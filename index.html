@@ -326,9 +326,23 @@ thead th:last-child{text-align:right}
     <div class="logo">Level <span>Up</span> <span style="font-size:0.6em;color:var(--muted2)">with Klep</span></div>
     <div class="header-right">
       <div class="athlete-tag" id="athlete-tag">—</div>
+      <button id="coach-tab" onclick="showCoach()" style="display:none;background:none;border:1px solid rgba(255,204,0,.4);border-radius:2px;color:var(--accent3);font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:6px 10px;cursor:pointer;transition:all .15s;text-shadow:0 0 6px var(--accent3)" onmouseover="this.style.background='rgba(255,204,0,.08)'" onmouseout="this.style.background='none'">👑 Coach</button>
       <button class="switch-btn" id="switch-btn">⎋ Exit</button>
     </div>
   </header>
+
+  <!-- COACH OVERLAY -->
+  <div id="coach-overlay" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:500;overflow-y:auto">
+    <div style="max-width:860px;margin:0 auto;padding:24px 28px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid var(--border2)">
+        <div style="font-family:'Press Start 2P',monospace;font-size:12px;color:var(--accent3);text-shadow:0 0 10px var(--accent3);letter-spacing:2px">👑 COACH DASHBOARD</div>
+        <button onclick="hideCoach()" style="background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted2);font-family:'Press Start 2P',monospace;font-size:8px;padding:6px 12px;cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted2)'">← Back</button>
+      </div>
+      <div id="coach-dashboard-content">
+        <div style="text-align:center;padding:40px;font-family:'Press Start 2P',monospace;font-size:8px;color:var(--muted2)"><span class="blink">█</span> LOADING...</div>
+      </div>
+    </div>
+  </div>
 
   <div id="page-roadmap" style="display:block">
 
@@ -783,7 +797,7 @@ function launchApp(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='block';
   document.getElementById('athlete-tag').textContent=currentUser+(isCoach?' 👑':'');
-  // currentUser is now set — safe to call setMode
+  document.getElementById('coach-tab').style.display=isCoach?'block':'none';
   currentMode='unlock';
   document.getElementById('mode-unlock').classList.add('active');
   document.getElementById('mode-upgrade').classList.remove('active');
@@ -795,6 +809,8 @@ function launchApp(){
 
 document.getElementById('switch-btn').addEventListener('click',()=>{
   currentUser=null;isCoach=false;
+  document.getElementById('coach-overlay').style.display='none';
+  document.getElementById('coach-tab').style.display='none';
   document.getElementById('login-user').value='';
   document.getElementById('login-pass').value='';
   document.getElementById('login-err').textContent='';
@@ -1764,7 +1780,108 @@ async function renderHSPU(){
   }
 }
 
-// ── POLL ──────────────────────────────────────────────────────────────────
+// ── COACH DASHBOARD ───────────────────────────────────────────────────────
+function showCoach(){
+  document.getElementById('coach-overlay').style.display='block';
+  renderCoachDashboard();
+}
+function hideCoach(){
+  document.getElementById('coach-overlay').style.display='none';
+}
+
+async function renderCoachDashboard(){
+  const el=document.getElementById('coach-dashboard-content');
+  if(!el) return;
+  el.innerHTML='<div style="text-align:center;padding:40px;font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2)"><span class="blink">█</span> LOADING...</div>';
+  try{
+    // Load all accounts and poll data in parallel
+    const [accounts, pollItems] = await Promise.all([
+      fbGet('accounts')||{},
+      fbGet('poll/items')||{}
+    ]);
+
+    const names=Object.keys(accounts||{});
+
+    // Load all athlete data in parallel
+    const athleteData=await Promise.all(names.map(async key=>{
+      const a=accounts[key];
+      const base='athletes/'+key.toLowerCase().replace(/\s+/g,'_');
+      const [duSteps,puSteps,hspuF,hspuB,hspuCycle]=await Promise.all([
+        fbGet('athletes/'+key+'/du_steps'),
+        fbGet('athletes/'+key+'/pu_steps'),
+        fbGet('athletes/'+key+'/hspu_foundation'),
+        fbGet('athletes/'+key+'/hspu_branch'),
+        fbGet('athletes/'+key+'/hspu_cycle'),
+      ]);
+      const duDone=(duSteps||[]).length;
+      const puDone=(puSteps||[]).length;
+      const hspuFDone=(hspuF||[]).length;
+      const hspuBDone=(hspuB||[]).length;
+      const hspuDone=hspuFDone+hspuBDone;
+      const hspuTotal=HSPU_FOUNDATION.length+hspuBranchSteps(hspuCycle||0).length;
+      return {name:a.name||key, duDone, duTotal:DU_STEPS.length, puDone, puTotal:PU_TRUNK.length, hspuDone, hspuTotal, hspuCycle:hspuCycle||0};
+    }));
+
+    // ── ATHLETE CARDS ──
+    function bar(done,total,color){
+      const pct=total?Math.round(done/total*100):0;
+      return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">'+
+        '<div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2);min-width:80px">'+done+'/'+total+'</div>'+
+        '<div style="flex:1;height:8px;background:var(--border2);border-radius:1px;overflow:hidden">'+
+          '<div style="height:100%;width:'+pct+'%;background:'+color+';transition:width .4s ease"></div>'+
+        '</div>'+
+        '<div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2);min-width:30px;text-align:right">'+pct+'%</div>'+
+      '</div>';
+    }
+
+    const athleteHTML=athleteData.length?athleteData.map(a=>{
+      const hasActivity=a.duDone||a.puDone||a.hspuDone;
+      return '<div style="background:var(--card);border:2px solid var(--border2);border-radius:2px;padding:16px 18px;margin-bottom:10px">'+
+        '<div style="font-family:\'Press Start 2P\',monospace;font-size:11px;color:var(--accent3);margin-bottom:12px;letter-spacing:1px">'+a.name.toUpperCase()+
+          (a.hspuCycle>0?'<span style="font-size:7px;color:var(--accent2);margin-left:10px">HSPU Cycle '+(a.hspuCycle+1)+'</span>':'')+
+        '</div>'+
+        (hasActivity?
+          '<div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2);margin-bottom:8px;letter-spacing:1px">🪢 DOUBLE UNDERS</div>'+bar(a.duDone,a.duTotal,'var(--accent)')+
+          '<div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2);margin-bottom:8px;margin-top:10px;letter-spacing:1px">💪 PULL-UPS</div>'+bar(a.puDone,a.puTotal,'var(--accent2)')+
+          '<div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2);margin-bottom:8px;margin-top:10px;letter-spacing:1px">🤸 STRICT HSPU</div>'+bar(a.hspuDone,a.hspuTotal,'var(--accent3)')
+          :'<div style="font-size:12px;color:var(--muted2);font-style:italic">No activity yet</div>')+
+      '</div>';
+    }).join(''):'<div style="font-size:13px;color:var(--muted2);padding:20px 0">No athletes registered yet.</div>';
+
+    // ── POLL RESULTS ──
+    const pollEntries=Object.entries(pollItems||{}).sort((a,b)=>
+      Object.keys(b[1].votes||{}).length - Object.keys(a[1].votes||{}).length
+    );
+    const maxV=pollEntries.length?Object.keys(pollEntries[0][1].votes||{}).length||1:1;
+    const pollHTML=pollEntries.length?pollEntries.map(([key,item])=>{
+      const votes=Object.keys(item.votes||{}).length;
+      const pct=Math.round(votes/Math.max(maxV,1)*100);
+      const isWriteIn=item.suggested_by&&item.suggested_by!=='coach';
+      return '<div style="background:var(--card);border:2px solid var(--border2);border-radius:2px;padding:12px 16px;margin-bottom:8px">'+
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'+
+          '<div style="flex:1;font-family:\'Press Start 2P\',monospace;font-size:9px;color:var(--text);text-transform:uppercase">'+item.name+
+            (isWriteIn?'<span style="font-size:7px;color:var(--muted2);font-family:\'Rajdhani\',sans-serif;text-transform:none;margin-left:8px">write-in by '+item.suggested_by+'</span>':'')+
+          '</div>'+
+          '<div style="font-family:\'Press Start 2P\',monospace;font-size:13px;color:var(--accent3)">'+votes+' <span style="font-size:8px;color:var(--muted2)">vote'+(votes===1?'':'s')+'</span></div>'+
+        '</div>'+
+        '<div style="height:6px;background:var(--border2);border-radius:1px;overflow:hidden">'+
+          '<div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,var(--accent3),var(--accent2));border-radius:1px"></div>'+
+        '</div>'+
+      '</div>';
+    }).join(''):'<div style="font-size:13px;color:var(--muted2);padding:10px 0">No votes yet.</div>';
+
+    el.innerHTML=
+      '<div style="font-family:\'Press Start 2P\',monospace;font-size:9px;color:var(--accent);letter-spacing:2px;margin-bottom:16px;text-shadow:0 0 6px var(--accent)">// ATHLETES ('+athleteData.length+')</div>'+
+      athleteHTML+
+      '<div style="font-family:\'Press Start 2P\',monospace;font-size:9px;color:var(--accent3);letter-spacing:2px;margin:24px 0 16px;text-shadow:0 0 6px var(--accent3)">// WHAT\'S NEXT · VOTE RESULTS</div>'+
+      pollHTML+
+      '<div style="text-align:center;margin-top:24px"><button onclick="renderCoachDashboard()" style="background:transparent;color:var(--accent);border:2px solid var(--accent);border-radius:2px;padding:10px 20px;font-family:\'Press Start 2P\',monospace;font-size:8px;letter-spacing:1px;cursor:pointer;transition:all .15s" onmouseover="this.style.background=\'var(--accent)\';this.style.color=\'#000\'" onmouseout="this.style.background=\'transparent\';this.style.color=\'var(--accent)\'">↻ Refresh</button></div>';
+
+  }catch(e){
+    console.error('Coach dashboard error:',e);
+    el.innerHTML='<div style="color:var(--accent2);font-family:\'Press Start 2P\',monospace;font-size:8px;padding:20px">!! ERROR LOADING DATA !!<br><br>'+e.message+'</div>';
+  }
+}
 const POLL_SEED=['Toes to Bar','Dips','Rope Climbs'];
 
 async function getPollItems(){
