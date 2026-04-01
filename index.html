@@ -303,14 +303,14 @@ thead th:last-child{text-align:right}
 .upgrade-card-desc{font-size:13px;color:var(--muted2);font-weight:500;line-height:1.5}
 .upgrade-card-arrow{font-family:'Press Start 2P',monospace;font-size:14px;color:var(--accent2);flex-shrink:0}
 
-#disclaimer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(4px)}
-#disclaimer-box{background:var(--surface);border:2px solid var(--accent3);border-radius:3px;padding:36px 32px;max-width:480px;width:100%;position:relative;box-shadow:0 0 40px rgba(255,204,0,.1),inset 0 1px 0 rgba(255,255,255,.04);animation:float-in .4s ease both}
-#disclaimer-box .corner{border-color:var(--accent3)}
-.disclaimer-title{font-family:'Press Start 2P',monospace;font-size:12px;letter-spacing:2px;color:var(--accent3);text-shadow:0 0 10px var(--accent3);margin-bottom:20px;text-transform:uppercase}
-.disclaimer-body{font-size:14px;color:var(--muted2);line-height:1.7;font-weight:500;margin-bottom:24px}
+#disclaimer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(4px);background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,204,.02) 2px,rgba(0,255,204,.02) 4px)}
+#disclaimer-box{background:var(--bg);border:3px solid var(--accent2);border-radius:2px;padding:36px 32px;max-width:460px;width:100%;position:relative;box-shadow:0 0 0 1px var(--border),0 0 40px rgba(255,0,170,.2),inset 0 0 60px rgba(255,0,170,.03);animation:float-in .4s ease both}
+#disclaimer-box .corner{border-color:var(--accent2)}
+.disclaimer-title{font-family:'Press Start 2P',monospace;font-size:14px;letter-spacing:3px;color:var(--accent2);text-shadow:0 0 16px var(--accent2);margin-bottom:10px;text-transform:uppercase;text-align:center}
+.disclaimer-body{font-size:14px;color:var(--muted2);line-height:1.8;font-weight:500;margin-bottom:24px;border-left:3px solid var(--accent2);padding-left:14px}
 .disclaimer-body strong{color:var(--text)}
-.disclaimer-btn{width:100%;background:transparent;color:var(--accent3);border:2px solid var(--accent3);border-radius:2px;padding:14px;font-family:'Press Start 2P',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .15s}
-.disclaimer-btn:hover{background:var(--accent3);color:#000;box-shadow:0 0 24px rgba(255,204,0,.3)}
+.disclaimer-btn{width:100%;background:transparent;color:var(--accent2);border:2px solid var(--accent2);border-radius:2px;padding:14px;font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .15s;text-shadow:0 0 8px var(--accent2)}
+.disclaimer-btn:hover{background:var(--accent2);color:#000;box-shadow:0 0 24px rgba(255,0,170,.4);text-shadow:none}
 .coach-athlete-card{background:var(--card);border:2px solid var(--border2);border-radius:2px;margin-bottom:16px;overflow:hidden}
 .coach-athlete-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;border-bottom:1px solid var(--border2)}
 .coach-athlete-name{font-family:'Press Start 2P',monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--accent3)}
@@ -346,26 +346,35 @@ thead th:last-child{text-align:right}
   <div id="disclaimer-box">
     <div class="corner tl"></div><div class="corner tr"></div>
     <div class="corner bl"></div><div class="corner br"></div>
-    <div class="disclaimer-title">⚠ Disclaimer</div>
+    <div class="disclaimer-title" style="animation:blink .8s step-end infinite">⚠ WARNING ⚠</div>
+    <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;color:var(--border2);margin-bottom:18px;text-align:center">── SYSTEM MESSAGE ──</div>
     <div class="disclaimer-body">
       This app is currently <strong>in development</strong>. Features may change, break, or disappear without notice.<br><br>
-      <strong>Do not enter any sensitive personal information.</strong><br><br>
-      By continuing you agree to interact at your own risk.
+      <strong>This developer does not want or care about your personal information. Keep it to yourself.</strong><br><br>
+      By pressing START you agree to interact at your own risk.
     </div>
-    <button class="disclaimer-btn" id="disclaimer-btn">✓ I Understand — Let's Go</button>
+    <button class="disclaimer-btn" id="disclaimer-btn">▶ Press Start</button>
+    <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--muted);text-align:center;margin-top:12px;letter-spacing:1px">INSERT COIN TO CONTINUE</div>
   </div>
 </div>
 
 <!-- CELEBRATION MODAL -->
-<div id="celebrate-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9998;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)">
-  <div style="background:var(--surface);border:2px solid var(--accent3);border-radius:3px;padding:24px;max-width:520px;width:100%;position:relative;box-shadow:0 0 60px rgba(255,204,0,.15);text-align:center">
+<div id="celebrate-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9998;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)">
+  <div style="background:var(--surface);border:2px solid var(--accent3);border-radius:3px;padding:24px;max-width:500px;width:100%;position:relative;box-shadow:0 0 60px rgba(255,204,0,.15);text-align:center">
     <div class="corner tl" style="border-color:var(--accent3)"></div><div class="corner tr" style="border-color:var(--accent3)"></div>
     <div class="corner bl" style="border-color:var(--accent3)"></div><div class="corner br" style="border-color:var(--accent3)"></div>
-    <div id="celebrate-title" style="font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:2px;color:var(--accent3);text-shadow:0 0 12px var(--accent3);margin-bottom:16px;text-transform:uppercase">🏆 Achievement Unlocked!</div>
-    <div id="celebrate-video-wrap" style="position:relative;border-radius:4px;overflow:hidden;margin-bottom:16px">
-      <iframe id="celebrate-iframe" width="100%" height="280" frameborder="0" allowfullscreen allow="autoplay" style="display:block"></iframe>
+    <div id="celebrate-title" style="font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:2px;color:var(--accent3);text-shadow:0 0 12px var(--accent3);margin-bottom:18px;text-transform:uppercase;animation:flicker 3s infinite">🏆 Achievement Unlocked!</div>
+    <div class="crt-wrap" style="margin-top:0">
+      <div class="crt-tv" style="max-width:100%">
+        <div class="crt-screen-wrap">
+          <iframe id="celebrate-iframe" width="100%" style="aspect-ratio:16/9;display:block;border:none" allowfullscreen allow="autoplay"></iframe>
+        </div>
+        <div class="crt-brand">LEVEL UP</div>
+        <div class="crt-knobs"><div class="crt-knob big"></div><div class="crt-knob"></div><div class="crt-knob"></div></div>
+        <div class="crt-feet"><div class="crt-foot"></div><div class="crt-foot"></div></div>
+      </div>
     </div>
-    <button onclick="closeCelebration()" style="background:transparent;color:var(--accent3);border:2px solid var(--accent3);border-radius:2px;padding:12px 24px;font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:2px;cursor:pointer;transition:all .15s;text-transform:uppercase" onmouseover="this.style.background='var(--accent3)';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='var(--accent3)'">▶ Continue</button>
+    <button onclick="closeCelebration()" style="margin-top:16px;background:transparent;color:var(--accent3);border:2px solid var(--accent3);border-radius:2px;padding:12px 24px;font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:2px;cursor:pointer;transition:all .15s;text-transform:uppercase" onmouseover="this.style.background='var(--accent3)';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='var(--accent3)'">▶ Continue</button>
   </div>
 </div>
 
@@ -2092,8 +2101,7 @@ function celebrate(title, videoId){
   document.getElementById('celebrate-title').textContent=title;
   document.getElementById('celebrate-iframe').src=
     'https://www.youtube.com/embed/'+videoId+'?autoplay=1&rel=0&modestbranding=1';
-  overlay.style.display='flex';
-}
+  overlay.style.display='flex';}
 function closeCelebration(){
   document.getElementById('celebrate-overlay').style.display='none';
   document.getElementById('celebrate-iframe').src='';
