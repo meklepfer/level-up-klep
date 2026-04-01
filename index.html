@@ -321,7 +321,7 @@ thead th:last-child{text-align:right}
   </header>
   <div class="nav-tabs">
     <button class="nav-tab active" data-page="roadmap">▶ Tracks</button>
-    <button class="nav-tab" data-page="leaderboard">⬆ Leaderboard</button>
+    <button class="nav-tab" data-page="leaderboard">🏆 Hi-Score</button>
     <button class="nav-tab" data-page="chat">💬 Chat</button>
     <button class="nav-tab" id="coach-tab" data-page="coach" style="display:none">👑 Coach</button>
   </div>
@@ -331,8 +331,8 @@ thead th:last-child{text-align:right}
       <div class="track-selector-label">// Select Track</div>
       <div class="track-btns">
         <button class="track-btn active" data-track="du">🐸 Double Unders</button>
-        <button class="track-btn" data-track="pullup">💪 Pull-Up Tree <span class="track-badge">WIP</span></button>
-        <button class="track-btn" data-track="hspu">🤸 Strict HSPU</button>
+        <button class="track-btn" data-track="pullup">💪 Pull-Up / Dip / MU</button>
+        <button class="track-btn" data-track="hspu">🤸 Strict HSPU for Volume</button>
       </div>
     </div>
 
@@ -387,8 +387,10 @@ thead th:last-child{text-align:right}
       <div class="hero">
         <div class="hero-label">// SKILL TRACK · GYMNASTICS</div>
         <div class="hero-title-row">
-          <h1 class="hero-title">Strict<br><span class="highlight2">HSPU</span></h1>
+          <h1 class="hero-title">Strict HSPU<br><span class="highlight2">for Volume</span></h1>
+          <div class="pixel-guy-wrap"><canvas id="pixel-hspu" width="80" height="96" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(255,0,170,.4))"></canvas></div>
         </div>
+        <p class="hero-sub" style="display:block;margin-top:8px">The intent of this track is to add strength and volume of Strict HSPU for athletes who are already capable of doing a strict HSPU with full ROM.</p>
       </div>
       <div class="progress-wrap">
         <div class="progress-meta">
@@ -1727,5 +1729,69 @@ async function delMsg(i){
 // focus textarea styling
 document.getElementById('chat-input').addEventListener('focus',function(){this.style.borderColor='var(--accent)'});
 document.getElementById('chat-input').addEventListener('blur',function(){this.style.borderColor='var(--border2)'});
+
+// ── PIXEL HSPU GUY ────────────────────────────────────────────────────────
+(function(){
+  const C=document.getElementById('pixel-hspu');
+  if(!C)return;
+  const ctx=C.getContext('2d');
+  const S=4;
+  // Colors
+  const SK='#f0c8a0',SK2='#d4a070'; // skin
+  const SH='#cc3366',SH2='#992244'; // hot pink shirt (accent2)
+  const PN='#2a2a4a',PN2='#1a1a3a'; // dark pants
+  const SN='#c8c8d8',SN2='#a0a0b8'; // shoes
+  const HR='#3a2010';                // hair
+  const AC='#ff00aa';                // accent glow
+
+  function clear(){ctx.clearRect(0,0,C.width,C.height)}
+  function px(x,y,c,w,h){w=w||1;h=h||1;ctx.fillStyle=c;ctx.fillRect(x*S,y*S,w*S,h*S)}
+
+  // Frame: 0=stand, 1=hands up, 2=inverted (handstand)
+  function drawGuy(frame){
+    if(frame===0){
+      // Standing — neutral
+      px(5,0,HR,6,2);px(4,1,HR,8,1);
+      px(4,2,SK,8,5);px(4,3,SK2,1,2);px(11,3,SK2,1,2);
+      px(4,7,SH,8,4);px(3,8,SH,1,3);px(12,8,SH,1,3);
+      px(3,9,SK,1,2);px(12,9,SK,1,2);
+      px(5,11,PN,6,5);px(4,13,PN2,1,3);px(11,13,PN2,1,3);
+      px(4,15,SN,3,2);px(9,15,SN,3,2);
+    } else if(frame===1){
+      // Arms raised overhead — preparing to kick up
+      px(5,0,HR,6,2);px(4,1,HR,8,1);
+      px(4,2,SK,8,5);
+      // arms up
+      px(3,2,SK,2,1);px(2,1,SK,1,2);px(11,2,SK,2,1);px(13,1,SK,1,2);
+      px(2,0,SH2,1,1);px(13,0,SH2,1,1);
+      px(4,7,SH,8,4);
+      px(5,11,PN,6,5);px(4,13,PN2,1,3);px(11,13,PN2,1,3);
+      px(4,15,SN,3,2);px(9,15,SN,3,2);
+    } else {
+      // Inverted handstand against wall
+      // Feet up top, hands down
+      px(5,0,SN,3,2);px(8,0,SN,3,2); // feet at top
+      px(4,2,PN2,1,3);px(11,2,PN2,1,3);px(5,2,PN,6,5); // legs
+      px(4,7,SH,8,4); // shirt (inverted)
+      px(3,8,SH,1,3);px(12,8,SH,1,3);
+      px(4,11,SK,8,5);px(4,12,SK2,1,2);px(11,12,SK2,1,2);
+      px(5,15,HR,6,2);px(4,14,HR,8,1); // hair at bottom
+      // hands on floor
+      px(3,17,SK,2,1);px(11,17,SK,2,1);
+    }
+  }
+
+  // Sequence: stand → arms up → arms up → handstand × 3 → arms up → stand
+  const SEQ=[[0,20],[1,8],[1,6],[2,16],[2,16],[2,16],[1,8],[0,20]];
+  let si=0,hc=0;
+  function animate(){
+    clear();
+    drawGuy(SEQ[si][0]);
+    hc++;
+    if(hc>=SEQ[si][1]){hc=0;si=(si+1)%SEQ.length;}
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
 
 </script>
