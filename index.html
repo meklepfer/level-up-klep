@@ -300,7 +300,7 @@ thead th:last-child{text-align:right}
     <div class="corner tl"></div><div class="corner tr"></div>
     <div class="corner bl"></div><div class="corner br"></div>
     <div class="login-hero">
-      <canvas id="klep-sprite" width="72" height="120"></canvas>
+      <canvas id="klep-sprite" width="128" height="128"></canvas>
       <div class="login-title-wrap">
         <div class="login-title-big">LEVEL<br><span>UP</span></div>
         <div class="login-title-small">with Klep</div>
@@ -345,7 +345,7 @@ thead th:last-child{text-align:right}
         <div class="hero-label">// SKILL TRACK · JUMP ROPE</div>
         <div class="hero-title-row">
           <h1 class="hero-title">Double<br><span class="highlight">Unders</span></h1>
-          <div class="pixel-guy-wrap"><canvas id="pixel-guy" width="64" height="96"></canvas></div>
+          <div class="pixel-guy-wrap"><canvas id="pixel-guy" width="128" height="140"></canvas></div>
         </div>
         <p class="hero-sub" style="display:none">5 minutes of supplemental work per session. Follow each step in order. Don't cheat yourself.</p>
       </div>
@@ -369,7 +369,7 @@ thead th:last-child{text-align:right}
         <div class="hero-label">// SKILL TRACK · GYMNASTICS</div>
         <div class="hero-title-row">
           <h1 class="hero-title">Pull-ups, Dips<br>&amp; Muscle-Ups...<br><span class="highlight2">Oh My!</span></h1>
-          <div class="pixel-guy-wrap"><canvas id="pixel-pullup" width="80" height="96"></canvas></div>
+          <div class="pixel-guy-wrap"><canvas id="pixel-pullup" width="128" height="140"></canvas></div>
         </div>
         <p class="hero-sub" style="display:none">Build from the ground up. Trunk unlocks the split. Both branches required to reach the boss.</p>
       </div>
@@ -1429,130 +1429,160 @@ async function delMsg(i){
 document.getElementById('chat-input').addEventListener('focus',function(){this.style.borderColor='var(--accent)'});
 document.getElementById('chat-input').addEventListener('blur',function(){this.style.borderColor='var(--border2)'});
 
-// ── KLEP SPRITE (login screen) ────────────────────────────────────────────
+// ── 16-BIT BISON KLEP — shared palette & draw function ───────────────────
+function drawBisonKlep(ctx, S, yOff, pose){
+  // pose: 'stand' | 'jump_squat' | 'jump_mid' | 'jump_peak' | 'hang' | 'pull_mid' | 'pull_top'
+  yOff=yOff||0;
+  function px(x,y,c,w,h){w=w||1;h=h||1;ctx.fillStyle=c;ctx.fillRect(x*S,(y+yOff)*S,w*S,h*S);}
+
+  // ── PALETTE ──
+  const BD='#5c3a1e'; // bison dark brown body
+  const BM='#7a4e2d'; // bison mid brown
+  const BL='#9b6840'; // bison light brown highlight
+  const BS='#3a2010'; // bison shadow/outline
+  const HU='#c8860a'; // hump warm highlight
+  const FUR='#2e1a08';// fur dark
+  const HAT='#2d6e2d';// green hat
+  const HAT2='#1a4a1a';// dark green hat
+  const HATB='#d4c9a0';// tan brim
+  const GL='#111';    // glasses frame
+  const GLL='#1a4a2a';// green lens
+  const HORN='#d4b060';// horn
+  const EYE='#00ffcc';// glowing cyan eye
+  const NOS='#1a0a04';// nose
+  const ROPE='#ff00aa';
+
+  if(pose==='stand'){
+    // ── BODY ── big bison hump
+    px(6,14,BS,20,1);
+    px(4,15,BD,24,8);
+    px(5,15,BM,22,6);
+    px(8,15,BL,10,3); // highlight top
+    px(4,23,BS,24,1);
+    // hump
+    px(8,10,BD,12,5);
+    px(9,10,BM,10,4);
+    px(10,10,HU,8,2);
+    px(8,9,BS,12,1);
+    // legs
+    px(6,23,BD,4,6); px(6,23,BM,3,5);
+    px(18,23,BD,4,6); px(18,23,BM,3,5);
+    px(9,23,BD,4,6); px(9,23,BM,3,5);
+    px(15,23,BD,4,6); px(15,23,BM,3,5);
+    // hooves
+    px(6,28,BS,4,1); px(9,28,BS,4,1); px(15,28,BS,4,1); px(18,28,BS,4,1);
+    px(6,27,FUR,4,2); px(9,27,FUR,4,2); px(15,27,FUR,4,2); px(18,27,FUR,4,2);
+    // tail
+    px(27,15,BD,2,4); px(28,18,FUR,2,3);
+    // ── HEAD ──
+    px(1,13,BS,9,1);
+    px(0,14,BD,10,7);
+    px(1,14,BM,8,5);
+    px(1,21,BS,10,1);
+    // snout
+    px(0,18,BM,4,3); px(0,19,BD,3,2);
+    px(0,21,NOS,2,1); px(2,21,NOS,2,1);
+    // ── HORN ──
+    px(3,11,HORN,2,1); px(2,10,HORN,2,1); px(1,9,HORN,1,1);
+    // ── EYE ──
+    px(5,16,GL,3,2); px(6,16,EYE,1,1);
+    // ── FUR BEARD ──
+    px(0,20,FUR,5,3); px(1,22,FUR,4,3);
+    // ── GREEN HAT ──
+    px(4,8,HAT2,8,1);
+    px(3,9,HAT,9,1);
+    px(2,10,HAT,10,3);
+    px(2,13,HAT2,10,1);
+    px(1,13,HATB,12,1); // brim
+    // hat logo dot
+    px(7,10,HAT2,2,2);
+    // ── SUNGLASSES ──
+    px(4,16,GL,1,2); px(5,15,GL,2,1); px(7,15,GL,2,1); px(9,16,GL,1,2); px(5,17,GL,2,1); px(7,17,GL,2,1);
+    px(5,16,GLL,2,1);
+    px(10,16,GL,2,1); // bridge
+    px(12,16,GL,1,2); px(13,15,GL,2,1); px(15,15,GL,2,1); px(17,16,GL,1,2); px(13,17,GL,2,1); px(15,17,GL,2,1);
+    px(13,16,GLL,2,1);
+    px(3,16,GL,1,1); px(18,16,GL,1,1); // arms
+
+  } else if(pose==='jump_squat'||pose==='jump_mid'||pose==='jump_peak'){
+    const legY=pose==='jump_squat'?0:pose==='jump_mid'?-2:-4;
+    // body same
+    px(6,14,BS,20,1);
+    px(4,15,BD,24,7);
+    px(5,15,BM,22,5);
+    px(8,15,BL,10,2);
+    px(4,22,BS,24,1);
+    px(8,10,BD,12,4);
+    px(9,10,BM,10,3);
+    px(10,10,HU,8,2);
+    px(8,9,BS,12,1);
+    // legs adjust
+    const lbY=pose==='jump_peak'?2:pose==='jump_mid'?1:0;
+    px(6,22+lbY,BD,4,4); px(9,22+lbY,BD,4,4); px(15,22+lbY,BD,4,4); px(18,22+lbY,BD,4,4);
+    px(6,25+lbY,FUR,4,1); px(9,25+lbY,FUR,4,1); px(15,25+lbY,FUR,4,1); px(18,25+lbY,FUR,4,1);
+    px(27,15,BD,2,3); px(28,17,FUR,2,2);
+    // head
+    px(1,13,BS,9,1); px(0,14,BD,10,7); px(1,14,BM,8,5); px(1,21,BS,10,1);
+    px(0,18,BM,4,3); px(0,19,BD,3,2);
+    px(0,21,NOS,2,1); px(2,21,NOS,2,1);
+    px(3,11,HORN,2,1); px(2,10,HORN,2,1); px(1,9,HORN,1,1);
+    px(5,16,GL,3,2); px(6,16,EYE,1,1);
+    px(0,20,FUR,5,3); px(1,22,FUR,4,3);
+    px(4,8,HAT2,8,1); px(3,9,HAT,9,1); px(2,10,HAT,10,3); px(2,13,HAT2,10,1); px(1,13,HATB,12,1);
+    px(7,10,HAT2,2,2);
+    px(4,16,GL,1,2); px(5,15,GL,2,1); px(7,15,GL,2,1); px(9,16,GL,1,2); px(5,17,GL,2,1); px(7,17,GL,2,1);
+    px(5,16,GLL,2,1); px(10,16,GL,2,1);
+    px(12,16,GL,1,2); px(13,15,GL,2,1); px(15,15,GL,2,1); px(17,16,GL,1,2); px(13,17,GL,2,1); px(15,17,GL,2,1);
+    px(13,16,GLL,2,1); px(3,16,GL,1,1); px(18,16,GL,1,1);
+
+  } else if(pose==='hang'||pose==='pull_mid'||pose==='pull_top'){
+    const hY=pose==='hang'?8:pose==='pull_mid'?4:0;
+    // body
+    px(6,10+hY,BS,20,1); px(4,11+hY,BD,24,7); px(5,11+hY,BM,22,5); px(8,11+hY,BL,10,2); px(4,18+hY,BS,24,1);
+    px(8,6+hY,BD,12,5); px(9,6+hY,BM,10,4); px(10,6+hY,HU,8,2); px(8,5+hY,BS,12,1);
+    // legs hang
+    px(7,18+hY,BD,4,5); px(10,18+hY,BD,3,5); px(15,18+hY,BD,4,5); px(18,18+hY,BD,3,5);
+    px(7,22+hY,FUR,4,1); px(10,22+hY,FUR,3,1); px(15,22+hY,FUR,4,1); px(18,22+hY,FUR,3,1);
+    px(27,11+hY,BD,2,3); px(28,13+hY,FUR,2,2);
+    // front legs grip bar
+    px(5,2,BD,3,4); px(5,2,BM,2,3);
+    px(20,2,BD,3,4); px(20,2,BM,2,3);
+    // hooves on bar
+    px(4,2,FUR,4,2); px(20,2,FUR,4,2);
+    // head
+    px(1,9+hY,BS,9,1); px(0,10+hY,BD,10,7); px(1,10+hY,BM,8,5); px(1,17+hY,BS,10,1);
+    px(0,14+hY,BM,4,3); px(0,15+hY,BD,3,2);
+    px(0,17+hY,NOS,2,1); px(2,17+hY,NOS,2,1);
+    px(3,7+hY,HORN,2,1); px(2,6+hY,HORN,2,1); px(1,5+hY,HORN,1,1);
+    px(5,12+hY,GL,3,2); px(6,12+hY,EYE,1,1);
+    px(0,16+hY,FUR,5,3);
+    // hat
+    px(4,4+hY,HAT2,8,1); px(3,5+hY,HAT,9,1); px(2,6+hY,HAT,10,3); px(2,9+hY,HAT2,10,1); px(1,9+hY,HATB,12,1);
+    px(7,6+hY,HAT2,2,2);
+    // shades
+    px(4,12+hY,GL,1,2); px(5,11+hY,GL,2,1); px(7,11+hY,GL,2,1); px(9,12+hY,GL,1,2); px(5,13+hY,GL,2,1); px(7,13+hY,GL,2,1);
+    px(5,12+hY,GLL,2,1); px(10,12+hY,GL,2,1);
+    px(12,12+hY,GL,1,2); px(13,11+hY,GL,2,1); px(15,11+hY,GL,2,1); px(17,12+hY,GL,1,2); px(13,13+hY,GL,2,1); px(15,13+hY,GL,2,1);
+    px(13,12+hY,GLL,2,1); px(3,12+hY,GL,1,1); px(18,12+hY,GL,1,1);
+    // smile at top
+    if(pose==='pull_top'){px(4,16,BD,1,1);px(3,17,BD,3,1);px(6,17,BL,2,1);}
+  }
+}
+
+// ── BISON KLEP LOGIN ─────────────────────────────────────────────────────
 (function(){
   const C=document.getElementById('klep-sprite');
   if(!C)return;
   const ctx=C.getContext('2d');
-  const S=4;
-
-  const SK='#e8b88a';  // skin
-  const SK2='#d4a070'; // skin shadow
-  const BR='#8b4513';  // brown beard
-  const BR2='#a0522d'; // lighter brown beard
-  const BR3='#6b3010'; // dark beard shadow
-  const GHT='#2d6e2d'; // green hat top
-  const GHT2='#1a4a1a'; // dark green hat
-  const BRIM='#d4c9a0';// tan/cream brim
-  const FRM='#111';    // glasses frame black
-  const LENS='#1a4a2a';// dark green lens tint
-  const LENS2='#0d3018';// darker lens
-  const SH1='#8a8a7a'; // plaid shirt grey
-  const SH2='#6a6a5a'; // plaid shirt dark
-  const SH3='#4a4a3a'; // plaid shirt darkest
-  const WHT='#f0f0f0'; // teeth/white
-  const PNK='#c87878'; // mouth/gums
-
+  const S=3;
   function clear(){ctx.clearRect(0,0,C.width,C.height)}
-  function px(x,y,col,w=1,h=1){ctx.fillStyle=col;ctx.fillRect(x*S,y*S,w*S,h*S)}
-
-  function drawKlep(){
-    // ── GREEN SNAPBACK ──
-    // hat dome
-    px(3,0,GHT2,10,1);
-    px(2,1,GHT,12,1);
-    px(1,2,GHT,14,2);
-    px(1,4,GHT2,14,1);
-    // hat brim (flat snapback style)
-    px(0,5,BRIM,16,2);
-    px(1,5,GHT2,14,1); // shadow under brim
-    // snake logo hint on hat
-    px(7,2,GHT2,2,2);
-
-    // ── HEAD ──
-    px(3,6,SK,10,1);
-    px(2,7,SK,12,5);
-    px(3,12,SK,10,1);
-
-    // ── ROUND SUNGLASSES ──
-    // left lens (round)
-    px(3,8,FRM,1,3);   // left edge
-    px(4,7,FRM,1,1);   // top left curve
-    px(4,10,FRM,1,1);  // bottom left curve
-    px(5,7,FRM,2,1);   // top
-    px(5,10,FRM,2,1);  // bottom
-    px(7,8,FRM,1,3);   // right edge
-    px(4,8,LENS,3,2);  // lens fill
-    px(4,8,LENS2,1,1); // dark center
-    px(4,8,'#2a6a3a',1,1); // shine top-left
-
-    // bridge
-    px(8,9,FRM,2,1);
-
-    // right lens (round)
-    px(10,8,FRM,1,3);  // left edge
-    px(11,7,FRM,1,1);  // top
-    px(11,10,FRM,1,1); // bottom
-    px(12,7,FRM,2,1);  // top
-    px(12,10,FRM,2,1); // bottom
-    px(14,8,FRM,1,3);  // right edge
-    px(11,8,LENS,3,2); // lens fill
-    px(11,8,LENS2,1,1);// dark center
-    px(11,8,'#2a6a3a',1,1); // shine
-
-    // arms of glasses
-    px(2,9,FRM,1,1);
-    px(15,9,FRM,1,1);
-
-    // ── NOSE ──
-    px(8,10,SK2,2,2);
-
-    // ── BIG BEARD ──
-    // cheeks/sides
-    px(2,11,BR,2,3); px(14,11,BR,2,3);
-    px(1,12,BR,2,3); px(15,12,BR,1,3);
-    // upper lip / mustache
-    px(5,11,BR3,8,1);
-    px(4,12,BR3,10,1);
-    // mouth / smile
-    px(6,12,PNK,6,1);
-    px(5,13,PNK,8,1);
-    px(6,13,WHT,6,1); // teeth
-    px(5,14,BR3,2,1); px(11,14,BR3,2,1); // smile corners
-    // main beard block
-    px(2,14,BR,14,1);
-    px(1,15,BR2,16,2);
-    px(2,17,BR,14,2);
-    px(3,19,BR,12,1);
-    // beard taper
-    px(4,20,BR2,10,1);
-    px(5,21,BR,8,1);
-    px(6,22,BR3,6,1);
-    px(7,23,BR3,4,1);
-    // beard texture
-    px(4,15,BR3,1,2); px(8,16,BR3,1,2); px(12,15,BR3,1,2);
-    px(6,18,BR3,1,1); px(10,18,BR3,1,1);
-
-    // ── PLAID SHIRT ──
-    // base
-    px(1,24,SH1,16,6);
-    // plaid vertical stripes
-    px(3,24,SH2,2,6); px(7,24,SH3,1,6); px(10,24,SH2,2,6); px(14,24,SH3,1,6);
-    // plaid horizontal stripes
-    px(1,25,SH2,16,1); px(1,28,SH3,16,1);
-    // collar
-    px(6,24,SK,5,2);
-    px(7,24,WHT,4,1);
-  }
-
-  // subtle idle bob
   const BOB=[0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1];
   let tick=0;
   function animate(){
     clear();
     const yo=BOB[tick%BOB.length];
     ctx.save();ctx.translate(0,yo*S);
-    drawKlep();
+    drawBisonKlep(ctx,S,0,'stand');
     ctx.restore();
     tick++;
     requestAnimationFrame(animate);
@@ -1560,257 +1590,61 @@ document.getElementById('chat-input').addEventListener('blur',function(){this.st
   animate();
 })();
 
-// ── KLEP JUMPING ROPE ─────────────────────────────────────────────────────
+// ── BISON KLEP JUMPING ROPE ───────────────────────────────────────────────
 (function(){
   const C=document.getElementById('pixel-guy');
   if(!C)return;
   const ctx=C.getContext('2d');
-  const S=4;
-  const SK='#e8b88a',SK2='#d4a070';
-  const BR='#8b4513',BR2='#a0522d',BR3='#6b3010';
-  const GHT='#2d6e2d',GHT2='#1a4a1a',BRIM='#d4c9a0';
-  const FRM='#111',LENS='#1a4a2a';
-  const SH1='#8a8a7a',SH2='#6a6a5a',SH3='#4a4a3a';
-  const PN='#2a2a4a',SN='#c8c8d8';
+  const S=3;
   const ROPE='#ff00aa';
-
   function clear(){ctx.clearRect(0,0,C.width,C.height)}
-  function px(x,y,col,w=1,h=1){ctx.fillStyle=col;ctx.fillRect(x*S,y*S,w*S,h*S)}
-
-  function drawKlepJump(fY, legFrame){
-    // ── HAT ──
-    px(3,0+fY,GHT2,10,1);
-    px(2,1+fY,GHT,12,1);
-    px(1,2+fY,GHT,14,2);
-    px(0,4+fY,BRIM,16,1);
-    px(1,4+fY,GHT2,14,1);
-
-    // ── HEAD ──
-    px(3,5+fY,SK,10,1);
-    px(2,6+fY,SK,12,4);
-    px(3,10+fY,SK,10,1);
-
-    // ── SUNGLASSES ──
-    px(3,7+fY,FRM,1,2); px(4,6+fY,FRM,1,1); px(4,8+fY,FRM,1,1);
-    px(5,6+fY,FRM,2,1); px(5,8+fY,FRM,2,1); px(7,7+fY,FRM,1,2);
-    px(4,7+fY,LENS,3,1);
-    px(8,7+fY,FRM,2,1);
-    px(10,7+fY,FRM,1,2); px(11,6+fY,FRM,1,1); px(11,8+fY,FRM,1,1);
-    px(12,6+fY,FRM,2,1); px(12,8+fY,FRM,2,1); px(14,7+fY,FRM,1,2);
-    px(11,7+fY,LENS,3,1);
-    px(2,7+fY,FRM,1,1); px(15,7+fY,FRM,1,1);
-
-    // ── NOSE ──
-    px(8,9+fY,SK2,2,1);
-
-    // ── BEARD ──
-    px(2,10+fY,BR,2,2); px(14,10+fY,BR,2,2);
-    px(2,11+fY,BR2,14,2);
-    px(3,13+fY,BR,12,1);
-    px(4,14+fY,BR2,10,1);
-    px(5,15+fY,BR,8,1);
-    px(6,16+fY,BR3,6,1);
-    px(3,11+fY,BR3,1,1); px(13,11+fY,BR3,1,1);
-
-    // ── PLAID SHIRT ──
-    px(2,17+fY,SH1,14,4);
-    px(4,17+fY,SH2,2,4); px(9,17+fY,SH2,2,4);
-    px(2,18+fY,SH2,14,1); px(2,20+fY,SH3,14,1);
-
-    // ── ARMS (holding rope handles) ──
-    if(legFrame===0){
-      // arms down at sides
-      px(1,17+fY,SK,2,3); px(15,17+fY,SK,2,3);
-      px(0,19+fY,SK,2,2); px(16,19+fY,SK,2,2);
-    } else if(legFrame===1){
-      // arms swinging up mid-jump
-      px(0,15+fY,SK,2,2); px(16,15+fY,SK,2,2);
-      px(1,17+fY,SK,1,2); px(15,17+fY,SK,1,2);
-    } else {
-      // arms raised at peak
-      px(0,13+fY,SK,2,2); px(16,13+fY,SK,2,2);
-      px(1,15+fY,SK,1,2); px(15,15+fY,SK,1,2);
-    }
-
-    // ── PANTS ──
-    if(legFrame===0){
-      px(4,21+fY,PN,4,3); px(10,21+fY,PN,4,3);
-      px(3,24+fY,SN,5,1); px(10,24+fY,SN,5,1);
-    } else if(legFrame===1){
-      // slight tuck
-      px(4,21+fY,PN,4,2); px(10,21+fY,PN,4,2);
-      px(3,23+fY,PN,5,1); px(10,23+fY,PN,5,1);
-      px(3,24+fY,SN,4,1); px(11,24+fY,SN,4,1);
-    } else {
-      // full tuck at peak
-      px(4,21+fY,PN,3,2); px(11,21+fY,PN,3,2);
-      px(3,22+fY,SN,4,1); px(11,22+fY,SN,4,1);
-    }
-  }
-
-  function drawRope(rf, fY){
-    ctx.save();
-    ctx.strokeStyle=ROPE;ctx.lineWidth=2;
-    ctx.shadowColor=ROPE;ctx.shadowBlur=8;
+  function drawRope(rf,fY){
+    ctx.save();ctx.strokeStyle=ROPE;ctx.lineWidth=2;ctx.shadowColor=ROPE;ctx.shadowBlur=8;
     ctx.beginPath();
-    if(rf===0){
-      ctx.moveTo(0*S,(23+fY)*S);
-      ctx.quadraticCurveTo(9*S,(28+fY)*S,18*S,(23+fY)*S);
-    } else if(rf===1){
-      ctx.moveTo(0*S,(20+fY)*S);
-      ctx.quadraticCurveTo(9*S,(6+fY)*S,18*S,(20+fY)*S);
-    } else {
-      ctx.moveTo(0*S,(15+fY)*S);
-      ctx.quadraticCurveTo(9*S,(0+fY)*S,18*S,(15+fY)*S);
-    }
+    if(rf===0){ctx.moveTo(0,(28+fY)*S);ctx.quadraticCurveTo(14*S,(34+fY)*S,28*S,(28+fY)*S);}
+    else if(rf===1){ctx.moveTo(0,(24+fY)*S);ctx.quadraticCurveTo(14*S,(8+fY)*S,28*S,(24+fY)*S);}
+    else{ctx.moveTo(0,(18+fY)*S);ctx.quadraticCurveTo(14*S,(2+fY)*S,28*S,(18+fY)*S);}
     ctx.stroke();ctx.restore();
   }
-
-  const SEQ=[[0,0,0,10],[-1,1,1,6],[-3,2,2,8],[-1,1,1,6],[0,0,0,10]];
+  const POSES=['jump_squat','jump_mid','jump_peak','jump_mid','jump_squat'];
+  const FYS=[0,-1,-3,-1,0];
+  const RFS=[0,1,2,1,0];
+  const HOLDS=[10,6,8,6,10];
   let seqIdx=0,holdCount=0;
   function animate(){
     clear();
-    const[fY,lf,rf]=SEQ[seqIdx];
-    drawRope(rf,fY);
-    drawKlepJump(fY,lf);
+    const fY=FYS[seqIdx];
+    drawRope(RFS[seqIdx],fY);
+    drawBisonKlep(ctx,S,fY,POSES[seqIdx]);
     holdCount++;
-    if(holdCount>=SEQ[seqIdx][3]){holdCount=0;seqIdx=(seqIdx+1)%SEQ.length}
+    if(holdCount>=HOLDS[seqIdx]){holdCount=0;seqIdx=(seqIdx+1)%POSES.length;}
     requestAnimationFrame(animate);
   }
   animate();
 })();
 
-// ── KLEP PULL-UP ──────────────────────────────────────────────────────────
+// ── BISON KLEP PULL-UP ────────────────────────────────────────────────────
 (function(){
   const C=document.getElementById('pixel-pullup');
   if(!C)return;
   const ctx=C.getContext('2d');
-  const S=4;
-  const SK='#e8b88a',SK2='#d4a070';
-  const BR='#8b4513',BR2='#a0522d',BR3='#6b3010';
-  const GHT='#2d6e2d',GHT2='#1a4a1a',BRIM='#d4c9a0';
-  const FRM='#111',LENS='#1a4a2a';
-  const SH1='#8a8a7a',SH2='#6a6a5a',SH3='#4a4a3a';
-  const PN='#2a2a4a',SN='#c8c8d8';
+  const S=3;
   const BARB='#8B5E3C',BARG='#00ffcc';
-
   function clear(){ctx.clearRect(0,0,C.width,C.height)}
-  function px(x,y,col,w=1,h=1){ctx.fillStyle=col;ctx.fillRect(x*S,y*S,w*S,h*S)}
-
   function drawBar(){
-    ctx.save();
-    ctx.shadowColor=BARG;ctx.shadowBlur=10;
-    ctx.fillStyle=BARB;
-    ctx.fillRect(0,1*S,C.width,S);
+    ctx.save();ctx.shadowColor=BARG;ctx.shadowBlur=10;
+    ctx.fillStyle=BARB;ctx.fillRect(0,S,C.width,S);
     ctx.restore();
-    px(0,1,'#c8843c',20,1);
+    ctx.fillStyle='#c8843c';ctx.fillRect(0,S,C.width,S);
   }
-
-  // frame 0 = dead hang, 1 = mid pull, 2 = chin over bar
-  function drawKlepPull(frame){
-    if(frame===0){
-      // ── DEAD HANG ──
-      // hands on bar
-      px(3,2,SK,2,1); px(14,2,SK,2,1);
-      // arms straight up
-      px(4,3,SK,1,4); px(14,3,SK,1,4);
-      // hat
-      px(4,7,GHT2,11,1); px(3,8,GHT,13,1); px(2,9,GHT,15,2); px(2,11,GHT2,15,1);
-      px(1,12,BRIM,17,1);
-      // head
-      px(3,13,SK,13,1); px(2,14,SK,15,4); px(3,18,SK,13,1);
-      // sunglasses
-      px(3,15,FRM,1,2); px(4,14,FRM,1,1); px(4,16,FRM,1,1);
-      px(5,14,FRM,3,1); px(5,16,FRM,3,1); px(8,15,FRM,1,2);
-      px(4,15,LENS,4,1);
-      px(9,15,FRM,2,1);
-      px(11,15,FRM,1,2); px(12,14,FRM,1,1); px(12,16,FRM,1,1);
-      px(13,14,FRM,3,1); px(13,16,FRM,3,1); px(16,15,FRM,1,2);
-      px(12,15,LENS,4,1);
-      px(2,15,FRM,1,1); px(17,15,FRM,1,1);
-      // beard
-      px(2,17,BR,2,2); px(15,17,BR,2,2);
-      px(2,18,BR2,15,2); px(3,20,BR,13,1); px(4,21,BR2,11,1);
-      px(5,22,BR,9,1); px(6,23,BR3,7,1);
-      // shirt
-      px(3,24,SH1,13,4); px(5,24,SH2,2,4); px(10,24,SH2,2,4);
-      px(3,25,SH2,13,1); px(3,27,SH3,13,1);
-      // legs hanging
-      px(5,28,PN,4,4); px(10,28,PN,4,4);
-      px(4,32,SN,5,1); px(10,32,SN,5,1);
-
-    } else if(frame===1){
-      // ── MID PULL ──
-      px(3,2,SK,2,1); px(14,2,SK,2,1);
-      px(3,3,SK,2,2); px(14,3,SK,2,2);
-      px(4,5,SK,1,2); px(14,5,SK,1,2);
-      // hat (higher)
-      px(4,3,GHT2,11,1); px(3,4,GHT,13,1); px(2,5,GHT,15,2); px(2,7,GHT2,15,1);
-      px(1,8,BRIM,17,1);
-      // head
-      px(3,9,SK,13,1); px(2,10,SK,15,4); px(3,14,SK,13,1);
-      // sunglasses
-      px(3,11,FRM,1,2); px(4,10,FRM,1,1); px(4,12,FRM,1,1);
-      px(5,10,FRM,3,1); px(5,12,FRM,3,1); px(8,11,FRM,1,2);
-      px(4,11,LENS,4,1);
-      px(9,11,FRM,2,1);
-      px(11,11,FRM,1,2); px(12,10,FRM,1,1); px(12,12,FRM,1,1);
-      px(13,10,FRM,3,1); px(13,12,FRM,3,1); px(16,11,FRM,1,2);
-      px(12,11,LENS,4,1);
-      px(2,11,FRM,1,1); px(17,11,FRM,1,1);
-      // beard
-      px(2,13,BR,2,2); px(15,13,BR,2,2);
-      px(2,14,BR2,15,2); px(3,16,BR,13,1); px(4,17,BR2,11,1);
-      px(5,18,BR,9,1); px(6,19,BR3,7,1);
-      // elbows wide
-      px(2,8,SK,2,2); px(16,8,SK,2,2);
-      // shirt
-      px(3,20,SH1,13,4); px(5,20,SH2,2,4); px(10,20,SH2,2,4);
-      // legs
-      px(5,24,PN,4,4); px(10,24,PN,4,4);
-      px(4,28,SN,5,1); px(10,28,SN,5,1);
-
-    } else {
-      // ── CHIN OVER BAR ──
-      px(3,2,SK,2,1); px(14,2,SK,2,1);
-      px(3,2,SK,2,3); px(14,2,SK,2,3);
-      px(3,5,SK,2,1); px(14,5,SK,2,1);
-      // hat above bar
-      px(4,0,GHT2,11,1); px(3,1,GHT,13,1); px(2,2,GHT,15,1);
-      // head above bar
-      px(3,3,SK,13,1); px(2,4,SK,15,4); px(3,8,SK,13,1);
-      // sunglasses
-      px(3,5,FRM,1,2); px(4,4,FRM,1,1); px(4,6,FRM,1,1);
-      px(5,4,FRM,3,1); px(5,6,FRM,3,1); px(8,5,FRM,1,2);
-      px(4,5,LENS,4,1);
-      px(9,5,FRM,2,1);
-      px(11,5,FRM,1,2); px(12,4,FRM,1,1); px(12,6,FRM,1,1);
-      px(13,4,FRM,3,1); px(13,6,FRM,3,1); px(16,5,FRM,1,2);
-      px(12,5,LENS,4,1);
-      // big grin
-      px(7,8,'#c87878',5,1); px(8,9,'#f0f0f0',4,1);
-      // beard
-      px(2,7,BR,2,2); px(15,7,BR,2,2);
-      px(2,8,BR2,15,2); px(3,10,BR,13,1); px(4,11,BR2,11,1);
-      px(5,12,BR,9,1);
-      // elbows wide and low
-      px(2,5,SK,2,2); px(16,5,SK,2,2);
-      // shirt
-      px(3,14,SH1,13,4); px(5,14,SH2,2,4); px(10,14,SH2,2,4);
-      // legs tucked
-      px(5,18,PN,4,3); px(10,18,PN,4,3);
-      px(4,20,SN,5,1); px(10,20,SN,5,1);
-    }
-  }
-
-  const SEQ=[[0,18],[1,10],[2,14],[1,10],[0,18]];
+  const POSES=['hang','pull_mid','pull_top','pull_mid','hang'];
+  const HOLDS=[18,10,14,10,18];
   let seqIdx=0,holdCount=0;
   function animate(){
-    clear();
-    drawBar();
-    drawKlepPull(SEQ[seqIdx][0]);
+    clear();drawBar();
+    drawBisonKlep(ctx,S,0,POSES[seqIdx]);
     holdCount++;
-    if(holdCount>=SEQ[seqIdx][1]){holdCount=0;seqIdx=(seqIdx+1)%SEQ.length}
+    if(holdCount>=HOLDS[seqIdx]){holdCount=0;seqIdx=(seqIdx+1)%POSES.length;}
     requestAnimationFrame(animate);
   }
   animate();
