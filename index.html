@@ -441,6 +441,7 @@ thead th:last-child{text-align:right}
           </div>
           <div class="xp-bar-wrap"><div class="xp-bar-fill" id="du-track-fill" style="width:0%"></div><div class="xp-label" id="du-xp-label">0%</div></div>
           <div class="step-dots" id="du-step-dots"></div>
+          <div style="text-align:right;margin-top:10px"><button onclick="resetTrack('du')" style="background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted);font-family:'Press Start 2P',monospace;font-size:7px;padding:4px 10px;cursor:pointer;letter-spacing:1px;transition:all .15s" onmouseover="this.style.borderColor='var(--accent2)';this.style.color='var(--accent2)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted)'">↺ Reset Progress</button></div>
         </div>
         <div class="all-done-banner" id="du-all-done">
           <div class="all-done-inner"><h2>🏆 Achievement Unlocked!</h2><p>Double-Unders complete. All 10 stages cleared. Now go put them in a WOD.</p></div>
@@ -521,6 +522,7 @@ thead th:last-child{text-align:right}
           </div>
           <div class="xp-bar-wrap"><div class="xp-bar-fill" id="pu-track-fill" style="width:0%"></div><div class="xp-label" id="pu-xp-label">0%</div></div>
           <div class="step-dots" id="pu-step-dots"></div>
+          <div style="text-align:right;margin-top:10px"><button onclick="resetTrack('pullup')" style="background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted);font-family:'Press Start 2P',monospace;font-size:7px;padding:4px 10px;cursor:pointer;letter-spacing:1px;transition:all .15s" onmouseover="this.style.borderColor='var(--accent2)';this.style.color='var(--accent2)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted)'">↺ Reset Progress</button></div>
         </div>
         <div class="branch-label trunk"><div class="bl-line"></div>FOUNDATION<div class="bl-line"></div></div>
         <div class="steps" id="pu-foundation-container"></div>
@@ -544,6 +546,7 @@ thead th:last-child{text-align:right}
           </div>
           <div class="xp-bar-wrap"><div class="xp-bar-fill" id="hspu-track-fill" style="width:0%"></div><div class="xp-label" id="hspu-xp-label">0%</div></div>
           <div class="step-dots" id="hspu-step-dots"></div>
+          <div style="text-align:right;margin-top:10px"><button onclick="resetTrack('hspu')" style="background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted);font-family:'Press Start 2P',monospace;font-size:7px;padding:4px 10px;cursor:pointer;letter-spacing:1px;transition:all .15s" onmouseover="this.style.borderColor='var(--accent2)';this.style.color='var(--accent2)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted)'">↺ Reset Progress</button></div>
         </div>
         <div class="branch-label trunk"><div class="bl-line"></div>OPTIONAL WARM-UP<div class="bl-line"></div></div>
         <div class="steps" style="padding-bottom:0">
@@ -620,9 +623,9 @@ thead th:last-child{text-align:right}
 // ── TRACK DATA ────────────────────────────────────────────────────────────
 const DU_STEPS=[
   {name:"Consistent High Jumps",preview:"5 sets · 30s on / 30s off · No rope",drill:"5 Sets 30s on / 30s off: Consistent high jumps with no rope. Focus on knees together, landing on the ball of your feet with soft knees. Same height every rep, relaxed landing.",note:"This step is complete when the athlete achieves 5 sets of continuous and consistent jumping for 30 seconds."},
-  {name:"Single-Unders",preview:"5 sets · 30s on / 30s off · 25 unbroken target",drill:"5 Sets 30s on / 30s off: Single-unders. Alternate sets — Set 1: focus on wrist rotation, elbows pinned. Set 2: eyes closed. Set 3: slow and controlled. Repeat.",note:"This step is complete when the athlete hits 25 unbroken single-unders at least 3 times across the 5 sets."},
+  {name:"Single-Unders",preview:"5 sets · 30s on / 30s off · 25 unbroken target",drill:"5 Sets 30s on / 30s off: Single-unders.",note:"This step is complete when the athlete hits 25 unbroken single-unders at least 3 times across the 5 sets.",videoLink:"hCuXYrTOMxI"},
   {name:"Speed Singles",preview:"5 sets · 20s on / 40s off · Max turnover",drill:"5 Sets 20s on / 40s off: Fast singles, maximum turnover. Elbows pinned, wrists only. Go as fast as you can without breaking.",note:"This step is complete when the athlete can sustain fast singles for the full 20 seconds without breaking, at least 3 out of 5 sets."},
-  {name:"Single-Single-Double",preview:"5 sets · 30s on / 30s off · Two singles, one DU",drill:"5 Sets 30s on / 30s off: Single-single-double. Two singles, one DU, reset. Focus on the power jump — same wrist speed, just jump higher.",note:"This step is complete when the athlete successfully hits the single-single-double pattern consistently for the full 30 seconds, at least 3 out of 5 sets."},
+  {name:"Single-Single-Double",preview:"5 sets · 30s on / 30s off · Two singles, one DU",drill:"5 Sets 30s on / 30s off: Single-single-double. Two singles, one DU. The intent is to understand that you can do a double-under.",note:"This step is complete when the athlete successfully hits the single-single-double pattern consistently for the full 30 seconds, at least 3 out of 5 sets. Note: Spending too much time at this step can lead athletes to having to unlearn the rhythm for S,S,D before learning the rhythm of dubs."},
   {name:"Fast Wrist Drill",preview:"5 sets · 20s on / 40s off · DU wrist speed",drill:"5 Sets 20s on / 40s off: Fast singles, maximum turnover. You are now training the exact wrist speed required for double-unders. Every flick is a DU flick.",note:"This step is complete when the athlete maintains fast, consistent singles for the full 20 seconds, at least 3 out of 5 sets."},
   {name:"Power Jump Drill",preview:"5 sets · 30s on / 30s off · Max jump height",drill:"5 Sets 30s on / 30s off: Singles with maximum jump height. Every jump as if you are about to do a DU. Consistent ceiling, consistent landing, relaxed arms.",note:"This step is complete when the athlete achieves consistent maximum-height singles for the full 30 seconds, at least 3 out of 5 sets."},
   {name:"DU Volume",preview:"5 sets · 30s on / 30s off · AMRAP DUs",drill:"5 Sets 30s on / 30s off: As many double-unders as possible. Singles are allowed as a reset but the goal is DUs.",note:"This step is complete when the athlete averages 5+ double-unders per set across all 5 sets."},
@@ -632,9 +635,9 @@ const DU_STEPS=[
 ];
 
 const PU_FOUNDATION=[
-  {name:"Hollow Hold",preview:"5 sets · 20s on / 40s off",drill:"5 Sets 20s on / 40s off: Hollow body hold. Lumbar pressed flat to the floor, legs straight and low, shoulders off the ground, arms overhead. Scale by bending the knees.",note:"5 unbroken sets of 20 seconds. Lower back stays down the entire time.",video:"Gkh7ZF_lcGw"},
-  {name:"Arch Hold",preview:"5 sets · 20s on / 40s off",drill:"5 Sets 20s on / 40s off: Arch hold. Face down, arms overhead, lift chest and legs simultaneously. Controlled position.",note:"5 unbroken sets of 20 seconds. Controlled position, not a max effort back bend.",video:"TkrTjU-qf6U"},
-  {name:"Hollow Rock",preview:"5 sets · 20s on / 40s off",drill:"5 Sets 20s on / 40s off: Hollow body rock. Maintain hollow position throughout — if the shape breaks, the set is over.",note:"5 unbroken sets of 20 seconds. Consistent rhythm, shape never breaks.",video:"p7j02V1fIzU"}
+  {name:"Hollow Hold",preview:"5 sets · 20s on / 40s off",drill:"5 Sets 20s on / 40s off: Hollow body hold. Lumbar pressed flat to the floor, legs straight and low, shoulders off the ground, arms overhead. Scale by bending the knees.",note:"5 unbroken sets of 20 seconds. Lower back stays down the entire time.",videoLink:"Gkh7ZF_lcGw"},
+  {name:"Arch Hold",preview:"5 sets · 20s on / 40s off",drill:"5 Sets 20s on / 40s off: Arch hold. Face down, arms overhead, lift chest and legs simultaneously. Controlled position.",note:"5 unbroken sets of 20 seconds. Controlled position, not a max effort back bend.",videoLink:"TkrTjU-qf6U"},
+  {name:"Hollow Rock",preview:"5 sets · 20s on / 40s off",drill:"5 Sets 20s on / 40s off: Hollow body rock. Maintain hollow position throughout — if the shape breaks, the set is over.",note:"5 unbroken sets of 20 seconds. Consistent rhythm, shape never breaks.",videoLink:"p7j02V1fIzU"}
 ];
 
 const PU_PULLUP=[
@@ -1075,8 +1078,8 @@ function buildCard(s,i,completed,containerId,onComplete,onUndo,extraHTML=''){
 
   const videoLinkHTML=s.videoLink?
     '<div style="margin-top:12px">'+
-    '<a href="https://www.youtube.com/watch?v='+s.videoLink+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:transparent;border:2px solid var(--accent2);border-radius:2px;color:var(--accent2);font-family:\'Press Start 2P\',monospace;font-size:9px;letter-spacing:2px;padding:9px 14px;text-decoration:none;transition:all .15s;text-shadow:0 0 6px var(--accent2);text-transform:uppercase" onmouseover="this.style.background=\'var(--accent2)\';this.style.color=\'#000\';this.style.textShadow=\'none\'" onmouseout="this.style.background=\'transparent\';this.style.color=\'var(--accent2)\';this.style.textShadow=\'0 0 6px var(--accent2)\'">'+
-    '▶ TUNE IN</a></div>':'';
+    '<button onclick="tuneIn(\''+s.videoLink+'\')" style="display:inline-flex;align-items:center;gap:8px;background:transparent;border:2px solid var(--accent2);border-radius:2px;color:var(--accent2);font-family:\'Press Start 2P\',monospace;font-size:9px;letter-spacing:2px;padding:9px 14px;cursor:pointer;transition:all .15s;text-shadow:0 0 6px var(--accent2);text-transform:uppercase" onmouseover="this.style.background=\'var(--accent2)\';this.style.color=\'#000\';this.style.textShadow=\'none\'" onmouseout="this.style.background=\'transparent\';this.style.color=\'var(--accent2)\';this.style.textShadow=\'0 0 6px var(--accent2)\'">'+
+    '▶ TUNE IN</button></div>':'';
 
   return '<div class="'+cls+'" data-i="'+i+'" id="step-'+containerId+'-'+i+'">'+
     '<div class="step-corner tl"></div><div class="step-corner br"></div>'+
@@ -1780,6 +1783,42 @@ async function renderHSPU(){
   }
 }
 
+// ── RESET TRACK ───────────────────────────────────────────────────────────
+async function resetTrack(track){
+  const labels={du:'Double Unders',pullup:'Pull-Up',hspu:'Strict HSPU Volume'};
+  const label=labels[track]||track;
+  if(!confirm('Reset all progress for '+label+'?\n\nThis cannot be undone.')) return;
+  if(track==='du'){
+    await fbSet(userPath()+'/du_steps',[]);
+    await fbSet(userPath()+'/du_annie',null);
+    renderDU();
+  } else if(track==='pullup'){
+    await fbSet(userPath()+'/pu_steps',[]);
+    await fbSet(userPath()+'/rr_log',null);
+    await fbSet(userPath()+'/hs_log',null);
+    await fbSet(userPath()+'/jn_log',null);
+    await fbSet(userPath()+'/fh_log',null);
+    await fbSet(userPath()+'/ta_log',null);
+    await fbSet(userPath()+'/band_log',null);
+    await fbSet(userPath()+'/maxpu_log',null);
+    renderPU();
+  } else if(track==='hspu'){
+    await fbSet(userPath()+'/hspu_foundation',[]);
+    await fbSet(userPath()+'/hspu_branch',[]);
+    await fbSet(userPath()+'/hspu_cycle',0);
+    await fbSet(userPath()+'/hspu_adventure',null);
+    await fbSet(userPath()+'/ww_log',null);
+    await fbSet(userPath()+'/pp_log',null);
+    await fbSet(userPath()+'/dpp_log',null);
+    await fbSet(userPath()+'/hold_log',null);
+    await fbSet(userPath()+'/neg_log',null);
+    await fbSet(userPath()+'/ladder_log',null);
+    await fbSet(userPath()+'/training_log',null);
+    await fbSet(userPath()+'/maxsets_log',null);
+    renderHSPU();
+  }
+}
+
 // ── COACH DASHBOARD ───────────────────────────────────────────────────────
 function showCoach(){
   document.getElementById('coach-overlay').style.display='block';
@@ -1996,12 +2035,22 @@ async function submitWriteInVote(){
   await submitWriteIn(name);
   renderPoll();
 }
-function celebrate(title, videoId){
-  const overlay=document.getElementById('celebrate-overlay');
-  document.getElementById('celebrate-title').textContent=title;
-  document.getElementById('celebrate-iframe').src=
-    'https://www.youtube.com/embed/'+videoId+'?autoplay=1&rel=0&modestbranding=1';
-  overlay.style.display='flex';}
+function tuneIn(videoId){
+  const t=document.getElementById('celebrate-title');
+  t.textContent='▶ NOW PLAYING';
+  t.style.color='var(--accent2)';
+  t.style.textShadow='0 0 12px var(--accent2)';
+  document.getElementById('celebrate-iframe').src='https://www.youtube.com/embed/'+videoId+'?autoplay=1&rel=0&modestbranding=1';
+  document.getElementById('celebrate-overlay').style.display='flex';
+}
+function celebrate(title,videoId){
+  const t=document.getElementById('celebrate-title');
+  t.textContent=title;
+  t.style.color='var(--accent3)';
+  t.style.textShadow='0 0 12px var(--accent3)';
+  document.getElementById('celebrate-iframe').src='https://www.youtube.com/embed/'+videoId+'?autoplay=1&rel=0&modestbranding=1';
+  document.getElementById('celebrate-overlay').style.display='flex';
+}
 function closeCelebration(){
   document.getElementById('celebrate-overlay').style.display='none';
   document.getElementById('celebrate-iframe').src='';
