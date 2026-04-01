@@ -65,7 +65,7 @@ header{background:rgba(10,10,26,.96);backdrop-filter:blur(12px);border-bottom:2p
 .nav-tab{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);padding:14px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;margin-bottom:-2px}
 .nav-tab:hover{color:var(--text)}
 .nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);text-shadow:0 0 8px var(--accent)}
-.page{display:none}.page.active{display:block;min-height:calc(100vh - 110px)}
+.page-section{display:block}
 
 /* TRACK SELECTOR */
 .track-selector{max-width:860px;margin:0 auto;padding:28px 28px 0}
@@ -407,13 +407,13 @@ thead th:last-child{text-align:right}
     </div>
   </header>
   <div class="nav-tabs">
-    <button class="nav-tab active" data-page="roadmap">▶ Tracks</button>
-    <button class="nav-tab" data-page="leaderboard">🏆 Hi-Score</button>
-    <button class="nav-tab" data-page="chat">💬 Chat</button>
-    <button class="nav-tab" id="coach-tab" data-page="coach" style="display:none">👑 Coach</button>
+    <button class="nav-tab active" id="nav-roadmap" onclick="showPage('roadmap')">▶ Tracks</button>
+    <button class="nav-tab" id="nav-leaderboard" onclick="showPage('leaderboard')">🏆 Hi-Score</button>
+    <button class="nav-tab" id="nav-chat" onclick="showPage('chat')">💬 Chat</button>
+    <button class="nav-tab" id="nav-coach" id="coach-tab" onclick="showPage('coach')" style="display:none">👑 Coach</button>
   </div>
 
-  <div class="page active" id="page-roadmap">
+  <div id="page-roadmap" style="display:block">
 
     <!-- MODE SELECTOR -->
     <div style="max-width:860px;margin:0 auto;padding:28px 28px 0;display:flex;gap:12px">
@@ -638,7 +638,7 @@ thead th:last-child{text-align:right}
     </div>
   </div>
 
-  <div class="page" id="page-leaderboard">
+  <div id="page-leaderboard" style="display:none">
     <div class="leaderboard-wrap">
       <div class="lb-title">Annie<br><span>Board</span></div>
       <div class="lb-sub">Fastest Annie Rx times across all athletes. Sorted by time.</div>
@@ -650,7 +650,7 @@ thead th:last-child{text-align:right}
     </div>
   </div>
 
-  <div class="page" id="page-chat">
+  <div id="page-chat" style="display:none">
     <div class="leaderboard-wrap">
       <div class="lb-title">Box<br><span>Chat</span></div>
       <div class="lb-sub">Open to all athletes and coach. Keep it constructive.</div>
@@ -666,7 +666,7 @@ thead th:last-child{text-align:right}
     </div>
   </div>
 
-  <div class="page" id="page-coach">
+  <div id="page-coach" style="display:none">
     <div class="leaderboard-wrap">
       <div class="lb-title">Coach<br><span>Dashboard</span></div>
       <div class="lb-sub">All athlete progress across all tracks.</div>
@@ -873,7 +873,7 @@ function launchApp(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='block';
   document.getElementById('athlete-tag').textContent=currentUser+(isCoach?' 👑':'');
-  document.getElementById('coach-tab').style.display=isCoach?'block':'none';
+  document.getElementById('nav-coach').style.display=isCoach?'block':'none';
   // currentUser is now set — safe to call setMode
   currentMode='unlock';
   document.getElementById('mode-unlock').classList.add('active');
@@ -894,29 +894,30 @@ document.getElementById('switch-btn').addEventListener('click',()=>{
 });
 
 // ── NAV ───────────────────────────────────────────────────────────────────
-function switchPage(page){
-  try{
-    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
-    const tab=document.querySelector('.nav-tab[data-page="'+page+'"]');
-    if(tab) tab.classList.add('active');
-    ['roadmap','leaderboard','chat','coach'].forEach(p=>{
-      const el=document.getElementById('page-'+p);
-      if(el) el.classList.remove('active');
-    });
-    const target=document.getElementById('page-'+page);
-    if(target) target.classList.add('active');
-    if(page==='leaderboard') renderLB();
-    if(page==='coach') renderCoach();
-    if(page==='chat'){
-      renderChat();
-      if(chatListener) fbRef('chat').off('value',chatListener);
-      chatListener=fbRef('chat').on('value',()=>renderChat());
-    } else {
-      if(chatListener){fbRef('chat').off('value',chatListener);chatListener=null;}
-    }
-  }catch(e){console.error('switchPage error:',e);}
+const PAGES=['roadmap','leaderboard','chat','coach'];
+function showPage(page){
+  PAGES.forEach(p=>{
+    const el=document.getElementById('page-'+p);
+    if(el) el.style.display=p===page?'block':'none';
+    const btn=document.getElementById('nav-'+p);
+    if(btn) btn.classList.toggle('active',p===page);
+  });
+  if(page==='leaderboard') renderLB();
+  if(page==='coach') renderCoach();
+  if(page==='chat'){
+    renderChat();
+    if(chatListener) fbRef('chat').off('value',chatListener);
+    chatListener=fbRef('chat').on('value',()=>renderChat());
+  } else {
+    if(chatListener){fbRef('chat').off('value',chatListener);chatListener=null;}
+  }
 }
-document.querySelectorAll('.nav-tab').forEach(tab=>tab.addEventListener('click',()=>switchPage(tab.dataset.page)));
+// Keep switchPage as alias for any remaining calls
+function switchPage(page){showPage(page);}
+document.querySelectorAll('.nav-tab').forEach(tab=>{
+  if(tab.onclick) return; // already has inline onclick
+  tab.addEventListener('click',()=>showPage(tab.id.replace('nav-','')));
+});
 
 // ── TRACK SELECTOR ────────────────────────────────────────────────────────
 document.querySelectorAll('.track-btn').forEach(btn=>btn.addEventListener('click',()=>{
