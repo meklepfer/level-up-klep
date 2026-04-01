@@ -61,20 +61,6 @@ header{background:rgba(10,10,26,.96);backdrop-filter:blur(12px);border-bottom:2p
 .switch-btn:hover{color:var(--accent2);border-color:var(--accent2)}
 
 /* NAV */
-.nav-tabs{display:flex;border-bottom:2px solid var(--border2);background:rgba(10,10,26,.92);position:sticky;top:53px;z-index:100;padding:0 28px}
-.nav-tab{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);padding:14px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;margin-bottom:-2px}
-.nav-tab:hover{color:var(--text)}
-.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);text-shadow:0 0 8px var(--accent)}
-.page-section{display:block}
-
-/* TRACK SELECTOR */
-.track-selector{max-width:860px;margin:0 auto;padding:28px 28px 0}
-.track-selector-label{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted2);margin-bottom:12px}
-.track-btns{display:flex;gap:8px;flex-wrap:wrap}
-.track-btn{background:var(--card);border:2px solid var(--border2);border-radius:2px;padding:10px 16px;font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);cursor:pointer;transition:all .15s;position:relative}
-.track-btn:hover{border-color:var(--accent);color:var(--text)}
-.track-btn.active{border-color:var(--accent);color:var(--accent);text-shadow:0 0 8px var(--accent);background:rgba(0,255,204,.04)}
-.track-btn .track-badge{position:absolute;top:-8px;right:-8px;background:var(--accent2);color:#000;font-size:7px;padding:2px 5px;border-radius:2px;font-family:'Press Start 2P',monospace}
 
 /* HERO */
 .hero{padding:28px 28px 20px;max-width:860px;margin:0 auto}
@@ -199,52 +185,9 @@ header{background:rgba(10,10,26,.96);backdrop-filter:blur(12px);border-bottom:2p
 .all-done-inner p{font-size:14px;color:var(--muted2);font-weight:500}
 
 /* LEADERBOARD */
-.leaderboard-wrap{max-width:860px;margin:0 auto;padding:32px 28px;padding-top:40px}
-.lb-title{font-family:'Press Start 2P',monospace;font-size:clamp(20px,5vw,40px);text-transform:uppercase;line-height:1.25;margin-bottom:10px;animation:glitch 8s infinite}
-.lb-title span{color:var(--accent2);text-shadow:0 0 15px var(--accent2)}
-.lb-sub{font-size:14px;color:var(--muted2);font-weight:500;margin-bottom:24px}
 table{width:100%;border-collapse:collapse}
 thead th{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);text-align:left;padding:10px 16px;border-bottom:2px solid var(--border2)}
 thead th:last-child{text-align:right}
-.lb-row{border-bottom:1px solid var(--border2);transition:background .1s}
-.lb-row:hover{background:rgba(0,255,204,.02)}
-.lb-row.is-me{background:rgba(255,204,0,.04);border-left:2px solid var(--accent3)}
-.lb-row td{padding:14px 16px;vertical-align:middle}
-.lb-rank{font-family:'Press Start 2P',monospace;font-size:18px;color:var(--muted);width:50px}
-.lb-rank.gold{color:#ffd700;text-shadow:0 0 10px #ffd700}
-.lb-rank.silver{color:#c0c0c0;text-shadow:0 0 8px #c0c0c0}
-.lb-rank.bronze{color:#cd7f32;text-shadow:0 0 8px #cd7f32}
-.lb-name{font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase}
-.you-tag{font-size:8px;color:var(--accent3);background:rgba(255,204,0,.1);border:1px solid rgba(255,204,0,.3);border-radius:2px;padding:2px 6px;margin-left:8px;letter-spacing:1px;vertical-align:middle;font-family:'Press Start 2P',monospace}
-.lb-time{font-family:'Press Start 2P',monospace;font-size:16px;color:var(--done);text-align:right;text-shadow:0 0 8px var(--done)}
-.lb-empty{text-align:center;padding:60px 20px;font-size:11px;color:var(--muted2);font-family:'Press Start 2P',monospace;line-height:2.5}
-.lb-empty .blink{animation:blink 1s infinite;color:var(--accent2)}
-.lb-footer{display:flex;align-items:center;gap:12px;margin-top:20px}
-.lb-refresh-btn{background:var(--card);border:1px solid var(--border2);border-radius:2px;color:var(--muted2);font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;cursor:pointer;transition:all .15s}
-.lb-refresh-btn:hover{color:var(--accent);border-color:var(--accent)}
-.lb-updated{font-size:9px;color:var(--muted);font-family:'Press Start 2P',monospace}
-
-.chat-msg{padding:10px 12px;border-bottom:1px solid var(--border);position:relative}
-.chat-msg:last-child{border-bottom:none}
-.chat-msg-header{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
-.chat-msg-user{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase}
-.chat-msg-user.is-coach{color:var(--accent3);text-shadow:0 0 6px var(--accent3)}
-.chat-msg-user.is-me{color:var(--accent)}
-.chat-msg-user.is-other{color:var(--muted2)}
-.chat-msg-time{font-size:10px;color:var(--muted);font-family:'Press Start 2P',monospace}
-.chat-msg-text{font-size:15px;font-weight:500;line-height:1.5;color:var(--text);white-space:pre-wrap;word-break:break-word}
-.chat-msg-actions{position:absolute;top:10px;right:10px;display:flex;gap:6px;opacity:0;transition:opacity .15s}
-.chat-msg:hover .chat-msg-actions{opacity:1}
-.chat-pin-btn,.chat-del-btn{background:none;border:1px solid var(--border2);border-radius:2px;font-family:'Press Start 2P',monospace;font-size:7px;padding:3px 6px;cursor:pointer;transition:all .15s}
-.chat-pin-btn{color:var(--accent3)}
-.chat-pin-btn:hover{border-color:var(--accent3);background:rgba(255,204,0,.08)}
-.chat-del-btn{color:var(--accent2)}
-.chat-del-btn:hover{border-color:var(--accent2);background:rgba(255,0,170,.08)}
-.chat-pinned-block{background:rgba(255,204,0,.06);border:1px solid rgba(255,204,0,.3);border-radius:2px;padding:12px 14px}
-.chat-pinned-label{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;color:var(--accent3);margin-bottom:6px;text-shadow:0 0 6px var(--accent3)}
-.chat-pinned-text{font-size:14px;font-weight:500;color:var(--text);line-height:1.5;white-space:pre-wrap}
-.chat-pinned-by{font-size:11px;color:var(--muted2);margin-top:4px}
-.chat-input:focus{outline:none;border-color:var(--accent)}
 
 .crt-wrap{margin-top:16px;display:flex;justify-content:center}
 .crt-tv{position:relative;background:#1a1008;border-radius:16px 16px 20px 20px;padding:18px 20px 28px;border:4px solid #3a2a10;box-shadow:0 0 0 2px #2a1a08,0 8px 24px rgba(0,0,0,.8),inset 0 2px 0 rgba(255,255,255,.05);max-width:420px;width:100%}
@@ -259,8 +202,6 @@ thead th:last-child{text-align:right}
 .crt-knob.big{width:14px;height:14px}
 .crt-feet{display:flex;justify-content:space-between;padding:0 20px;margin-top:-2px}
 .crt-foot{width:24px;height:8px;background:#1a1008;border-radius:0 0 4px 4px;border:2px solid #3a2a10;border-top:none}
-
-.coach-filter.active{color:var(--accent);border-color:var(--accent);box-shadow:0 0 8px rgba(0,255,204,.2)}
 
 /* MODE BUTTONS */
 .mode-btn{flex:1;background:var(--card);border:2px solid var(--border2);border-radius:3px;padding:16px;cursor:pointer;transition:all .2s;text-align:left;display:flex;flex-direction:column;gap:4px}
@@ -311,29 +252,11 @@ thead th:last-child{text-align:right}
 .disclaimer-body strong{color:var(--text)}
 .disclaimer-btn{width:100%;background:transparent;color:var(--accent2);border:2px solid var(--accent2);border-radius:2px;padding:14px;font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .15s;text-shadow:0 0 8px var(--accent2)}
 .disclaimer-btn:hover{background:var(--accent2);color:#000;box-shadow:0 0 24px rgba(255,0,170,.4);text-shadow:none}
-.coach-athlete-card{background:var(--card);border:2px solid var(--border2);border-radius:2px;margin-bottom:16px;overflow:hidden}
-.coach-athlete-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;border-bottom:1px solid var(--border2)}
-.coach-athlete-name{font-family:'Press Start 2P',monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--accent3)}
-.coach-athlete-meta{font-size:12px;color:var(--muted2);font-weight:500}
-.coach-athlete-body{display:none;padding:16px 18px}
-.coach-athlete-card.open .coach-athlete-body{display:block}
-.coach-track-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--border)}
-.coach-track-row:last-child{border-bottom:none}
-.coach-track-name{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px;color:var(--muted2);min-width:120px}
-.coach-track-bar-wrap{flex:1;height:10px;background:var(--bg);border:1px solid var(--border2);border-radius:1px;overflow:hidden}
-.coach-track-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .4s ease}
-.coach-track-pct{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--accent3);min-width:36px;text-align:right}
-.coach-rr-log{margin-top:10px;padding:10px;background:var(--bg);border:1px solid var(--border2);border-radius:2px}
-.coach-rr-title{font-family:'Press Start 2P',monospace;font-size:7px;letter-spacing:2px;color:var(--accent2);margin-bottom:8px}
-.coach-rr-entry{font-size:12px;color:var(--muted2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;gap:10px}
-.coach-rr-entry:last-child{border-bottom:none}
 
 @media(max-width:600px){
-  .hero,.leaderboard-wrap,.track-selector{padding-left:16px;padding-right:16px}
   .steps,.progress-wrap{padding:0 16px}
   .step-body{padding-left:16px}
   header{padding:10px 16px}
-  .nav-tabs{padding:0 16px;top:49px}
   .logo{font-size:9px}
   .login-box{padding:36px 20px}
   .hero-title{font-size:20px}
@@ -406,12 +329,6 @@ thead th:last-child{text-align:right}
       <button class="switch-btn" id="switch-btn">⎋ Exit</button>
     </div>
   </header>
-  <div class="nav-tabs">
-    <button class="nav-tab active" id="nav-roadmap" onclick="showPage('roadmap')">▶ Tracks</button>
-    <button class="nav-tab" id="nav-leaderboard" onclick="showPage('leaderboard')">🏆 Hi-Score</button>
-    <button class="nav-tab" id="nav-chat" onclick="showPage('chat')">💬 Chat</button>
-    <button class="nav-tab" id="nav-coach" id="coach-tab" onclick="showPage('coach')" style="display:none">👑 Coach</button>
-  </div>
 
   <div id="page-roadmap" style="display:block">
 
@@ -638,49 +555,7 @@ thead th:last-child{text-align:right}
     </div>
   </div>
 
-  <div id="page-leaderboard" style="display:none">
-    <div class="leaderboard-wrap">
-      <div class="lb-title">Annie<br><span>Board</span></div>
-      <div class="lb-sub">Fastest Annie Rx times across all athletes. Sorted by time.</div>
-      <div id="lb-content"><div class="lb-empty"><span class="blink">█</span> LOADING...</div></div>
-      <div class="lb-footer">
-        <button class="lb-refresh-btn" id="lb-refresh-btn">↻ Refresh</button>
-        <div class="lb-updated" id="lb-updated"></div>
-      </div>
-    </div>
   </div>
-
-  <div id="page-chat" style="display:none">
-    <div class="leaderboard-wrap">
-      <div class="lb-title">Box<br><span>Chat</span></div>
-      <div class="lb-sub">Open to all athletes and coach. Keep it constructive.</div>
-      <div id="chat-pinned" style="display:none;margin-bottom:16px"></div>
-      <div id="chat-messages" style="min-height:200px;max-height:420px;overflow-y:auto;border:1px solid var(--border2);border-radius:2px;padding:12px;margin-bottom:12px;background:var(--card)">
-        <div class="lb-empty"><span class="blink">█</span> LOADING...</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:flex-start">
-        <textarea id="chat-input" placeholder="Say something..." style="flex:1;background:var(--bg);border:2px solid var(--border2);border-radius:2px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:500;padding:10px 12px;resize:none;height:48px;transition:border-color .15s" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
-        <button class="btn-complete" onclick="sendChat()" style="height:48px;white-space:nowrap">Send ▶</button>
-      </div>
-      <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--muted);margin-top:8px">SHIFT+ENTER for new line · Coach can pin messages</div>
-    </div>
-  </div>
-
-  <div id="page-coach" style="display:none">
-    <div class="leaderboard-wrap">
-      <div class="lb-title">Coach<br><span>Dashboard</span></div>
-      <div class="lb-sub">All athlete progress across all tracks.</div>
-      <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center">
-        <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;color:var(--muted2)">FILTER:</div>
-        <button class="lb-refresh-btn coach-filter active" data-filter="all">All</button>
-        <button class="lb-refresh-btn coach-filter" data-filter="du">Double Unders</button>
-        <button class="lb-refresh-btn coach-filter" data-filter="pullup">Pull-Up Tree</button>
-        <button class="lb-refresh-btn" id="coach-refresh-btn" style="margin-left:auto">↻ Refresh</button>
-      </div>
-      <div id="coach-content"><div class="lb-empty"><span class="blink">█</span> LOADING...</div></div>
-    </div>
-  </div>
-</div>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
@@ -717,10 +592,6 @@ const PU_PULLUP=[
 
 // Combined for progress tracking
 const PU_TRUNK=[...PU_FOUNDATION,...PU_PULLUP];
-
-const PU_BRANCH_A=[];
-const PU_BRANCH_B=[];
-const PU_BOSS=[];
 
 const RR_POSITIONS=['Feet in Front','Feet Under','Feet Behind','Feet Elevated'];
 
@@ -813,17 +684,12 @@ async function fbGet(path){
   return snap.exists()?snap.val():null;
 }
 async function fbSet(path,val){return fbRef(path).set(val)}
-async function fbUpdate(path,val){return fbRef(path).update(val)}
-async function fbPush(path,val){return fbRef(path).push(val)}
-async function fbRemove(path){return fbRef(path).remove()}
 
 // ── AUTH ──────────────────────────────────────────────────────────────────
 const COACH_USER='Klep';
 const COACH_PASS='CrossFit';
 let currentUser=null;
 let isCoach=false;
-
-function uKey(t){return t+'_'+currentUser.toLowerCase().replace(/\s+/g,'_')}
 
 async function getAccounts(){
   try{return await fbGet('accounts')||{}}catch(e){return{}}
@@ -873,7 +739,6 @@ function launchApp(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='block';
   document.getElementById('athlete-tag').textContent=currentUser+(isCoach?' 👑':'');
-  document.getElementById('nav-coach').style.display=isCoach?'block':'none';
   // currentUser is now set — safe to call setMode
   currentMode='unlock';
   document.getElementById('mode-unlock').classList.add('active');
@@ -891,32 +756,6 @@ document.getElementById('switch-btn').addEventListener('click',()=>{
   document.getElementById('login-err').textContent='';
   document.getElementById('app').style.display='none';
   document.getElementById('login-screen').style.display='flex';
-});
-
-// ── NAV ───────────────────────────────────────────────────────────────────
-const PAGES=['roadmap','leaderboard','chat','coach'];
-function showPage(page){
-  PAGES.forEach(p=>{
-    const el=document.getElementById('page-'+p);
-    if(el) el.style.display=p===page?'block':'none';
-    const btn=document.getElementById('nav-'+p);
-    if(btn) btn.classList.toggle('active',p===page);
-  });
-  if(page==='leaderboard') renderLB();
-  if(page==='coach') renderCoach();
-  if(page==='chat'){
-    renderChat();
-    if(chatListener) fbRef('chat').off('value',chatListener);
-    chatListener=fbRef('chat').on('value',()=>renderChat());
-  } else {
-    if(chatListener){fbRef('chat').off('value',chatListener);chatListener=null;}
-  }
-}
-// Keep switchPage as alias for any remaining calls
-function switchPage(page){showPage(page);}
-document.querySelectorAll('.nav-tab').forEach(tab=>{
-  if(tab.onclick) return; // already has inline onclick
-  tab.addEventListener('click',()=>showPage(tab.id.replace('nav-','')));
 });
 
 // ── TRACK SELECTOR ────────────────────────────────────────────────────────
@@ -967,9 +806,6 @@ function closeTrack(){
   ['du','pullup','hspu'].forEach(t=>document.getElementById('track-'+t).style.display='none');
   setMode(currentMode);
 }
-
-// Kept for compatibility
-function setActiveTrack(t){ enterTrack(t); }
 
 async function renderSkillTree(){
   try{
@@ -1056,14 +892,12 @@ async function getDUCompleted(){
 }
 async function saveDUCompleted(a){
   try{await fbSet(userPath()+'/du_steps',a)}catch(e){}
-  localStorage.setItem(uKey('du_steps'),JSON.stringify(a));
 }
 async function getDUTime(){
   try{return await fbGet(userPath()+'/du_annie')||''}catch(e){return''}
 }
 async function saveDUTime(t){
   try{await fbSet(userPath()+'/du_annie',t)}catch(e){}
-  localStorage.setItem(uKey('du_annie'),t);
 }
 
 // ── PU STORAGE ────────────────────────────────────────────────────────────
@@ -1072,7 +906,6 @@ async function getPUCompleted(){
 }
 async function savePUCompleted(a){
   try{await fbSet(userPath()+'/pu_steps',a)}catch(e){}
-  localStorage.setItem(uKey('pu_steps'),JSON.stringify(a));
 }
 async function getRRLog(){
   try{const d=await fbGet(userPath()+'/rr_log');return d?Object.values(d):[]}catch(e){return[]}
@@ -1136,43 +969,12 @@ async function getHSPULog(key){
 async function saveHSPULog(key,a){
   try{await fbSet(userPath()+'/'+key,a)}catch(e){}
 }
-async function pushHSPULeaderboard(u,reps){
-  try{
-    const existing=await fbGet('leaderboard_maxhspu/'+u.toLowerCase().replace(/\s+/g,'_'));
-    if(!existing||reps>existing.reps){
-      await fbSet('leaderboard_maxhspu/'+u.toLowerCase().replace(/\s+/g,'_'),{name:u,reps,ts:Date.now()});
-    }
-  }catch(e){}
-}
-async function fetchHSPULeaderboard(){
-  try{const d=await fbGet('leaderboard_maxhspu');return d?Object.values(d):[]}catch(e){return[]}
-}
 async function getMaxPULog(){
   try{const d=await fbGet(userPath()+'/maxpu_log');return d?Object.values(d):[]}catch(e){return[]}
 }
 async function saveMaxPULog(a){
   try{await fbSet(userPath()+'/maxpu_log',a)}catch(e){}
 }
-async function pushMaxPULeaderboard(u,reps){
-  try{
-    const existing=await fbGet('leaderboard_maxpu/'+u.toLowerCase().replace(/\s+/g,'_'));
-    if(!existing||reps>existing.reps){
-      await fbSet('leaderboard_maxpu/'+u.toLowerCase().replace(/\s+/g,'_'),{name:u,reps,ts:Date.now()});
-    }
-  }catch(e){}
-}
-async function fetchMaxPULeaderboard(){
-  try{const d=await fbGet('leaderboard_maxpu');return d?Object.values(d):[]}catch(e){return[]}
-}
-
-// ── LEADERBOARD ───────────────────────────────────────────────────────────
-async function pushLB(u,t){
-  try{await fbSet('leaderboard/'+u.toLowerCase().replace(/\s+/g,'_'),{name:u,time:t,ts:Date.now()})}catch(e){}
-}
-async function fetchLB(){
-  try{const d=await fbGet('leaderboard');return d?Object.values(d):[]}catch(e){return[]}
-}
-function parseSec(s){const c=(s||'').trim().replace(/[^0-9:]/g,'');const p=c.split(':');if(p.length===2)return parseInt(p[0]||0)*60+parseInt(p[1]||0);return parseInt(c)||99999}
 
 // ── HELPERS ───────────────────────────────────────────────────────────────
 function isDone(c,i){return c.includes(i)}
@@ -1937,206 +1739,6 @@ async function renderHSPU(){
   }
 }
 
-// ── LEADERBOARD ───────────────────────────────────────────────────────────
-async function renderLB(){
-  const el=document.getElementById('lb-content');
-  if(!el)return;
-  el.innerHTML='<div class="lb-empty"><span class="blink">█</span> LOADING...</div>';
-  try{
-    const entries=await fetchLB();
-    if(!entries.length){el.innerHTML='<div class="lb-empty">NO SCORES YET<br><br>Be the first to finish Annie Rx.</div>';return}
-    const sorted=[...entries].sort((a,b)=>parseSec(a.time)-parseSec(b.time));
-    const medals=['gold','silver','bronze'];
-    const sym=i=>i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
-    el.innerHTML='<table><thead><tr><th>#</th><th>Athlete</th><th style="text-align:right">Annie</th></tr></thead><tbody>'+
-      sorted.map((e,idx)=>{const me=e.name.toLowerCase()===currentUser.toLowerCase();return '<tr class="lb-row'+(me?' is-me':'')+'"><td class="lb-rank '+(medals[idx]||'')+'">'+sym(idx)+'</td><td class="lb-name">'+e.name+(me?'<span class="you-tag">YOU</span>':'')+
-      '</td><td class="lb-time">'+e.time+'</td></tr>'}).join('')+'</tbody></table>';
-    const upd=document.getElementById('lb-updated');
-    if(upd)upd.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-  }catch(e){
-    console.error('renderLB error:',e);
-    el.innerHTML='<div class="lb-empty">!! ERROR LOADING SCORES !!<br><br>'+e.message+'</div>';
-  }
-}
-document.getElementById('lb-refresh-btn').addEventListener('click',renderLB);
-
-// ── COACH DASHBOARD ───────────────────────────────────────────────────────
-let coachFilter='all';
-
-document.querySelectorAll('.coach-filter').forEach(btn=>btn.addEventListener('click',()=>{
-  document.querySelectorAll('.coach-filter').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  coachFilter=btn.dataset.filter;
-  renderCoach();
-}));
-document.getElementById('coach-refresh-btn').addEventListener('click',renderCoach);
-
-async function renderCoach(){
-  const el=document.getElementById('coach-content');
-  el.innerHTML='<div class="lb-empty"><span class="blink">█</span> LOADING...</div>';
-  const accounts=await getAccounts();
-  const allNames=Object.values(accounts).map(a=>a.name).filter(n=>n.toLowerCase()!==COACH_USER.toLowerCase());
-
-  // Also pull athletes from Firebase athletes node
-  try{
-    const athleteData=await fbGet('athletes');
-    if(athleteData){
-      const fbKeys=Object.keys(athleteData);
-      const nameSet=new Set(allNames.map(n=>n.toLowerCase().replace(/\s+/g,'_')));
-      fbKeys.forEach(k=>{if(!nameSet.has(k)){allNames.push(k.charAt(0).toUpperCase()+k.slice(1));nameSet.add(k)}});
-    }
-  }catch(e){}
-
-  if(!allNames.length){el.innerHTML='<div class="lb-empty">NO ATHLETES YET</div>';return}
-
-  const showDU=coachFilter==='all'||coachFilter==='du';
-  const showPU=coachFilter==='all'||coachFilter==='pullup';
-
-  // Load all athlete data from Firebase in parallel
-  const athleteCards=await Promise.all(allNames.map(async name=>{
-    const key=name.toLowerCase().replace(/\s+/g,'_');
-    const [duSteps,puSteps,annieTime,rrLog]= await Promise.all([
-      fbGet('athletes/'+key+'/du_steps').catch(()=>[]),
-      fbGet('athletes/'+key+'/pu_steps').catch(()=>[]),
-      fbGet('athletes/'+key+'/du_annie').catch(()=>null),
-      fbGet('athletes/'+key+'/rr_log').catch(()=>null)
-    ]);
-    const du=duSteps||[];
-    const pu=puSteps||[];
-    const rr=rrLog?Object.values(rrLog):[];
-    const duPct=Math.round(du.length/DU_STEPS.length*100);
-    const puPct=Math.round(pu.length/PU_TRUNK.length*100);
-
-    const rrEntries=rr.slice(-3).reverse().map(e=>
-      '<div class="coach-rr-entry">'+
-      '<span style="color:var(--muted2);font-family:\'Press Start 2P\',monospace;font-size:7px">'+e.date+'</span>'+
-      '<span style="color:var(--accent);font-size:11px">'+(e.pos||e.type||'')+'</span>'+
-      '<span style="color:var(--accent3);font-family:\'Press Start 2P\',monospace;font-size:8px">'+(e.sets?e.sets+'x'+e.reps:e.secs+'s')+'</span>'+
-      (e.notes?'<span style="font-style:italic;font-size:11px"> '+e.notes+'</span>':'')+
-      '</div>'
-    ).join('');
-
-    return '<div class="coach-athlete-card">'+
-      '<div class="coach-athlete-header">'+
-      '<div class="coach-athlete-name">'+name+'</div>'+
-      '<div class="coach-athlete-meta">'+(annieTime?'Annie: '+annieTime:'No Annie')+' · DU '+duPct+'% · PU '+puPct+'%</div>'+
-      '<div class="step-chevron">▾</div>'+
-      '</div>'+
-      '<div class="coach-athlete-body">'+
-      (showDU?'<div class="coach-track-row"><div class="coach-track-name">🐸 Double Unders</div><div class="coach-track-bar-wrap"><div class="coach-track-bar-fill" style="width:'+duPct+'%"></div></div><div class="coach-track-pct">'+duPct+'% ('+du.length+'/'+DU_STEPS.length+')</div></div>':'')+
-      (showPU?'<div class="coach-track-row"><div class="coach-track-name">💪 Pull-Up Tree</div><div class="coach-track-bar-wrap"><div class="coach-track-bar-fill" style="width:'+puPct+'%"></div></div><div class="coach-track-pct">'+puPct+'% ('+pu.length+'/'+PU_TRUNK.length+')</div></div>':'')+
-      (rr.length&&showPU?'<div class="coach-rr-log"><div class="coach-rr-title">// Recent Log Entries</div>'+rrEntries+'</div>':'')+
-      '</div>'+
-      '</div>';
-  }));
-
-  el.innerHTML=athleteCards.join('');
-  el.querySelectorAll('.coach-athlete-header').forEach(h=>h.addEventListener('click',()=>h.closest('.coach-athlete-card').classList.toggle('open')));
-}
-
-// ── CHAT ──────────────────────────────────────────────────────────────────
-let chatPollInterval=null;
-let chatListener=null;
-
-async function loadChat(){
-  try{const d=await fbGet('chat/messages');return d?Object.values(d).sort((a,b)=>a.ts-b.ts):[]}catch(e){return[]}
-}
-async function loadPin(){
-  try{return await fbGet('chat/pinned')}catch(e){return null}
-}
-async function savePin(pin){
-  try{if(pin){await fbSet('chat/pinned',pin)}else{await fbRemove('chat/pinned')}}catch(e){}
-}
-
-async function renderChat(){
-  const msgs=await loadChat();
-  const pin=await loadPin();
-  const msgsEl=document.getElementById('chat-messages');
-  const pinnedEl=document.getElementById('chat-pinned');
-  if(!msgsEl)return;
-
-  // pinned
-  if(pin){
-    pinnedEl.style.display='block';
-    pinnedEl.innerHTML='<div class="chat-pinned-block">'+
-      '<div class="chat-pinned-label">📌 PINNED</div>'+
-      '<div class="chat-pinned-text">'+escHtml(pin.text)+'</div>'+
-      '<div class="chat-pinned-by">— '+pin.user+' · '+pin.time+'</div>'+
-      (isCoach?'<button class="chat-pin-btn" style="margin-top:8px" onclick="unpinMsg()">Unpin</button>':'')+
-    '</div>';
-  } else {
-    pinnedEl.style.display='none';
-    pinnedEl.innerHTML='';
-  }
-
-  if(!msgs.length){
-    msgsEl.innerHTML='<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted);text-align:center;padding:24px">No messages yet. Say something!</div>';
-    return;
-  }
-
-  const wasAtBottom=msgsEl.scrollHeight-msgsEl.scrollTop<=msgsEl.clientHeight+40;
-
-  msgsEl.innerHTML=msgs.map((m,i)=>{
-    const isMe=m.user.toLowerCase()===currentUser.toLowerCase();
-    const coach=m.user.toLowerCase()===COACH_USER.toLowerCase();
-    const userCls=coach?'is-coach':isMe?'is-me':'is-other';
-    const actions=(isCoach||isMe)?
-      '<div class="chat-msg-actions">'+
-      (isCoach?'<button class="chat-pin-btn" onclick="pinMsg('+i+')">📌 Pin</button>':'')+
-      (isCoach||isMe?'<button class="chat-del-btn" onclick="delMsg('+i+')">✕ Del</button>':'')+
-      '</div>':'';
-    return '<div class="chat-msg">'+
-      '<div class="chat-msg-header">'+
-      '<span class="chat-msg-user '+userCls+'">'+(coach?'👑 ':'')+m.user+'</span>'+
-      '<span class="chat-msg-time">'+m.time+'</span>'+
-      '</div>'+
-      '<div class="chat-msg-text">'+escHtml(m.text)+'</div>'+
-      actions+
-      '</div>';
-  }).join('');
-
-  if(wasAtBottom) msgsEl.scrollTop=msgsEl.scrollHeight;
-}
-
-function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-
-async function sendChat(){
-  const input=document.getElementById('chat-input');
-  const text=(input.value||'').trim();
-  if(!text)return;
-  const now=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-  const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
-  await fbPush('chat/messages',{user:currentUser,text,time:today+' '+now,ts:Date.now()});
-  input.value='';
-}
-
-async function pinMsg(i){
-  const msgs=await loadChat();
-  if(!msgs[i])return;
-  const now=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-  await savePin({text:msgs[i].text,user:msgs[i].user,time:now});
-  renderChat();
-}
-
-async function unpinMsg(){
-  await savePin(null);
-  renderChat();
-}
-
-async function delMsg(i){
-  const msgs=await loadChat();
-  if(!msgs[i])return;
-  // Find the Firebase key for this message
-  try{
-    const snap=await fbRef('chat/messages').orderByChild('ts').once('value');
-    const entries=[];
-    snap.forEach(child=>entries.push({key:child.key,val:child.val()}));
-    entries.sort((a,b)=>a.val.ts-b.val.ts);
-    if(entries[i]){await fbRemove('chat/messages/'+entries[i].key)}
-  }catch(e){}
-  renderChat();
-}
-
 // ── CELEBRATION MODAL ─────────────────────────────────────────────────────
 function celebrate(title, videoId){
   const overlay=document.getElementById('celebrate-overlay');
@@ -2155,10 +1757,6 @@ document.getElementById('disclaimer-btn').addEventListener('click',()=>{
 });
 // Show disclaimer on load
 document.getElementById('disclaimer-overlay').style.display='flex';
-
-
-document.getElementById('chat-input').addEventListener('focus',function(){this.style.borderColor='var(--accent)'});
-document.getElementById('chat-input').addEventListener('blur',function(){this.style.borderColor='var(--border2)'});
 
 // ── MOHAWK DUDE HSPU ──────────────────────────────────────────────────────
 (function(){
