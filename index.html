@@ -260,6 +260,49 @@ thead th:last-child{text-align:right}
 .crt-feet{display:flex;justify-content:space-between;padding:0 20px;margin-top:-2px}
 .crt-foot{width:24px;height:8px;background:#1a1008;border-radius:0 0 4px 4px;border:2px solid #3a2a10;border-top:none}
 
+.coach-filter.active{color:var(--accent);border-color:var(--accent);box-shadow:0 0 8px rgba(0,255,204,.2)}
+
+/* MODE BUTTONS */
+.mode-btn{flex:1;background:var(--card);border:2px solid var(--border2);border-radius:3px;padding:16px;cursor:pointer;transition:all .2s;text-align:left;display:flex;flex-direction:column;gap:4px}
+.mode-btn:hover{border-color:var(--accent);background:rgba(0,255,204,.03)}
+.mode-btn.active{border-color:var(--accent);background:rgba(0,255,204,.05);box-shadow:0 0 20px rgba(0,255,204,.08)}
+.mode-icon{font-size:22px;margin-bottom:4px;display:block}
+.mode-label{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;color:var(--text);text-transform:uppercase}
+.mode-btn.active .mode-label{color:var(--accent);text-shadow:0 0 8px var(--accent)}
+.mode-sub{font-size:12px;color:var(--muted2);font-weight:500}
+
+/* SKILL TREE */
+.st-node{display:inline-flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:transform .15s}
+.st-node:hover .st-box{border-color:var(--accent);box-shadow:0 0 16px rgba(0,255,204,.2)}
+.st-node:hover{transform:translateY(-2px)}
+.st-box{background:var(--card);border:2px solid var(--border2);border-radius:3px;padding:14px 16px;text-align:center;min-width:120px;transition:all .2s;position:relative}
+.st-box.st-active{border-color:var(--accent3);box-shadow:0 0 18px rgba(255,204,0,.12);animation:pulse-border 2s infinite}
+.st-box.st-locked{border-color:var(--border);opacity:.4;cursor:default;pointer-events:none}
+.st-icon{font-size:22px;margin-bottom:6px;display:block}
+.st-name{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:.5px;color:var(--text);text-transform:uppercase;line-height:1.5}
+.st-box.st-active .st-name{color:var(--accent3)}
+.st-box.st-locked .st-name{color:var(--muted)}
+.st-lock{font-size:9px;color:var(--muted);margin-top:4px;font-family:'Press Start 2P',monospace}
+.st-pct{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);text-shadow:0 0 6px var(--accent);margin-top:4px}
+.st-col{display:flex;flex-direction:column;align-items:center}
+.st-vline{width:2px;height:28px;background:var(--border2)}
+.st-hline{height:2px;background:var(--border2);flex:1}
+.st-row{display:flex;align-items:flex-start;justify-content:center}
+.st-branch-row{display:flex;align-items:flex-start;justify-content:center;gap:0}
+.st-branch-col{display:flex;flex-direction:column;align-items:center}
+.st-merge{display:flex;align-items:center;justify-content:center;width:100%}
+
+/* UPGRADE CARDS */
+.upgrade-card{background:var(--card);border:2px solid var(--border2);border-radius:3px;padding:18px 20px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all .2s}
+.upgrade-card:hover{border-color:var(--accent2);box-shadow:0 0 18px rgba(255,0,170,.08);transform:translateY(-1px)}
+.upgrade-card-locked{opacity:.4;pointer-events:none}
+.upgrade-card-icon{font-size:28px;flex-shrink:0}
+.upgrade-card-body{flex:1}
+.upgrade-card-name{font-family:'Press Start 2P',monospace;font-size:10px;letter-spacing:.5px;color:var(--text);text-transform:uppercase;margin-bottom:6px}
+.upgrade-card:hover .upgrade-card-name{color:var(--accent2)}
+.upgrade-card-desc{font-size:13px;color:var(--muted2);font-weight:500;line-height:1.5}
+.upgrade-card-arrow{font-family:'Press Start 2P',monospace;font-size:14px;color:var(--accent2);flex-shrink:0}
+
 #disclaimer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(4px)}
 #disclaimer-box{background:var(--surface);border:2px solid var(--accent3);border-radius:3px;padding:36px 32px;max-width:480px;width:100%;position:relative;box-shadow:0 0 40px rgba(255,204,0,.1),inset 0 1px 0 rgba(255,255,255,.04);animation:float-in .4s ease both}
 #disclaimer-box .corner{border-color:var(--accent3)}
@@ -346,107 +389,162 @@ thead th:last-child{text-align:right}
   </div>
 
   <div class="page active" id="page-roadmap">
-    <div class="track-selector">
-      <div class="track-selector-label">// Select Track</div>
-      <div class="track-btns">
-        <button class="track-btn active" data-track="du">🐸 Double Unders</button>
-        <button class="track-btn" data-track="pullup">💪 Pull-Up / Dip / MU</button>
-        <button class="track-btn" data-track="hspu">🤸 Strict HSPU for Volume</button>
+
+    <!-- MODE SELECTOR -->
+    <div style="max-width:860px;margin:0 auto;padding:28px 28px 0;display:flex;gap:12px">
+      <button class="mode-btn active" id="mode-unlock" onclick="setMode('unlock')">
+        <span class="mode-icon">🗺</span>
+        <span class="mode-label">Unlock a Skill</span>
+        <span class="mode-sub">Learn something new</span>
+      </button>
+      <button class="mode-btn" id="mode-upgrade" onclick="setMode('upgrade')">
+        <span class="mode-icon">⬆</span>
+        <span class="mode-label">Upgrade a Skill</span>
+        <span class="mode-sub">More volume · More strength</span>
+      </button>
+    </div>
+
+    <!-- UNLOCK MODE: ARCADE SKILL TREE -->
+    <div id="mode-unlock-content">
+      <div style="max-width:860px;margin:0 auto;padding:20px 28px 0">
+        <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;color:var(--accent);margin-bottom:4px;text-shadow:0 0 8px var(--accent)">// SKILL TREE</div>
+        <div style="font-size:13px;color:var(--muted2);font-weight:500;margin-bottom:20px">Tap a node to enter that track. Complete skills to unlock the next branch.</div>
+      </div>
+      <div id="skill-tree-wrap" style="max-width:860px;margin:0 auto;padding:0 28px 28px;overflow-x:auto">
+        <div id="skill-tree" style="min-width:320px;padding:8px 0"></div>
       </div>
     </div>
 
-    <!-- DU TRACK -->
-    <div id="track-du">
-      <div class="hero">
-        <div class="hero-label">// SKILL TRACK · JUMP ROPE</div>
-        <div class="hero-title-row">
-          <h1 class="hero-title">Double<br><span class="highlight">Unders</span></h1>
-        </div>
-        <p class="hero-sub" style="display:none">5 minutes of supplemental work per session. Follow each step in order. Don't cheat yourself.</p>
+    <!-- UPGRADE MODE: LIST -->
+    <div id="mode-upgrade-content" style="display:none">
+      <div style="max-width:860px;margin:0 auto;padding:20px 28px 0">
+        <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;color:var(--accent2);margin-bottom:4px;text-shadow:0 0 8px var(--accent2)">// UPGRADE PROGRAMS</div>
+        <div style="font-size:13px;color:var(--muted2);font-weight:500;margin-bottom:20px">Targeted programs to build volume and strength on skills you already have.</div>
       </div>
-      <div class="progress-wrap">
-        <div class="progress-meta">
-          <div class="progress-label">XP Progress</div>
-          <div class="progress-fraction"><span id="du-done-count">0</span> / 11 <span>stages</span></div>
-        </div>
-        <div class="xp-bar-wrap"><div class="xp-bar-fill" id="du-track-fill" style="width:0%"></div><div class="xp-label" id="du-xp-label">0%</div></div>
-        <div class="step-dots" id="du-step-dots"></div>
-      </div>
-      <div class="all-done-banner" id="du-all-done">
-        <div class="all-done-inner"><h2>🏆 Achievement Unlocked!</h2><p>Double-Unders complete. All 11 stages cleared. Now go put them in a WOD.</p></div>
-      </div>
-      <div class="steps" id="du-steps-container"></div>
-    </div>
-
-    <!-- PULL-UP TRACK -->
-    <div id="track-pullup" style="display:none">
-      <div class="hero">
-        <div class="hero-label">// SKILL TRACK · GYMNASTICS</div>
-        <div class="hero-title-row">
-          <h1 class="hero-title">Pull-ups, Dips<br>&amp; Muscle-Ups...<br><span class="highlight2">Oh My!</span></h1>
-        </div>
-        <p class="hero-sub" style="display:none">Build from the ground up. Trunk unlocks the split. Both branches required to reach the boss.</p>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-meta">
-          <div class="progress-label">XP Progress</div>
-          <div class="progress-fraction"><span id="pu-done-count">0</span> / <span id="pu-total-count">8</span> <span>stages</span></div>
-        </div>
-        <div class="xp-bar-wrap"><div class="xp-bar-fill" id="pu-track-fill" style="width:0%"></div><div class="xp-label" id="pu-xp-label">0%</div></div>
-        <div class="step-dots" id="pu-step-dots"></div>
-      </div>
-      <div class="branch-label trunk"><div class="bl-line"></div>FOUNDATION<div class="bl-line"></div></div>
-      <div class="steps" id="pu-foundation-container"></div>
-      <div class="branch-label split"><div class="bl-line"></div>PULL-UP BRANCH<div class="bl-line"></div></div>
-      <div class="steps" id="pu-trunk-container"></div>
-    </div>
-
-    <!-- HSPU TRACK -->
-    <div id="track-hspu" style="display:none">
-      <div class="hero">
-        <div class="hero-label">// SKILL TRACK · GYMNASTICS</div>
-        <div class="hero-title-row">
-          <h1 class="hero-title">Strict HSPU<br><span class="highlight2">for Volume</span></h1>
-          <div class="pixel-guy-wrap"><canvas id="pixel-hspu" width="80" height="96" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(255,0,170,.4))"></canvas></div>
-        </div>
-        <p class="hero-sub" style="display:block;margin-top:8px">The intent of this track is to add strength and volume of Strict HSPU for athletes who are already capable of doing a strict HSPU with full ROM.</p>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-meta">
-          <div class="progress-label">XP Progress</div>
-          <div class="progress-fraction"><span id="hspu-done-count">0</span> / <span id="hspu-total-count">0</span> <span>stages</span></div>
-        </div>
-        <div class="xp-bar-wrap"><div class="xp-bar-fill" id="hspu-track-fill" style="width:0%"></div><div class="xp-label" id="hspu-xp-label">0%</div></div>
-        <div class="step-dots" id="hspu-step-dots"></div>
-      </div>
-      <div class="branch-label trunk"><div class="bl-line"></div>OPTIONAL WARM-UP<div class="bl-line"></div></div>
-      <div class="steps" style="padding-bottom:0">
-        <div class="step-card" style="border-color:rgba(0,255,204,0.2)">
-          <div class="step-corner tl"></div><div class="step-corner br"></div>
-          <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
-            <div class="step-num" style="font-size:14px;color:var(--accent)">▶</div>
-            <div class="step-info">
-              <div class="step-name">Optional HSPU Warm-Up</div>
-              <div class="step-preview">~3 min · Do this before every HSPU session</div>
-            </div>
-            <div class="step-chevron">▾</div>
+      <div style="max-width:860px;margin:0 auto;padding:0 28px 28px;display:flex;flex-direction:column;gap:12px">
+        <div class="upgrade-card" onclick="setMode('unlock');enterTrack('hspu')">
+          <div class="upgrade-card-icon">🤸</div>
+          <div class="upgrade-card-body">
+            <div class="upgrade-card-name">Strict HSPU for Volume</div>
+            <div class="upgrade-card-desc">Build from 1-3 reps to consistent sets of 10+. 4-cycle progressive program with cycle-specific targets.</div>
           </div>
-          <div class="step-body" style="padding-left:16px">
-            <div class="drill-label">// The Warm-Up</div>
-            <div class="drill-text">
-              <div style="margin-bottom:10px">1. <strong>Wall Shoulder Taps</strong> — 3×10 each side. Hands on floor, feet on wall, slow and controlled.</div>
-              <div style="margin-bottom:10px">2. <strong>Pike Push-Up</strong> — 2×8 slow. Full range, head to floor. This is your movement warm-up.</div>
-              <div style="margin-bottom:10px">3. <strong>Scap Push-Up</strong> — 2×10. Protract and retract the shoulder blades at the top of a push-up position. No arm bend.</div>
-              <div>4. <strong>Wrist Prep</strong> — Circles each direction 15 reps, then loaded wrist stretch 30 seconds each hand.</div>
-            </div>
-            <div class="completion-note" style="margin-top:12px">This warm-up is optional but recommended before every session. It takes 3 minutes and makes every rep safer and more productive.</div>
+          <div class="upgrade-card-arrow">▶</div>
+        </div>
+        <div class="upgrade-card upgrade-card-locked">
+          <div class="upgrade-card-icon">🔒</div>
+          <div class="upgrade-card-body">
+            <div class="upgrade-card-name">Double Under Volume</div>
+            <div class="upgrade-card-desc">Coming soon</div>
+          </div>
+        </div>
+        <div class="upgrade-card upgrade-card-locked">
+          <div class="upgrade-card-icon">🔒</div>
+          <div class="upgrade-card-body">
+            <div class="upgrade-card-name">Pull-Up Volume</div>
+            <div class="upgrade-card-desc">Coming soon</div>
           </div>
         </div>
       </div>
-      <div class="branch-label trunk"><div class="bl-line"></div>FOUNDATION<div class="bl-line"></div></div>
-      <div class="steps" id="hspu-foundation-container"></div>
-      <div class="branch-label split" id="hspu-branch-label"><div class="bl-line"></div>HSPU BRANCH · CYCLE <span id="hspu-cycle-num">1</span><div class="bl-line"></div></div>
-      <div class="steps" id="hspu-branch-container"></div>
+    </div>
+
+    <!-- TRACK VIEWS (hidden until selected from tree) -->
+    <div id="track-views" style="display:none">
+      <div style="max-width:860px;margin:0 auto;padding:16px 28px 0;display:flex;align-items:center;gap:10px">
+        <button onclick="closeTrack()" style="background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted2);font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px;padding:6px 12px;cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted2)'">← Back</button>
+        <div id="track-breadcrumb" style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--muted2);letter-spacing:1px"></div>
+      </div>
+
+      <!-- DU TRACK -->
+      <div id="track-du" style="display:none">
+        <div class="hero">
+          <div class="hero-label">// SKILL TRACK · JUMP ROPE</div>
+          <div class="hero-title-row">
+            <h1 class="hero-title">Double<br><span class="highlight">Unders</span></h1>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <div class="progress-label">XP Progress</div>
+            <div class="progress-fraction"><span id="du-done-count">0</span> / 11 <span>stages</span></div>
+          </div>
+          <div class="xp-bar-wrap"><div class="xp-bar-fill" id="du-track-fill" style="width:0%"></div><div class="xp-label" id="du-xp-label">0%</div></div>
+          <div class="step-dots" id="du-step-dots"></div>
+        </div>
+        <div class="all-done-banner" id="du-all-done">
+          <div class="all-done-inner"><h2>🏆 Achievement Unlocked!</h2><p>Double-Unders complete. All 11 stages cleared. Now go put them in a WOD.</p></div>
+        </div>
+        <div class="steps" id="du-steps-container"></div>
+      </div>
+
+      <!-- PULL-UP TRACK -->
+      <div id="track-pullup" style="display:none">
+        <div class="hero">
+          <div class="hero-label">// SKILL TRACK · GYMNASTICS</div>
+          <div class="hero-title-row">
+            <h1 class="hero-title">Pull-ups, Dips<br>&amp; Muscle-Ups...<br><span class="highlight2">Oh My!</span></h1>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <div class="progress-label">XP Progress</div>
+            <div class="progress-fraction"><span id="pu-done-count">0</span> / <span id="pu-total-count">8</span> <span>stages</span></div>
+          </div>
+          <div class="xp-bar-wrap"><div class="xp-bar-fill" id="pu-track-fill" style="width:0%"></div><div class="xp-label" id="pu-xp-label">0%</div></div>
+          <div class="step-dots" id="pu-step-dots"></div>
+        </div>
+        <div class="branch-label trunk"><div class="bl-line"></div>FOUNDATION<div class="bl-line"></div></div>
+        <div class="steps" id="pu-foundation-container"></div>
+        <div class="branch-label split"><div class="bl-line"></div>PULL-UP BRANCH<div class="bl-line"></div></div>
+        <div class="steps" id="pu-trunk-container"></div>
+      </div>
+
+      <!-- HSPU TRACK -->
+      <div id="track-hspu" style="display:none">
+        <div class="hero">
+          <div class="hero-label">// SKILL TRACK · GYMNASTICS</div>
+          <div class="hero-title-row">
+            <h1 class="hero-title">Strict HSPU<br><span class="highlight2">for Volume</span></h1>
+            <div class="pixel-guy-wrap"><canvas id="pixel-hspu" width="80" height="96" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(255,0,170,.4))"></canvas></div>
+          </div>
+          <p class="hero-sub" style="display:block;margin-top:8px">The intent of this track is to add strength and volume of Strict HSPU for athletes who are already capable of doing a strict HSPU with full ROM.</p>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <div class="progress-label">XP Progress</div>
+            <div class="progress-fraction"><span id="hspu-done-count">0</span> / <span id="hspu-total-count">0</span> <span>stages</span></div>
+          </div>
+          <div class="xp-bar-wrap"><div class="xp-bar-fill" id="hspu-track-fill" style="width:0%"></div><div class="xp-label" id="hspu-xp-label">0%</div></div>
+          <div class="step-dots" id="hspu-step-dots"></div>
+        </div>
+        <div class="branch-label trunk"><div class="bl-line"></div>OPTIONAL WARM-UP<div class="bl-line"></div></div>
+        <div class="steps" style="padding-bottom:0">
+          <div class="step-card" style="border-color:rgba(0,255,204,0.2)">
+            <div class="step-corner tl"></div><div class="step-corner br"></div>
+            <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
+              <div class="step-num" style="font-size:14px;color:var(--accent)">▶</div>
+              <div class="step-info">
+                <div class="step-name">Optional HSPU Warm-Up</div>
+                <div class="step-preview">~3 min · Do this before every HSPU session</div>
+              </div>
+              <div class="step-chevron">▾</div>
+            </div>
+            <div class="step-body" style="padding-left:16px">
+              <div class="drill-label">// The Warm-Up</div>
+              <div class="drill-text">
+                <div style="margin-bottom:10px">1. <strong>Wall Shoulder Taps</strong> — 3×10 each side. Hands on floor, feet on wall, slow and controlled.</div>
+                <div style="margin-bottom:10px">2. <strong>Pike Push-Up</strong> — 2×8 slow. Full range, head to floor. This is your movement warm-up.</div>
+                <div style="margin-bottom:10px">3. <strong>Scap Push-Up</strong> — 2×10. Protract and retract the shoulder blades at the top of a push-up position. No arm bend.</div>
+                <div>4. <strong>Wrist Prep</strong> — Circles each direction 15 reps, then loaded wrist stretch 30 seconds each hand.</div>
+              </div>
+              <div class="completion-note" style="margin-top:12px">This warm-up is optional but recommended before every session. It takes 3 minutes and makes every rep safer and more productive.</div>
+            </div>
+          </div>
+        </div>
+        <div class="branch-label trunk"><div class="bl-line"></div>FOUNDATION<div class="bl-line"></div></div>
+        <div class="steps" id="hspu-foundation-container"></div>
+        <div class="branch-label split" id="hspu-branch-label"><div class="bl-line"></div>HSPU BRANCH · CYCLE <span id="hspu-cycle-num">1</span><div class="bl-line"></div></div>
+        <div class="steps" id="hspu-branch-container"></div>
+      </div>
     </div>
   </div>
 
@@ -679,10 +777,7 @@ function launchApp(){
   document.getElementById('app').style.display='block';
   document.getElementById('athlete-tag').textContent=currentUser+(isCoach?' 👑':'');
   document.getElementById('coach-tab').style.display=isCoach?'block':'none';
-  setActiveTrack('du');
-  renderDU();
-  renderPU();
-  setTimeout(()=>autoOpen('du-steps-container',getDUCompleted()),80);
+  setMode('unlock');
 }
 
 document.getElementById('switch-btn').addEventListener('click',()=>{
@@ -719,11 +814,120 @@ document.querySelectorAll('.track-btn').forEach(btn=>btn.addEventListener('click
   setActiveTrack(btn.dataset.track);
 }));
 
-function setActiveTrack(t){
-  document.getElementById('track-du').style.display=t==='du'?'block':'none';
-  document.getElementById('track-pullup').style.display=t==='pullup'?'block':'none';
-  document.getElementById('track-hspu').style.display=t==='hspu'?'block':'none';
-  if(t==='hspu')renderHSPU();
+// ── MODE & SKILL TREE ────────────────────────────────────────────────────
+let currentMode='unlock';
+let currentTrack=null;
+
+function setMode(mode){
+  currentMode=mode;
+  document.getElementById('mode-unlock').classList.toggle('active',mode==='unlock');
+  document.getElementById('mode-upgrade').classList.toggle('active',mode==='upgrade');
+  document.getElementById('mode-unlock-content').style.display=mode==='unlock'?'block':'none';
+  document.getElementById('mode-upgrade-content').style.display=mode==='upgrade'?'block':'none';
+  document.getElementById('track-views').style.display='none';
+  ['du','pullup','hspu'].forEach(t=>document.getElementById('track-'+t).style.display='none');
+  currentTrack=null;
+  if(mode==='unlock') renderSkillTree();
+}
+
+function enterTrack(track){
+  currentTrack=track;
+  document.getElementById('mode-unlock-content').style.display='none';
+  document.getElementById('mode-upgrade-content').style.display='none';
+  document.getElementById('track-views').style.display='block';
+  ['du','pullup','hspu'].forEach(t=>document.getElementById('track-'+t).style.display='none');
+  document.getElementById('track-'+track).style.display='block';
+  const labels={du:'Double Unders',pullup:'Pull-Up / Dip / MU',hspu:'Strict HSPU for Volume'};
+  document.getElementById('track-breadcrumb').textContent='// '+labels[track];
+  if(track==='du') renderDU();
+  if(track==='pullup') renderPU();
+  if(track==='hspu') renderHSPU();
+}
+
+function closeTrack(){
+  currentTrack=null;
+  document.getElementById('track-views').style.display='none';
+  ['du','pullup','hspu'].forEach(t=>document.getElementById('track-'+t).style.display='none');
+  setMode(currentMode);
+}
+
+// Kept for compatibility
+function setActiveTrack(t){ enterTrack(t); }
+
+async function renderSkillTree(){
+  // Get progress percentages
+  const duC=await getDUCompleted();
+  const puC=await getPUCompleted();
+  const duPct=Math.round(duC.length/DU_STEPS.length*100);
+  const puPct=Math.round(puC.length/PU_TRUNK.length*100);
+
+  function node(id,icon,label,pct,locked,track){
+    const cls='st-box'+(locked?' st-locked':pct>0?' st-active':'');
+    const pctHTML=!locked&&pct>0?'<div class="st-pct">'+pct+'%</div>':'';
+    const lockHTML=locked?'<div class="st-lock">🔒 SOON</div>':'';
+    const click=locked?'':'onclick="enterTrack(\''+track+'\')"';
+    return '<div class="st-node" '+click+'><div class="'+cls+'" id="st-node-'+id+'"><span class="st-icon">'+icon+'</span><div class="st-name">'+label+'</div>'+pctHTML+lockHTML+'</div></div>';
+  }
+  function vline(){return '<div class="st-col"><div class="st-vline"></div></div>';}
+
+  const tree=document.getElementById('skill-tree');
+  tree.innerHTML=`
+    <div class="st-col" style="align-items:center">
+
+      <!-- DOUBLE UNDERS -->
+      <div class="st-row">${node('du','🐸','Double Unders',duPct,false,'du')}</div>
+
+      ${vline()}
+
+      <!-- PULL-UPS + DIPS branch -->
+      <div style="display:flex;align-items:flex-start;justify-content:center;gap:0;width:100%">
+        <!-- left branch to pull-ups -->
+        <div style="display:flex;flex-direction:column;align-items:flex-end;flex:1">
+          <div style="display:flex;align-items:center;width:100%;justify-content:flex-end">
+            <div class="st-hline"></div>
+            <div style="width:2px;height:28px;background:var(--border2)"></div>
+          </div>
+          <div style="margin-right:1px">${node('pullup','💪','Pull-Ups',puPct,false,'pullup')}</div>
+        </div>
+        <!-- center vertical drop -->
+        <div style="display:flex;flex-direction:column;align-items:center;margin-top:28px">
+          <div style="width:2px;height:28px;background:var(--border2)"></div>
+        </div>
+        <!-- right branch to dips -->
+        <div style="display:flex;flex-direction:column;align-items:flex-start;flex:1">
+          <div style="display:flex;align-items:center;width:100%;justify-content:flex-start">
+            <div style="width:2px;height:28px;background:var(--border2)"></div>
+            <div class="st-hline"></div>
+          </div>
+          <div style="margin-left:1px">${node('dips','🤸','Dips',0,true,'')}</div>
+        </div>
+      </div>
+
+      <!-- converging lines back to BMU -->
+      <div style="display:flex;align-items:flex-start;justify-content:center;gap:0;width:100%;margin-top:0">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:flex-end">
+          <div style="width:2px;height:28px;background:var(--border2);margin-right:calc(50% - 1px)"></div>
+          <div class="st-hline" style="height:2px;width:calc(50% + 1px)"></div>
+        </div>
+        <div style="width:2px;height:28px;background:var(--border2)"></div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:flex-start">
+          <div style="width:2px;height:28px;background:var(--border2);margin-left:calc(50% - 1px)"></div>
+          <div class="st-hline" style="height:2px;width:calc(50% + 1px)"></div>
+        </div>
+      </div>
+
+      ${vline()}
+
+      <!-- BMU -->
+      <div class="st-row">${node('bmu','🏋️','Bar Muscle-Up',0,true,'')}</div>
+
+      ${vline()}
+
+      <!-- RMU -->
+      <div class="st-row">${node('rmu','💫','Ring Muscle-Up',0,true,'')}</div>
+
+    </div>
+  `;
 }
 
 // ── DU STORAGE ────────────────────────────────────────────────────────────
