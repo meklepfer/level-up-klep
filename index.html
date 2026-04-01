@@ -260,7 +260,14 @@ thead th:last-child{text-align:right}
 .crt-feet{display:flex;justify-content:space-between;padding:0 20px;margin-top:-2px}
 .crt-foot{width:24px;height:8px;background:#1a1008;border-radius:0 0 4px 4px;border:2px solid #3a2a10;border-top:none}
 
-.coach-filter.active{color:var(--accent);border-color:var(--accent);box-shadow:0 0 8px rgba(0,255,204,.2)}
+#disclaimer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(4px)}
+#disclaimer-box{background:var(--surface);border:2px solid var(--accent3);border-radius:3px;padding:36px 32px;max-width:480px;width:100%;position:relative;box-shadow:0 0 40px rgba(255,204,0,.1),inset 0 1px 0 rgba(255,255,255,.04);animation:float-in .4s ease both}
+#disclaimer-box .corner{border-color:var(--accent3)}
+.disclaimer-title{font-family:'Press Start 2P',monospace;font-size:12px;letter-spacing:2px;color:var(--accent3);text-shadow:0 0 10px var(--accent3);margin-bottom:20px;text-transform:uppercase}
+.disclaimer-body{font-size:14px;color:var(--muted2);line-height:1.7;font-weight:500;margin-bottom:24px}
+.disclaimer-body strong{color:var(--text)}
+.disclaimer-btn{width:100%;background:transparent;color:var(--accent3);border:2px solid var(--accent3);border-radius:2px;padding:14px;font-family:'Press Start 2P',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .15s}
+.disclaimer-btn:hover{background:var(--accent3);color:#000;box-shadow:0 0 24px rgba(255,204,0,.3)}
 .coach-athlete-card{background:var(--card);border:2px solid var(--border2);border-radius:2px;margin-bottom:16px;overflow:hidden}
 .coach-athlete-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;border-bottom:1px solid var(--border2)}
 .coach-athlete-name{font-family:'Press Start 2P',monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--accent3)}
@@ -292,7 +299,19 @@ thead th:last-child{text-align:right}
 </head>
 <body>
 
-<div id="login-screen">
+<div id="disclaimer-overlay">
+  <div id="disclaimer-box">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+    <div class="disclaimer-title">⚠ Disclaimer</div>
+    <div class="disclaimer-body">
+      This app is currently <strong>in development</strong>. Features may change, break, or disappear without notice.<br><br>
+      <strong>Do not enter any sensitive personal information.</strong><br><br>
+      By continuing you agree to interact at your own risk.
+    </div>
+    <button class="disclaimer-btn" id="disclaimer-btn">✓ I Understand — Let's Go</button>
+  </div>
+</div>
   <div class="login-box">
     <div class="corner tl"></div><div class="corner tr"></div>
     <div class="corner bl"></div><div class="corner br"></div>
@@ -523,8 +542,9 @@ const HSPU_WARMUP='WARM-UP (do this every session, ~3 min): Wall Shoulder Taps 3
 
 const HSPU_FOUNDATION=[
   {name:"Wall Walk",preview:"3 sets · 5 reps · Controlled",
-   drill:"Start in a push-up position with feet against the wall. Walk your feet up the wall and your hands toward the wall simultaneously until your chest touches the wall. Hold 2 seconds at the top, then walk back down under control. Every rep is deliberate — no flopping.",
+   drill:"Walk your feet up the wall and hands toward the wall until your chest touches. Hold 2 seconds. Walk back down under control.",
    note:"Complete when athlete logs 3 sets of 5 controlled wall walks in a single session. Chest must touch the wall every rep.",
+   video:"NK_OcHEm8yM",
    isHSPULog:true, hspu_log_key:'ww_log'},
   {name:"Pike Push-Up",preview:"4 sets · 10 reps · Full ROM",
    drill:"Start in a downward dog position with hips high. Bend your elbows and lower your head toward the floor between your hands — full range of motion, head touches floor. Press back to the top. Keep hips high throughout. This is the movement pattern of the HSPU, just scaled.",
@@ -869,7 +889,7 @@ function buildCard(s,i,completed,containerId,onComplete,onUndo,extraHTML=''){
     '<div class="step-header"><div class="step-num">'+(dn?'✓':String(i+1).padStart(2,'0'))+'</div>'+
     '<div class="step-info"><div class="step-name">'+s.name+'</div><div class="step-preview">'+s.preview+'</div></div>'+
     badge+'<div class="step-chevron">▾</div></div>'+
-    '<div class="step-body"><div class="drill-label">// The Drill</div><div class="drill-text">'+s.drill+'</div>'+
+    '<div class="step-body">'+(s.drill?'<div class="drill-label">// The Drill</div><div class="drill-text">'+s.drill+'</div>':'')+
     videoHTML+
     disclaimerHTML+
     '<div class="completion-note">'+s.note+'</div><div class="step-actions">'+action+'</div>'+
@@ -1750,7 +1770,12 @@ async function delMsg(i){
   renderChat();
 }
 
-// focus textarea styling
+// ── DISCLAIMER ────────────────────────────────────────────────────────────
+document.getElementById('disclaimer-btn').addEventListener('click',()=>{
+  document.getElementById('disclaimer-overlay').style.display='none';
+});
+
+
 document.getElementById('chat-input').addEventListener('focus',function(){this.style.borderColor='var(--accent)'});
 document.getElementById('chat-input').addEventListener('blur',function(){this.style.borderColor='var(--border2)'});
 
