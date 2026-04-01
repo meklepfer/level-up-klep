@@ -506,7 +506,11 @@ thead th:last-child{text-align:right}
               <div class="drill-label" style="color:var(--accent3)">// The Workout</div>
               <div class="drill-text" style="border-left-color:var(--accent3)">
                 <div style="display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
-                  ${[50,40,30,20,10].map(r=>`<div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">${r}</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>`).join('')}
+                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">50</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
+                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">40</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
+                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">30</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
+                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">20</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
+                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">10</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
                 </div>
                 <div style="font-size:13px;color:var(--muted2);line-height:1.7">For time. All double-unders must be Rx — no singles. Abmat sit-ups. This is the benchmark that proves you've got the DU volume to compete.</div>
               </div>
@@ -588,7 +592,7 @@ thead th:last-child{text-align:right}
         <div class="steps" id="hspu-foundation-container"></div>
         <div class="branch-label split" id="hspu-branch-label"><div class="bl-line"></div>HSPU BRANCH · CYCLE <span id="hspu-cycle-num">1</span><div class="bl-line"></div></div>
         <div class="steps" id="hspu-branch-container"></div>
-        <div class="branch-label boss" style="display:none"><div class="bl-line"></div>⭐ BONUS LEVEL<div class="bl-line"></div></div>
+        <div class="branch-label boss" id="hspu-bonus-label" style="display:none"><div class="bl-line"></div>⭐ BONUS LEVEL<div class="bl-line"></div></div>
         <div class="steps" id="hspu-bonus-container" style="display:none;padding-bottom:28px">
           <div class="step-card" id="diane-card" style="border-color:rgba(255,0,170,0.35);box-shadow:0 0 18px rgba(255,0,170,.06)">
             <div class="step-corner tl" style="border-color:var(--accent2)"></div><div class="step-corner br" style="border-color:var(--accent2)"></div>
@@ -1674,6 +1678,7 @@ async function renderPU(){
     await pushMaxPULeaderboard(currentUser,reps);
     renderPU();
     setTimeout(()=>celebrate('💪 Pull-Up Beast Mode!','tTa_J7Sv8-0'),400);
+  });
   document.querySelectorAll('.rr-entry-del[data-maxpu-idx]').forEach(btn=>btn.addEventListener('click',async e=>{
     e.stopPropagation();const log=await getMaxPULog();log.splice(+btn.dataset.maxpuIdx,1);await saveMaxPULog(log);renderPU();
   }));
@@ -1866,6 +1871,7 @@ async function renderHSPU(){
     await pushHSPULeaderboard(currentUser,reps);
     renderHSPU();
     setTimeout(()=>celebrate('🤸 HSPU Beast!','MGyQarhoz8E'),400);
+  });
   const cycleBtn=document.getElementById('hspu-cycle-btn');
   if(cycleBtn)cycleBtn.addEventListener('click',async e=>{
     e.stopPropagation();
@@ -2308,3 +2314,6 @@ function drawCFDude(ctx, S, frame, yOff){
   }
   animate();
 })();
+</script>
+</body>
+</html>
