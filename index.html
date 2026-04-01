@@ -344,6 +344,11 @@ thead th:last-child{text-align:right}
         <span class="mode-label">Upgrade a Skill</span>
         <span class="mode-sub">More volume · More strength</span>
       </button>
+      <button class="mode-btn" id="mode-poll" onclick="setMode('poll')">
+        <span class="mode-icon">🗳️</span>
+        <span class="mode-label">What's Next?</span>
+        <span class="mode-sub">Vote for the next track</span>
+      </button>
     </div>
 
     <!-- UNLOCK MODE: ARCADE SKILL TREE -->
@@ -389,6 +394,17 @@ thead th:last-child{text-align:right}
       </div>
     </div>
 
+    <!-- POLL MODE -->
+    <div id="mode-poll-content" style="display:none">
+      <div style="max-width:860px;margin:0 auto;padding:20px 28px 0">
+        <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;color:var(--accent3);margin-bottom:4px;text-shadow:0 0 8px var(--accent3)">// WHAT'S NEXT?</div>
+        <div style="font-size:13px;color:var(--muted2);font-weight:500;margin-bottom:20px">Vote for the next skill track. Write-ins go on the list for everyone.</div>
+      </div>
+      <div id="poll-content" style="max-width:860px;margin:0 auto;padding:0 28px 28px">
+        <div class="lb-empty" style="padding:40px 0"><span class="blink">█</span> LOADING...</div>
+      </div>
+    </div>
+
     <!-- TRACK VIEWS (hidden until selected from tree) -->
     <div id="track-views" style="display:none">
       <div style="max-width:860px;margin:0 auto;padding:16px 28px 0;display:flex;align-items:center;gap:10px">
@@ -399,7 +415,6 @@ thead th:last-child{text-align:right}
       <!-- DU TRACK -->
       <div id="track-du" style="display:none">
         <div class="hero">
-          <div class="hero-label">// SKILL TRACK · JUMP ROPE</div>
           <div class="hero-title-row">
             <h1 class="hero-title">Double<br><span class="highlight">Unders</span></h1>
             <div class="pixel-guy-wrap"><canvas id="pixel-guy-du" width="64" height="80" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(0,255,204,.4))"></canvas></div>
@@ -712,6 +727,7 @@ async function fbGet(path){
   return snap.exists()?snap.val():null;
 }
 async function fbSet(path,val){return fbRef(path).set(val)}
+async function fbRemove(path){return fbRef(path).remove()}
 
 // ── AUTH ──────────────────────────────────────────────────────────────────
 const COACH_USER='Klep';
@@ -801,17 +817,22 @@ function setMode(mode){
   currentMode=mode;
   const modeUnlock=document.getElementById('mode-unlock');
   const modeUpgrade=document.getElementById('mode-upgrade');
+  const modePoll=document.getElementById('mode-poll');
   const unlockContent=document.getElementById('mode-unlock-content');
   const upgradeContent=document.getElementById('mode-upgrade-content');
+  const pollContent=document.getElementById('mode-poll-content');
   const trackViews=document.getElementById('track-views');
   if(modeUnlock) modeUnlock.classList.toggle('active',mode==='unlock');
   if(modeUpgrade) modeUpgrade.classList.toggle('active',mode==='upgrade');
+  if(modePoll) modePoll.classList.toggle('active',mode==='poll');
   if(unlockContent) unlockContent.style.display=mode==='unlock'?'block':'none';
   if(upgradeContent) upgradeContent.style.display=mode==='upgrade'?'block':'none';
+  if(pollContent) pollContent.style.display=mode==='poll'?'block':'none';
   if(trackViews) trackViews.style.display='none';
   ['du','pullup','hspu'].forEach(t=>{const el=document.getElementById('track-'+t);if(el)el.style.display='none';});
   currentTrack=null;
   if(mode==='unlock'&&currentUser) renderSkillTree();
+  if(mode==='poll'&&currentUser) renderPoll();
 }
 
 function enterTrack(track){
@@ -1276,37 +1297,16 @@ function toesAssistHTML(log){
     '</div>';
 }
 
-function maxPullupHTML(log,lbData){
-  log=log||[];lbData=lbData||[];
+function maxPullupHTML(log){
+  log=log||[];
   const pr=log.reduce((best,e)=>e.reps>best?e.reps:best,0);
-  const sorted=[...lbData].sort((a,b)=>b.reps-a.reps);
-  const medals=['🥇','🥈','🥉'];
-
-  const hsBoard=sorted.length?
-    '<div style="background:var(--bg);border:2px solid var(--accent3);border-radius:2px;padding:16px;margin-bottom:14px;text-align:center">'+
-    '<div style="font-family:\'Press Start 2P\',monospace;font-size:10px;letter-spacing:3px;color:var(--accent3);text-shadow:0 0 10px var(--accent3);margin-bottom:16px;animation:flicker 4s infinite">── HIGH SCORES ──</div>'+
-    sorted.slice(0,10).map((e,i)=>{
-      const isMe=e.name.toLowerCase()===currentUser.toLowerCase();
-      return '<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);justify-content:space-between">'+
-        '<span style="font-family:\'Press Start 2P\',monospace;font-size:10px;color:'+(i<3?'var(--accent3)':'var(--muted2)')+'">'+
-          (i<3?medals[i]:(i+1)+'.')+
-        '</span>'+
-        '<span style="font-family:\'Press Start 2P\',monospace;font-size:10px;text-transform:uppercase;color:'+(isMe?'var(--accent)':'var(--text)')+'">'+
-          e.name+(isMe?' ◀':'')+
-        '</span>'+
-        '<span style="font-family:\'Press Start 2P\',monospace;font-size:14px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">'+
-          e.reps+' <span style="font-size:8px;color:var(--muted2)">REPS</span>'+
-        '</span>'+
-      '</div>';
-    }).join('')+
-    '</div>':
-    '<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);text-align:center;padding:16px;border:2px solid var(--border2);border-radius:2px;margin-bottom:14px">NO SCORES YET<br><br>BE THE FIRST</div>';
 
   const myLog=log.slice().reverse().slice(0,10).map((e,i)=>
     '<div class="rr-entry">'+
     '<div class="rr-entry-date">'+e.date+'</div>'+
     '<div class="rr-entry-pos" style="color:'+(e.reps===pr?'var(--accent3)':'var(--accent)')+'">'+
-      (e.reps===pr?'★ PR':'')+'</div>'+
+      (e.reps===pr?'★ PR':'')+
+    '</div>'+
     '<div class="rr-entry-reps" style="font-size:16px;color:var(--accent3)">'+e.reps+' reps</div>'+
     '<div class="rr-entry-notes">'+(e.notes||'')+'</div>'+
     '<button class="rr-entry-del" data-maxpu-idx="'+(log.length-1-i)+'">x</button>'+
@@ -1324,7 +1324,6 @@ function maxPullupHTML(log,lbData){
 
   return '<div class="rr-log-block">'+
     (pr?'<div style="font-family:\'Press Start 2P\',monospace;font-size:22px;color:var(--accent3);text-align:center;margin-bottom:12px;text-shadow:0 0 12px var(--accent3)">PR: '+pr+' <span style="font-size:10px;color:var(--muted2)">REPS</span></div>':'')+
-    hsBoard+
     '<div class="rr-log-title">// Your Attempts</div>'+
     form+
     (myLog?'<div class="rr-entries">'+myLog+'</div>':'<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);padding:12px 0;text-align:center">No attempts yet</div>')+
@@ -1365,8 +1364,8 @@ function bandedHTML(log){
 // ── PU RENDER ─────────────────────────────────────────────────────────────
 async function renderPU(){
   const c=await getPUCompleted(),total=PU_TRUNK.length;
-  const [rrLog,hsLog,jnLog,fhLog,taLog,bandLog,maxPULog,maxPULB]=await Promise.all([
-    getRRLog(),getHSLog(),getJumpNegLog(),getFlexHangLog(),getToesLog(),getBandedLog(),getMaxPULog(),fetchMaxPULeaderboard()
+  const [rrLog,hsLog,jnLog,fhLog,taLog,bandLog,maxPULog]=await Promise.all([
+    getRRLog(),getHSLog(),getJumpNegLog(),getFlexHangLog(),getToesLog(),getBandedLog(),getMaxPULog()
   ]);
   const done=c.length,pct=Math.round(done/total*100);
   document.getElementById('pu-done-count').textContent=done;
@@ -1390,7 +1389,7 @@ async function renderPU(){
     else if(s.isFlexHang) extra=flexHangHTML(fhLog);
     else if(s.isToesAssist) extra=toesAssistHTML(taLog);
     else if(s.isBanded) extra=bandedHTML(bandLog);
-    else if(s.isMaxPullup) extra=maxPullupHTML(maxPULog,maxPULB);
+    else if(s.isMaxPullup) extra=maxPullupHTML(maxPULog);
     return buildCard(s,idx,c,'pu-trunk-container',null,null,extra);
   }).join('');
 
@@ -1537,7 +1536,6 @@ async function renderPU(){
     const log=await getMaxPULog();
     log.push({reps,notes,date:today});
     await saveMaxPULog(log);
-    await pushMaxPULeaderboard(currentUser,reps);
     renderPU();
     setTimeout(()=>celebrate('💪 Pull-Up Beast Mode!','tTa_J7Sv8-0'),400);
   });
@@ -1766,7 +1764,121 @@ async function renderHSPU(){
   }
 }
 
-// ── CELEBRATION MODAL ─────────────────────────────────────────────────────
+// ── POLL ──────────────────────────────────────────────────────────────────
+const POLL_SEED=['Toes to Bar','Dips','Rope Climbs'];
+
+async function getPollItems(){
+  try{
+    const data=await fbGet('poll/items')||{};
+    // Merge seed items in if not present
+    let changed=false;
+    POLL_SEED.forEach(name=>{
+      const key=name.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');
+      if(!data[key]){data[key]={name,votes:{},suggested_by:'coach',ts:Date.now()};changed=true;}
+    });
+    if(changed) await fbSet('poll/items',data);
+    return data;
+  }catch(e){return{}}
+}
+
+async function voteForItem(key){
+  const uKey=currentUser.toLowerCase().replace(/\s+/g,'_');
+  await fbSet('poll/items/'+key+'/votes/'+uKey,true);
+}
+
+async function unvoteItem(key){
+  const uKey=currentUser.toLowerCase().replace(/\s+/g,'_');
+  await fbRemove('poll/items/'+key+'/votes/'+uKey);
+}
+
+async function submitWriteIn(name){
+  const key=name.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');
+  if(!key) return;
+  const existing=await fbGet('poll/items/'+key);
+  if(!existing){
+    await fbSet('poll/items/'+key,{name,votes:{},suggested_by:currentUser,ts:Date.now()});
+  }
+  // Auto-vote for your own suggestion
+  await voteForItem(key);
+}
+
+async function deleteItem(key){
+  await fbRemove('poll/items/'+key);
+}
+
+async function renderPoll(){
+  const el=document.getElementById('poll-content');
+  if(!el) return;
+  el.innerHTML='<div style="text-align:center;padding:40px 0;font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2)"><span class="blink">█</span> LOADING...</div>';
+  try{
+    const items=await getPollItems();
+    const uKey=currentUser.toLowerCase().replace(/\s+/g,'_');
+    // Sort by vote count desc
+    const sorted=Object.entries(items).sort((a,b)=>{
+      const av=Object.keys(a[1].votes||{}).length;
+      const bv=Object.keys(b[1].votes||{}).length;
+      return bv-av;
+    });
+    const maxVotes=sorted.length?Object.keys(sorted[0][1].votes||{}).length||1:1;
+
+    const cards=sorted.map(([key,item])=>{
+      const votes=Object.keys(item.votes||{}).length;
+      const voted=!!(item.votes||{})[uKey];
+      const pct=Math.round(votes/Math.max(maxVotes,1)*100);
+      const isCoachItem=item.suggested_by==='coach';
+      const suggestedBy=!isCoachItem?'<div style="font-size:11px;color:var(--muted2);margin-top:2px">suggested by '+item.suggested_by+'</div>':'';
+      const delBtn=isCoach?'<button onclick="deletePollItem(\''+key+'\')" style="background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted2);font-family:\'Press Start 2P\',monospace;font-size:7px;padding:4px 8px;cursor:pointer;transition:all .15s;margin-left:8px" onmouseover="this.style.borderColor=\'var(--accent2)\';this.style.color=\'var(--accent2)\'" onmouseout="this.style.borderColor=\'var(--border2)\';this.style.color=\'var(--muted2)\'">✕</button>':'';
+      return '<div style="background:var(--card);border:2px solid '+(voted?'var(--accent)':'var(--border2)')+';border-radius:2px;padding:14px 16px;margin-bottom:10px;transition:border-color .2s">'+
+        '<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">'+
+          '<div style="flex:1">'+
+            '<div style="font-family:\'Press Start 2P\',monospace;font-size:10px;color:'+(voted?'var(--accent)':'var(--text)')+';text-transform:uppercase;letter-spacing:.5px">'+item.name+'</div>'+
+            suggestedBy+
+          '</div>'+
+          '<div style="font-family:\'Press Start 2P\',monospace;font-size:11px;color:var(--accent3);min-width:32px;text-align:right">'+votes+'</div>'+
+          '<button onclick="toggleVote(\''+key+'\','+voted+')" style="background:'+(voted?'var(--accent)':'transparent')+';border:2px solid var(--accent);border-radius:2px;color:'+(voted?'#000':'var(--accent)')+';font-family:\'Press Start 2P\',monospace;font-size:8px;padding:6px 12px;cursor:pointer;transition:all .15s;white-space:nowrap">'+(voted?'✓ VOTED':'▶ VOTE')+'</button>'+
+          delBtn+
+        '</div>'+
+        '<div style="height:6px;background:var(--border2);border-radius:1px;overflow:hidden">'+
+          '<div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .4s ease;border-radius:1px"></div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+
+    const writeIn='<div style="margin-top:20px;background:var(--card);border:2px solid var(--border2);border-radius:2px;padding:16px">'+
+      '<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--accent3);letter-spacing:2px;margin-bottom:12px;text-shadow:0 0 6px var(--accent3)">// WRITE-IN</div>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap">'+
+        '<input id="poll-write-in" type="text" placeholder="Suggest a movement..." style="flex:1;min-width:160px;background:var(--bg);border:2px solid var(--border2);border-radius:2px;color:var(--text);font-family:\'Rajdhani\',sans-serif;font-size:15px;font-weight:600;padding:10px 12px;transition:border-color .15s" onfocus="this.style.borderColor=\'var(--accent3)\'" onblur="this.style.borderColor=\'var(--border2)\'">'+
+        '<button onclick="submitWriteInVote()" style="background:transparent;color:var(--accent3);border:2px solid var(--accent3);border-radius:2px;padding:10px 16px;font-family:\'Press Start 2P\',monospace;font-size:9px;letter-spacing:1px;cursor:pointer;transition:all .15s;white-space:nowrap" onmouseover="this.style.background=\'var(--accent3)\';this.style.color=\'#000\'" onmouseout="this.style.background=\'transparent\';this.style.color=\'var(--accent3)\'">▶ Submit</button>'+
+      '</div>'+
+    '</div>';
+
+    el.innerHTML=cards+writeIn;
+  }catch(e){
+    console.error('renderPoll error:',e);
+    el.innerHTML='<div style="color:var(--accent2);font-family:\'Press Start 2P\',monospace;font-size:8px;padding:20px">!! ERROR LOADING POLL !!</div>';
+  }
+}
+
+async function toggleVote(key,hasVoted){
+  if(hasVoted) await unvoteItem(key);
+  else await voteForItem(key);
+  renderPoll();
+}
+
+async function deletePollItem(key){
+  await deleteItem(key);
+  renderPoll();
+}
+
+async function submitWriteInVote(){
+  const input=document.getElementById('poll-write-in');
+  if(!input) return;
+  const name=input.value.trim();
+  if(!name||name.length<2) return;
+  input.value='';
+  await submitWriteIn(name);
+  renderPoll();
+}
 function celebrate(title, videoId){
   const overlay=document.getElementById('celebrate-overlay');
   document.getElementById('celebrate-title').textContent=title;
