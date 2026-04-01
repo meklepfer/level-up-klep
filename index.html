@@ -335,12 +335,12 @@ thead th:last-child{text-align:right}
     <!-- MODE SELECTOR -->
     <div style="max-width:860px;margin:0 auto;padding:28px 28px 0;display:flex;gap:12px">
       <button class="mode-btn active" id="mode-unlock" onclick="setMode('unlock')">
-        <span class="mode-icon">🗺</span>
+        <span class="mode-icon">📦</span>
         <span class="mode-label">Unlock a Skill</span>
         <span class="mode-sub">Learn something new</span>
       </button>
       <button class="mode-btn" id="mode-upgrade" onclick="setMode('upgrade')">
-        <span class="mode-icon">⬆</span>
+        <span class="mode-icon" style="font-size:18px;letter-spacing:-2px">⭐⭐<span style="filter:grayscale(1) brightness(2);opacity:0.5">☆</span></span>
         <span class="mode-label">Upgrade a Skill</span>
         <span class="mode-sub">More volume · More strength</span>
       </button>
@@ -364,7 +364,7 @@ thead th:last-child{text-align:right}
         <div style="font-size:13px;color:var(--muted2);font-weight:500;margin-bottom:20px">Targeted programs to build volume and strength on skills you already have.</div>
       </div>
       <div style="max-width:860px;margin:0 auto;padding:0 28px 28px;display:flex;flex-direction:column;gap:12px">
-        <div class="upgrade-card" onclick="setMode('unlock');enterTrack('hspu')">
+        <div class="upgrade-card" onclick="setMode('upgrade');enterTrack('hspu')">
           <div class="upgrade-card-icon">🤸</div>
           <div class="upgrade-card-body">
             <div class="upgrade-card-name">Strict HSPU for Volume</div>
@@ -416,6 +416,34 @@ thead th:last-child{text-align:right}
         <div class="all-done-banner" id="du-all-done">
           <div class="all-done-inner"><h2>🏆 Achievement Unlocked!</h2><p>Double-Unders complete. All 10 stages cleared. Now go put them in a WOD.</p></div>
         </div>
+        <div class="branch-label trunk"><div class="bl-line"></div>OPTIONAL WARM-UP<div class="bl-line"></div></div>
+        <div class="steps" style="padding-bottom:0">
+          <div class="step-card" style="border-color:rgba(0,255,204,0.2)">
+            <div class="step-corner tl"></div><div class="step-corner br"></div>
+            <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
+              <div class="step-num" style="font-size:20px">🪢</div>
+              <div class="step-info">
+                <div class="step-name">Jump Rope Warm-Up</div>
+                <div class="step-preview">AMRAP 5:00 · Optional · Before every session</div>
+              </div>
+              <div class="step-chevron">▾</div>
+            </div>
+            <div class="step-body">
+              <div class="drill-label">// The Warm-Up</div>
+              <div class="drill-text">
+                <div style="margin-bottom:10px"><strong>AMRAP 5:00</strong> (or more as needed)</div>
+                <div style="margin-bottom:10px">1. <strong>Calf Stretch</strong> — 5-10 seconds each side.</div>
+                <div style="margin-bottom:10px">2. <strong>Wrist Stretch</strong> — 5-10 seconds each hand. Place hands flat on the wall and apply light pressure.</div>
+                <div style="margin-bottom:10px">3. <strong>Wrist Circles</strong> — 5 circles in each direction per arm.</div>
+                <div style="margin-bottom:10px">4. <strong>Bodyweight Calf Raises</strong> — 10 reps. Slow and controlled.</div>
+                <div style="margin-bottom:10px">5. <strong>Plate Hops</strong> — 10 hops. Two-foot hop over a plate, focus on consistent landing mechanics — ball of foot, soft knees, knees together.</div>
+                <div>6. <strong>Single Under / Double Under Practice</strong> — 30 seconds. Use whatever you're working on.</div>
+              </div>
+              <div class="completion-note" style="margin-top:12px">Optional but recommended before every session. Takes about 5 minutes and primes the movement patterns you are about to train.</div>
+            </div>
+          </div>
+        </div>
+        <div class="branch-label trunk" style="margin-top:8px"><div class="bl-line"></div>SKILL STEPS<div class="bl-line"></div></div>
         <div class="steps" id="du-steps-container"></div>
         <div class="branch-label boss" id="du-bonus-label" style="display:none"><div class="bl-line"></div>⭐ BONUS LEVEL<div class="bl-line"></div></div>
         <div id="du-bonus-container" style="display:none;max-width:860px;margin:0 auto;padding:0 28px 28px">
@@ -562,7 +590,7 @@ thead th:last-child{text-align:right}
 <script>
 // ── TRACK DATA ────────────────────────────────────────────────────────────
 const DU_STEPS=[
-  {name:"Jump Mechanics",preview:"5 sets · 30s on / 30s off · No rope",drill:"5 Sets 30s on / 30s off: Consistent high jumps. Ball of foot takeoff, same height every rep, relaxed landing. No rope.",note:"This step is complete when the athlete achieves 5 sets of continuous and consistent jumping for 30 seconds. Do not cheat yourself."},
+  {name:"Consistent High Jumps",preview:"5 sets · 30s on / 30s off · No rope",drill:"5 Sets 30s on / 30s off: Consistent high jumps with no rope. Focus on knees together, landing on the ball of your feet with soft knees. Same height every rep, relaxed landing.",note:"This step is complete when the athlete achieves 5 sets of continuous and consistent jumping for 30 seconds."},
   {name:"Single-Unders",preview:"5 sets · 30s on / 30s off · 25 unbroken target",drill:"5 Sets 30s on / 30s off: Single-unders. Alternate sets — Set 1: focus on wrist rotation, elbows pinned. Set 2: eyes closed. Set 3: slow and controlled. Repeat.",note:"This step is complete when the athlete hits 25 unbroken single-unders at least 3 times across the 5 sets."},
   {name:"Speed Singles",preview:"5 sets · 20s on / 40s off · Max turnover",drill:"5 Sets 20s on / 40s off: Fast singles, maximum turnover. Elbows pinned, wrists only. Go as fast as you can without breaking.",note:"This step is complete when the athlete can sustain fast singles for the full 20 seconds without breaking, at least 3 out of 5 sets."},
   {name:"Single-Single-Double",preview:"5 sets · 30s on / 30s off · Two singles, one DU",drill:"5 Sets 30s on / 30s off: Single-single-double. Two singles, one DU, reset. Focus on the power jump — same wrist speed, just jump higher.",note:"This step is complete when the athlete successfully hits the single-single-double pattern consistently for the full 30 seconds, at least 3 out of 5 sets."},
@@ -828,7 +856,7 @@ async function renderSkillTree(){
     <div class="st-col" style="align-items:center">
 
       <!-- DOUBLE UNDERS -->
-      <div class="st-row">${node('du','🐸','Double Unders',duPct,false,'du')}</div>
+      <div class="st-row">${node('du','🪢','Double Unders',duPct,false,'du')}</div>
 
       ${vline()}
 
@@ -1641,7 +1669,6 @@ async function renderHSPU(){
   const logKeys=['ww_log','pp_log','dpp_log','hold_log','neg_log','ladder_log','training_log'];
   const logs={};
   await Promise.all([...logKeys,'maxsets_log'].map(async k=>{logs[k]=await getHSPULog(k);}));
-  const hspuLB=await fetchHSPULeaderboard();
   document.getElementById('hspu-foundation-container').innerHTML=HSPU_FOUNDATION.map((s,i)=>
     buildCard(s,i,fc,'hspu-foundation-container',null,null,hspuGenericLogHTML(s,logs[s.hspu_log_key],s.hspu_log_key))
   ).join('');
