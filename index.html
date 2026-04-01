@@ -481,15 +481,40 @@ thead th:last-child{text-align:right}
         <div class="progress-wrap">
           <div class="progress-meta">
             <div class="progress-label">XP Progress</div>
-            <div class="progress-fraction"><span id="du-done-count">0</span> / 11 <span>stages</span></div>
+            <div class="progress-fraction"><span id="du-done-count">0</span> / 10 <span>stages</span></div>
           </div>
           <div class="xp-bar-wrap"><div class="xp-bar-fill" id="du-track-fill" style="width:0%"></div><div class="xp-label" id="du-xp-label">0%</div></div>
           <div class="step-dots" id="du-step-dots"></div>
         </div>
         <div class="all-done-banner" id="du-all-done">
-          <div class="all-done-inner"><h2>🏆 Achievement Unlocked!</h2><p>Double-Unders complete. All 11 stages cleared. Now go put them in a WOD.</p></div>
+          <div class="all-done-inner"><h2>🏆 Achievement Unlocked!</h2><p>Double-Unders complete. All 10 stages cleared. Now go put them in a WOD.</p></div>
         </div>
         <div class="steps" id="du-steps-container"></div>
+        <div class="branch-label boss" id="du-bonus-label" style="display:none"><div class="bl-line"></div>⭐ BONUS LEVEL<div class="bl-line"></div></div>
+        <div id="du-bonus-container" style="display:none;max-width:860px;margin:0 auto;padding:0 28px 28px">
+          <div class="step-card" style="border-color:rgba(255,204,0,0.35);box-shadow:0 0 18px rgba(255,204,0,.06)">
+            <div class="step-corner tl" style="border-color:var(--accent3)"></div><div class="step-corner br" style="border-color:var(--accent3)"></div>
+            <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
+              <div class="step-num" style="font-size:20px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">Rx</div>
+              <div class="step-info">
+                <div class="step-name" style="color:var(--accent3)">Annie</div>
+                <div class="step-preview">50-40-30-20-10 · DUs & Sit-Ups · For Time</div>
+              </div>
+              <div class="step-chevron">▾</div>
+            </div>
+            <div class="step-body" style="padding-left:16px">
+              <div class="drill-label" style="color:var(--accent3)">// The Workout</div>
+              <div class="drill-text" style="border-left-color:var(--accent3)">
+                <div style="display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
+                  ${[50,40,30,20,10].map(r=>`<div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">${r}</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>`).join('')}
+                </div>
+                <div style="font-size:13px;color:var(--muted2);line-height:1.7">For time. All double-unders must be Rx — no singles. Abmat sit-ups. This is the benchmark that proves you've got the DU volume to compete.</div>
+              </div>
+              <div class="completion-note" style="margin-top:12px;border-color:rgba(255,204,0,.3)">Record your time below. Your score goes on the leaderboard.</div>
+              <div id="du-annie-block"></div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- PULL-UP TRACK -->
@@ -563,15 +588,15 @@ thead th:last-child{text-align:right}
         <div class="steps" id="hspu-foundation-container"></div>
         <div class="branch-label split" id="hspu-branch-label"><div class="bl-line"></div>HSPU BRANCH · CYCLE <span id="hspu-cycle-num">1</span><div class="bl-line"></div></div>
         <div class="steps" id="hspu-branch-container"></div>
-        <div class="branch-label boss"><div class="bl-line"></div>BENCHMARK WOD<div class="bl-line"></div></div>
-        <div class="steps" style="padding-bottom:28px">
-          <div class="step-card" style="border-color:rgba(255,0,170,0.35);box-shadow:0 0 18px rgba(255,0,170,.06)">
+        <div class="branch-label boss" style="display:none"><div class="bl-line"></div>⭐ BONUS LEVEL<div class="bl-line"></div></div>
+        <div class="steps" id="hspu-bonus-container" style="display:none;padding-bottom:28px">
+          <div class="step-card" id="diane-card" style="border-color:rgba(255,0,170,0.35);box-shadow:0 0 18px rgba(255,0,170,.06)">
             <div class="step-corner tl" style="border-color:var(--accent2)"></div><div class="step-corner br" style="border-color:var(--accent2)"></div>
             <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
               <div class="step-num" style="font-size:20px;color:var(--accent2);text-shadow:0 0 8px var(--accent2)">Rx</div>
               <div class="step-info">
                 <div class="step-name" style="color:var(--accent2)">Diane</div>
-                <div class="step-preview">21-15-9 · Deadlift + Strict HSPU · For Time</div>
+                <div class="step-preview">21-15-9 · Deadlift + HSPU · For Time</div>
               </div>
               <div class="step-chevron">▾</div>
             </div>
@@ -586,18 +611,17 @@ thead th:last-child{text-align:right}
                     <div style="font-size:11px;color:var(--muted2);margin-top:4px">lb</div>
                   </div>
                   <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 20px;text-align:center;flex:1;min-width:120px">
-                    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted2);margin-bottom:6px">STRICT HSPU</div>
-                    <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent2)">Full ROM</div>
-                    <div style="font-size:11px;color:var(--muted2);margin-top:4px">head to floor</div>
+                    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted2);margin-bottom:6px">HSPU</div>
+                    <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent2)">Kipping OK</div>
+                    <div style="font-size:11px;color:var(--muted2);margin-top:4px">head to mat</div>
                   </div>
                 </div>
-                <div style="font-size:13px;color:var(--muted2);line-height:1.7">45 total strict HSPU. This is what the program has been building toward. Deadlifts tax the posterior chain and put the HSPU under metabolic stress — exactly the conditions you'll face in competition.</div>
+                <div style="font-size:13px;color:var(--muted2);line-height:1.7">Diane uses kipping HSPU — but the strict strength you've built is exactly what makes kipping HSPU fast and sustainable. More strict capacity means more reps before you blow up. Test it here.</div>
               </div>
-              <div class="completion-note" style="margin-top:12px;border-color:rgba(255,0,170,.3)">You are ready for Diane when you can consistently hit sets of 10+ strict HSPU with full ROM. Complete the program first.</div>
+              <div class="completion-note" style="margin-top:12px;border-color:rgba(255,0,170,.3)">This is a bonus — not a requirement. Log a max set score first, then attempt Diane. Or skip it and start another cycle.</div>
             </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
 
@@ -659,8 +683,7 @@ const DU_STEPS=[
   {name:"DU Volume",preview:"5 sets · 30s on / 30s off · AMRAP DUs",drill:"5 Sets 30s on / 30s off: As many double-unders as possible. Singles are allowed as a reset but the goal is DUs.",note:"This step is complete when the athlete averages 5+ double-unders per set across all 5 sets."},
   {name:"EMOM Ladder x1",preview:"10 min EMOM · 1 DU → 10 DUs",drill:"10 Minute EMOM: Minute 1 is 1 DU, Minute 2 is 2 DUs... up to 10 DUs in Minute 10. Rest for the remainder of each minute. Reps do not need to be unbroken.",note:"This step is complete when the athlete completes all 10 rounds without missing. Reps do not need to be unbroken."},
   {name:"EMOM Ladder x2",preview:"10 min EMOM · 2 DUs → 20 DUs",drill:"10 Minute EMOM: Minute 1 is 2 DUs, Minute 2 is 4 DUs... up to 20 DUs in Minute 10. Rest for the remainder of each minute. Reps do not need to be unbroken.",note:"This step is complete when the athlete completes all 10 rounds without missing. Reps do not need to be unbroken."},
-  {name:"EMOM Ladder x3",preview:"10 min EMOM · 3 DUs → 30 DUs",drill:"10 Minute EMOM: Minute 1 is 3 DUs, Minute 2 is 6 DUs... up to 30 DUs in Minute 10. Rest for the remainder of each minute. Reps do not need to be unbroken.",note:"This step is complete when the athlete completes all 10 rounds without missing. Reps do not need to be unbroken. You can now do double-unders."},
-  {name:"Annie",preview:"Annie · 50-40-30-20-10 · DUs & Sit-Ups",drill:"Annie — For Time: 50-40-30-20-10 reps of Double-Unders and Abmat Sit-Ups. All double-under reps must be Rx. No singles.",note:"This step is complete when the athlete finishes Annie Rx. Record your time below.",isBenchmark:true}
+  {name:"EMOM Ladder x3",preview:"10 min EMOM · 3 DUs → 30 DUs",drill:"10 Minute EMOM: Minute 1 is 3 DUs, Minute 2 is 6 DUs... up to 30 DUs in Minute 10. Rest for the remainder of each minute. Reps do not need to be unbroken.",note:"This step is complete when the athlete completes all 10 rounds without missing. Reps do not need to be unbroken. You can now do double-unders."}
 ];
 
 const PU_FOUNDATION=[
@@ -1183,11 +1206,20 @@ async function renderDU(){
   const dotsEl=document.getElementById('du-step-dots');
   dotsEl.innerHTML=DU_STEPS.map((_,i)=>'<div class="step-dot '+(isDone(c,i)?'done':isActive(c,i)?'active':'')+'" data-i="'+i+'"></div>').join('');
   dotsEl.querySelectorAll('.step-dot').forEach(d=>d.addEventListener('click',()=>{const el=document.getElementById('step-du-steps-container-'+d.dataset.i);if(el)el.scrollIntoView({behavior:'smooth',block:'center'})}));
-  document.getElementById('du-steps-container').innerHTML=DU_STEPS.map((s,i)=>buildCard(s,i,c,'du-steps-container',null,null,s.isBenchmark?benchHTML(saved):'')).join('');
+  document.getElementById('du-steps-container').innerHTML=DU_STEPS.map((s,i)=>buildCard(s,i,c,'du-steps-container',null,null,'')).join('');
   bindCards('du-steps-container',
     async i=>{const arr=await getDUCompleted();if(!arr.includes(i)){arr.push(i);await saveDUCompleted(arr)}renderDU();setTimeout(()=>{const nx=document.getElementById('step-du-steps-container-'+(i+1));if(nx){nx.classList.add('open');nx.scrollIntoView({behavior:'smooth',block:'center'})}},100)},
     async i=>{const arr=await getDUCompleted();await saveDUCompleted(arr.filter(x=>x!==i));renderDU()}
   );
+  // Bonus level — show Annie once all 10 steps complete
+  const bonusLabel=document.getElementById('du-bonus-label');
+  const bonusContainer=document.getElementById('du-bonus-container');
+  const unlocked=done>=total;
+  if(bonusLabel) bonusLabel.style.display=unlocked?'flex':'none';
+  if(bonusContainer) bonusContainer.style.display=unlocked?'block':'none';
+  // Render Annie bench inside bonus block
+  const annieBlock=document.getElementById('du-annie-block');
+  if(annieBlock&&unlocked) annieBlock.innerHTML=benchHTML(saved);
   const sb=document.getElementById('save-annie-btn');
   if(sb)sb.addEventListener('click',async e=>{
     e.stopPropagation();const val=(document.getElementById('annie-input').value||'').trim();
@@ -1845,6 +1877,15 @@ async function renderHSPU(){
     await saveHSPUBranchCompleted([]);
     renderHSPU();
   });
+
+  // Bonus level — unlocks once any max HSPU score is logged
+  const bonusWrap=document.getElementById('hspu-bonus-container');
+  const bonusLabel=bonusWrap?bonusWrap.previousElementSibling:null;
+  const hasMaxScore=logs['maxhspu_log']&&logs['maxhspu_log'].length>0;
+  if(bonusWrap){
+    bonusWrap.style.display=hasMaxScore?'block':'none';
+    if(bonusLabel) bonusLabel.style.display=hasMaxScore?'flex':'none';
+  }
 }
 
 // ── LEADERBOARD ───────────────────────────────────────────────────────────
