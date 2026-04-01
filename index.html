@@ -356,6 +356,19 @@ thead th:last-child{text-align:right}
   </div>
 </div>
 
+<!-- CELEBRATION MODAL -->
+<div id="celebrate-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9998;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)">
+  <div style="background:var(--surface);border:2px solid var(--accent3);border-radius:3px;padding:24px;max-width:520px;width:100%;position:relative;box-shadow:0 0 60px rgba(255,204,0,.15);text-align:center">
+    <div class="corner tl" style="border-color:var(--accent3)"></div><div class="corner tr" style="border-color:var(--accent3)"></div>
+    <div class="corner bl" style="border-color:var(--accent3)"></div><div class="corner br" style="border-color:var(--accent3)"></div>
+    <div id="celebrate-title" style="font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:2px;color:var(--accent3);text-shadow:0 0 12px var(--accent3);margin-bottom:16px;text-transform:uppercase">🏆 Achievement Unlocked!</div>
+    <div id="celebrate-video-wrap" style="position:relative;border-radius:4px;overflow:hidden;margin-bottom:16px">
+      <iframe id="celebrate-iframe" width="100%" height="280" frameborder="0" allowfullscreen allow="autoplay" style="display:block"></iframe>
+    </div>
+    <button onclick="closeCelebration()" style="background:transparent;color:var(--accent3);border:2px solid var(--accent3);border-radius:2px;padding:12px 24px;font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:2px;cursor:pointer;transition:all .15s;text-transform:uppercase" onmouseover="this.style.background='var(--accent3)';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='var(--accent3)'">▶ Continue</button>
+  </div>
+</div>
+
 <div id="login-screen">
   <div class="login-box">
     <div class="corner tl"></div><div class="corner tr"></div>
@@ -462,6 +475,7 @@ thead th:last-child{text-align:right}
           <div class="hero-label">// SKILL TRACK · JUMP ROPE</div>
           <div class="hero-title-row">
             <h1 class="hero-title">Double<br><span class="highlight">Unders</span></h1>
+            <div class="pixel-guy-wrap"><canvas id="pixel-guy-du" width="64" height="80" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(0,255,204,.4))"></canvas></div>
           </div>
         </div>
         <div class="progress-wrap">
@@ -484,6 +498,7 @@ thead th:last-child{text-align:right}
           <div class="hero-label">// SKILL TRACK · GYMNASTICS</div>
           <div class="hero-title-row">
             <h1 class="hero-title">Pull-ups, Dips<br>&amp; Muscle-Ups...<br><span class="highlight2">Oh My!</span></h1>
+            <div class="pixel-guy-wrap"><canvas id="pixel-guy-pu" width="64" height="80" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(255,0,170,.4))"></canvas></div>
           </div>
         </div>
         <div class="progress-wrap">
@@ -533,10 +548,12 @@ thead th:last-child{text-align:right}
             <div class="step-body" style="padding-left:16px">
               <div class="drill-label">// The Warm-Up</div>
               <div class="drill-text">
-                <div style="margin-bottom:10px">1. <strong>Wall Shoulder Taps</strong> — 3×10 each side. Hands on floor, feet on wall, slow and controlled.</div>
-                <div style="margin-bottom:10px">2. <strong>Pike Push-Up</strong> — 2×8 slow. Full range, head to floor. This is your movement warm-up.</div>
-                <div style="margin-bottom:10px">3. <strong>Scap Push-Up</strong> — 2×10. Protract and retract the shoulder blades at the top of a push-up position. No arm bend.</div>
-                <div>4. <strong>Wrist Prep</strong> — Circles each direction 15 reps, then loaded wrist stretch 30 seconds each hand.</div>
+                <div style="margin-bottom:10px"><strong>AMRAP 5:00</strong> (or more as needed)</div>
+                <div style="margin-bottom:10px">1. <strong>Wrist/Forearm Stretch</strong> — 5-10 seconds. Place hands flat on the wall and apply light pressure to stretch wrists and forearms.</div>
+                <div style="margin-bottom:10px">2. <strong>Wrist Circles</strong> — 5 circles in each direction per arm.</div>
+                <div style="margin-bottom:10px">3. <strong>Scap Push-Ups</strong> — 5 reps. From a push-up position, protract and retract the shoulder blades. No arm bend.</div>
+                <div style="margin-bottom:10px">4. <strong>Pike Push-Ups</strong> — 5 reps. Hips high, head to floor, full range of motion.</div>
+                <div>5. <strong>Handstand Shoulder Taps</strong> — 10 reps. Hands on floor, feet on wall. Tap each shoulder alternately while maintaining a tight body position.</div>
               </div>
               <div class="completion-note" style="margin-top:12px">This warm-up is optional but recommended before every session. It takes 3 minutes and makes every rep safer and more productive.</div>
             </div>
@@ -546,6 +563,40 @@ thead th:last-child{text-align:right}
         <div class="steps" id="hspu-foundation-container"></div>
         <div class="branch-label split" id="hspu-branch-label"><div class="bl-line"></div>HSPU BRANCH · CYCLE <span id="hspu-cycle-num">1</span><div class="bl-line"></div></div>
         <div class="steps" id="hspu-branch-container"></div>
+        <div class="branch-label boss"><div class="bl-line"></div>BENCHMARK WOD<div class="bl-line"></div></div>
+        <div class="steps" style="padding-bottom:28px">
+          <div class="step-card" style="border-color:rgba(255,0,170,0.35);box-shadow:0 0 18px rgba(255,0,170,.06)">
+            <div class="step-corner tl" style="border-color:var(--accent2)"></div><div class="step-corner br" style="border-color:var(--accent2)"></div>
+            <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
+              <div class="step-num" style="font-size:20px;color:var(--accent2);text-shadow:0 0 8px var(--accent2)">Rx</div>
+              <div class="step-info">
+                <div class="step-name" style="color:var(--accent2)">Diane</div>
+                <div class="step-preview">21-15-9 · Deadlift + Strict HSPU · For Time</div>
+              </div>
+              <div class="step-chevron">▾</div>
+            </div>
+            <div class="step-body" style="padding-left:16px">
+              <div class="drill-label" style="color:var(--accent2)">// The Workout</div>
+              <div class="drill-text" style="border-left-color:var(--accent2)">
+                <div style="font-family:'Press Start 2P',monospace;font-size:22px;color:var(--accent2);text-align:center;margin-bottom:16px;text-shadow:0 0 12px var(--accent2)">21 — 15 — 9</div>
+                <div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
+                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 20px;text-align:center;flex:1;min-width:120px">
+                    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted2);margin-bottom:6px">DEADLIFT</div>
+                    <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent3)">225 / 155</div>
+                    <div style="font-size:11px;color:var(--muted2);margin-top:4px">lb</div>
+                  </div>
+                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 20px;text-align:center;flex:1;min-width:120px">
+                    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted2);margin-bottom:6px">STRICT HSPU</div>
+                    <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent2)">Full ROM</div>
+                    <div style="font-size:11px;color:var(--muted2);margin-top:4px">head to floor</div>
+                  </div>
+                </div>
+                <div style="font-size:13px;color:var(--muted2);line-height:1.7">45 total strict HSPU. This is what the program has been building toward. Deadlifts tax the posterior chain and put the HSPU under metabolic stress — exactly the conditions you'll face in competition.</div>
+              </div>
+              <div class="completion-note" style="margin-top:12px;border-color:rgba(255,0,170,.3)">You are ready for Diane when you can consistently hit sets of 10+ strict HSPU with full ROM. Complete the program first.</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -638,7 +689,7 @@ const PU_BOSS=[];
 const RR_POSITIONS=['Feet in Front','Feet Under','Feet Behind','Feet Elevated'];
 
 // ── HSPU TRACK DATA ───────────────────────────────────────────────────────
-const HSPU_WARMUP='WARM-UP (do this every session, ~3 min): Wall Shoulder Taps 3×10 each side · Pike Push-Up 2×8 slow · Scap Push-Up 2×10 · Wrist circles + loaded stretch 30s each direction.';
+const HSPU_WARMUP='WARM-UP — AMRAP 5:00: Wrist/Forearm Stretch 5-10s · Wrist Circles 5 each direction · Scap Push-Ups 5 · Pike Push-Ups 5 · Handstand Shoulder Taps 10';
 
 const HSPU_FOUNDATION=[
   {name:"Wall Walk",preview:"3 sets · 5 reps · Controlled",
@@ -1142,7 +1193,7 @@ async function renderDU(){
     e.stopPropagation();const val=(document.getElementById('annie-input').value||'').trim();
     if(!val)return;await saveDUTime(val);await pushLB(currentUser,val);
     sb.textContent='✓ SAVED';sb.style.background='var(--done)';sb.style.color='#000';sb.style.border='2px solid var(--done)';sb.style.textShadow='none';
-    setTimeout(()=>renderDU(),900);
+    setTimeout(()=>{renderDU();celebrate('🏆 Annie Rx Complete!','eoCMJGVChRY');},900);
   });
 }
 
@@ -1590,7 +1641,7 @@ async function renderPU(){
     await saveMaxPULog(log);
     await pushMaxPULeaderboard(currentUser,reps);
     renderPU();
-  });
+    setTimeout(()=>celebrate('💪 Pull-Up Beast Mode!','tTa_J7Sv8-0'),400);
   document.querySelectorAll('.rr-entry-del[data-maxpu-idx]').forEach(btn=>btn.addEventListener('click',async e=>{
     e.stopPropagation();const log=await getMaxPULog();log.splice(+btn.dataset.maxpuIdx,1);await saveMaxPULog(log);renderPU();
   }));
@@ -1782,7 +1833,7 @@ async function renderHSPU(){
     await saveHSPULog('maxhspu_log',log);
     await pushHSPULeaderboard(currentUser,reps);
     renderHSPU();
-  });
+    setTimeout(()=>celebrate('🤸 HSPU Beast!','MGyQarhoz8E'),400);
   const cycleBtn=document.getElementById('hspu-cycle-btn');
   if(cycleBtn)cycleBtn.addEventListener('click',async e=>{
     e.stopPropagation();
@@ -1986,6 +2037,19 @@ async function delMsg(i){
     if(entries[i]){await fbRemove('chat/messages/'+entries[i].key)}
   }catch(e){}
   renderChat();
+}
+
+// ── CELEBRATION MODAL ─────────────────────────────────────────────────────
+function celebrate(title, videoId){
+  const overlay=document.getElementById('celebrate-overlay');
+  document.getElementById('celebrate-title').textContent=title;
+  document.getElementById('celebrate-iframe').src=
+    'https://www.youtube.com/embed/'+videoId+'?autoplay=1&rel=0&modestbranding=1';
+  overlay.style.display='flex';
+}
+function closeCelebration(){
+  document.getElementById('celebrate-overlay').style.display='none';
+  document.getElementById('celebrate-iframe').src='';
 }
 
 // ── DISCLAIMER ────────────────────────────────────────────────────────────
