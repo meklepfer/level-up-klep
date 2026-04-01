@@ -2125,4 +2125,145 @@ document.getElementById('chat-input').addEventListener('blur',function(){this.st
   animate();
 })();
 
-</script>
+// ── PIXEL GUY · CROSSFIT DUDE (red mohawk, beard, vest, grey shorts, green shoes)
+// Used on DU track (jumping rope) and Pull-Up track (doing pull-ups)
+function drawCFDude(ctx, S, frame, yOff){
+  yOff=yOff||0;
+  function px(x,y,c,w,h){w=w||1;h=h||1;ctx.fillStyle=c;ctx.fillRect(x*S,(y+yOff)*S,w*S,h*S);}
+  const SK='#d4956a',SK2='#b87050'; // skin
+  const MH='#cc2200';               // red mohawk
+  const BD='#5a3010';               // dark beard
+  const VS='#6a1515',VS2='#8a2020'; // dark red vest
+  const SH='#888898',SH2='#666678'; // grey shorts
+  const SN='#228822',SN2='#115511'; // green shoes
+  const WH='#e8e8f0';               // whites of eyes
+  const PU='#222244';               // pupils
+
+  // HEAD
+  px(3,1,SK,6,5);
+  // mohawk
+  px(4,0,MH,1,2);px(5,0,MH,2,3);px(7,0,MH,1,2);
+  // eyes
+  px(4,3,WH,1,1);px(7,3,WH,1,1);
+  px(4,3,PU,1,1);px(7,3,PU,1,1);
+  // beard
+  px(3,5,BD,6,3);px(2,6,BD,8,2);px(3,7,BD,6,1);
+
+  if(frame===0){
+    // standing — arms at sides
+    // vest/torso
+    px(2,8,VS,8,5);px(3,8,VS2,6,3);
+    // arms down
+    px(1,8,SK,2,4);px(9,8,SK,2,4);
+    // shorts
+    px(2,13,SH,8,3);px(3,13,SH2,6,2);
+    // legs
+    px(2,16,SK,3,3);px(7,16,SK,3,3);
+    // shoes
+    px(1,18,SN,4,2);px(7,18,SN,4,2);px(1,19,SN2,4,1);px(7,19,SN2,4,1);
+
+  } else if(frame===1){
+    // squat — knees bent for jump
+    px(2,8,VS,8,5);px(3,8,VS2,6,3);
+    px(1,9,SK,2,3);px(9,9,SK,2,3);
+    px(2,13,SH,8,3);
+    px(2,15,SK,3,2);px(7,15,SK,3,2);
+    px(2,16,SK2,3,1);px(7,16,SK2,3,1); // knees bent
+    px(1,17,SN,4,2);px(7,17,SN,4,2);
+
+  } else if(frame===2){
+    // mid jump — legs tucked, arms out
+    px(2,8,VS,8,4);px(3,8,VS2,6,3);
+    px(0,9,SK,2,2);px(10,9,SK,2,2); // arms out wide
+    px(2,12,SH,8,2);
+    // tucked legs
+    px(2,14,SK,3,2);px(7,14,SK,3,2);
+    px(2,15,SH,3,1);px(7,15,SH,3,1);
+    px(1,15,SN,4,1);px(7,15,SN,4,1);
+
+  } else if(frame===3){
+    // hanging from bar — arms up
+    px(2,4,SK,3,2);px(7,4,SK,3,2); // hands up
+    px(3,3,SK,2,2);px(7,3,SK,2,2);
+    px(2,8,VS,8,5);px(3,8,VS2,6,3);
+    px(2,13,SH,8,3);
+    px(2,16,SK,3,4);px(7,16,SK,3,4);
+    px(1,19,SN,4,1);px(7,19,SN,4,1);
+
+  } else if(frame===4){
+    // chin over bar — pulled up
+    px(2,2,SK,3,2);px(7,2,SK,3,2);
+    px(3,1,SK,2,2);px(7,1,SK,2,2);
+    // head higher
+    px(3,0,SK,6,4);
+    px(4,0,MH,1,1);px(5,0,MH,2,2);px(7,0,MH,1,1);
+    px(4,2,WH,1,1);px(7,2,WH,1,1);
+    px(4,2,PU,1,1);px(7,2,PU,1,1);
+    px(3,3,BD,6,2);px(2,4,BD,8,1);
+    px(2,5,VS,8,5);px(3,5,VS2,6,3);
+    px(2,10,SH,8,3);
+    px(2,13,SK,3,4);px(7,13,SK,3,4);
+    px(1,16,SN,4,1);px(7,16,SN,4,1);
+  }
+}
+
+// ── DU TRACK GUY ────────────────────────────────────────────────────────
+(function(){
+  const C=document.getElementById('pixel-guy-du');
+  if(!C)return;
+  const ctx=C.getContext('2d');
+  const S=4;
+  C.width=13*S; C.height=21*S;
+  const ROPE='#ff00aa';
+
+  function drawRope(rf,yOff){
+    ctx.save();ctx.strokeStyle=ROPE;ctx.lineWidth=2;ctx.shadowColor=ROPE;ctx.shadowBlur=6;
+    ctx.beginPath();
+    const mid=6*S, bot=(20+yOff)*S, top=(2+yOff)*S;
+    if(rf===0){ctx.moveTo(0,bot);ctx.quadraticCurveTo(mid,bot+10,13*S,bot);}
+    else if(rf===1){ctx.moveTo(0,bot-14);ctx.quadraticCurveTo(mid,top+8,13*S,bot-14);}
+    else{ctx.moveTo(0,bot-24);ctx.quadraticCurveTo(mid,top-4,13*S,bot-24);}
+    ctx.stroke();ctx.restore();
+  }
+
+  const SEQ=[[0,0,12],[1,1,8],[2,2,10],[1,1,8],[0,0,12]];
+  let si=0,hc=0;
+  function animate(){
+    ctx.clearRect(0,0,C.width,C.height);
+    const[fr,rf,hold]=SEQ[si];
+    const yOff=fr===2?-2:0;
+    drawRope(rf,yOff);
+    drawCFDude(ctx,S,fr,yOff);
+    hc++;if(hc>=hold){hc=0;si=(si+1)%SEQ.length;}
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ── PULL-UP TRACK GUY ────────────────────────────────────────────────────
+(function(){
+  const C=document.getElementById('pixel-guy-pu');
+  if(!C)return;
+  const ctx=C.getContext('2d');
+  const S=4;
+  C.width=13*S; C.height=22*S;
+  const BARC='#8B5E3C', BARG='#ff00aa';
+
+  function drawBar(){
+    ctx.save();ctx.shadowColor=BARG;ctx.shadowBlur=8;
+    ctx.fillStyle=BARC;ctx.fillRect(0,0,C.width,S);
+    ctx.restore();
+    ctx.fillStyle='#c8a050';ctx.fillRect(0,0,C.width,S/2);
+  }
+
+  const SEQ=[[3,18],[4,12],[3,18]];
+  let si=0,hc=0;
+  function animate(){
+    ctx.clearRect(0,0,C.width,C.height);
+    drawBar();
+    drawCFDude(ctx,S,SEQ[si][0],0);
+    hc++;if(hc>=SEQ[si][1]){hc=0;si=(si+1)%SEQ.length;}
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
