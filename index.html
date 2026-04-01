@@ -777,7 +777,14 @@ function launchApp(){
   document.getElementById('app').style.display='block';
   document.getElementById('athlete-tag').textContent=currentUser+(isCoach?' 👑':'');
   document.getElementById('coach-tab').style.display=isCoach?'block':'none';
-  setMode('unlock');
+  // currentUser is now set — safe to call setMode
+  currentMode='unlock';
+  document.getElementById('mode-unlock').classList.add('active');
+  document.getElementById('mode-upgrade').classList.remove('active');
+  document.getElementById('mode-unlock-content').style.display='block';
+  document.getElementById('mode-upgrade-content').style.display='none';
+  document.getElementById('track-views').style.display='none';
+  renderSkillTree();
 }
 
 document.getElementById('switch-btn').addEventListener('click',()=>{
@@ -820,14 +827,19 @@ let currentTrack=null;
 
 function setMode(mode){
   currentMode=mode;
-  document.getElementById('mode-unlock').classList.toggle('active',mode==='unlock');
-  document.getElementById('mode-upgrade').classList.toggle('active',mode==='upgrade');
-  document.getElementById('mode-unlock-content').style.display=mode==='unlock'?'block':'none';
-  document.getElementById('mode-upgrade-content').style.display=mode==='upgrade'?'block':'none';
-  document.getElementById('track-views').style.display='none';
-  ['du','pullup','hspu'].forEach(t=>document.getElementById('track-'+t).style.display='none');
+  const modeUnlock=document.getElementById('mode-unlock');
+  const modeUpgrade=document.getElementById('mode-upgrade');
+  const unlockContent=document.getElementById('mode-unlock-content');
+  const upgradeContent=document.getElementById('mode-upgrade-content');
+  const trackViews=document.getElementById('track-views');
+  if(modeUnlock) modeUnlock.classList.toggle('active',mode==='unlock');
+  if(modeUpgrade) modeUpgrade.classList.toggle('active',mode==='upgrade');
+  if(unlockContent) unlockContent.style.display=mode==='unlock'?'block':'none';
+  if(upgradeContent) upgradeContent.style.display=mode==='upgrade'?'block':'none';
+  if(trackViews) trackViews.style.display='none';
+  ['du','pullup','hspu'].forEach(t=>{const el=document.getElementById('track-'+t);if(el)el.style.display='none';});
   currentTrack=null;
-  if(mode==='unlock') renderSkillTree();
+  if(mode==='unlock'&&currentUser) renderSkillTree();
 }
 
 function enterTrack(track){
