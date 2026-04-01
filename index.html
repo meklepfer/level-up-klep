@@ -561,12 +561,11 @@ header{padding:10px 16px}
   <!-- HSPU TRACK -->
   <div id="track-hspu" style="display:none">
     <div class="hero">
-      <div class="hero-label">// SKILL TRACK · GYMNASTICS</div>
       <div class="hero-title-row">
-        <h1 class="hero-title">Strict HSPU<br><span class="highlight2">for Volume</span></h1>
+        <h1 class="hero-title">Strict HSPU<br><span class="highlight2">Volume Program</span></h1>
         <div class="pixel-guy-wrap"><canvas id="pixel-hspu" width="80" height="96" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(255,0,170,.4))"></canvas></div>
       </div>
-      <p class="hero-sub" style="display:block;margin-top:8px">The intent of this track is to add strength and volume of Strict HSPU for athletes who are already capable of doing a strict HSPU with full ROM.</p>
+      <p class="hero-sub" style="display:block;margin-top:8px">For athletes who can already do a strict HSPU with full ROM. Build strength and volume from 1-3 reps to consistent sets of 10+.</p>
     </div>
     <div class="progress-wrap">
       <div class="progress-meta">
@@ -738,18 +737,20 @@ const HSPU_WARMUP='WARM-UP — AMRAP 5:00: Wrist/Forearm Stretch 5-10s · Wrist 
 
 const HSPU_FOUNDATION=[
   {name:"Wall Walk",preview:"3 sets · 5 reps · Controlled",
-   drill:"Walk your feet up the wall and hands toward the wall until your chest touches. Hold 2 seconds. Walk back down under control.",
-   note:"Complete when athlete logs 3 sets of 5 controlled wall walks in a single session. Chest must touch the wall every rep.",
+   drill:"Complete 3 sets of 5 wall walks. Rest 2:00 - 3:00 between each set.",
+   note:"Complete when athlete logs 3 sets of 5 controlled wall walks in a single session.",
    videoLink:"NK_OcHEm8yM",
-   isHSPULog:true, hspu_log_key:'ww_log'},
-  {name:"Pike Push-Up",preview:"4 sets · 10 reps · Full ROM",
-   drill:"Start in a downward dog position with hips high. Bend your elbows and lower your head toward the floor between your hands — full range of motion, head touches floor. Press back to the top. Keep hips high throughout. This is the movement pattern of the HSPU, just scaled.",
-   note:"Complete when athlete logs 4 sets of 10 full ROM reps in a single session.",
-   isHSPULog:true, hspu_log_key:'pp_log'},
-  {name:"Deficit Pike Push-Up",preview:"4 sets · 8 reps · Plates or parallettes",
-   drill:"Hands elevated on plates or parallettes, hips high, same pike push-up pattern. The deficit forces you below the floor plane — this is the bottom of an HSPU. Lower until shoulders are below wrist level. This range of motion is non-negotiable for full ROM strict HSPU.",
-   note:"Complete when athlete logs 4 sets of 8 reps with a full deficit in a single session.",
-   isHSPULog:true, hspu_log_key:'dpp_log'},
+   isHSPULog:true, hspu_log_key:'ww_log', hspu_target:{sets:3,reps:5}, hspu_no_target:true},
+  {name:"Pike Push-Up",preview:"3 sets · 10 reps · Full ROM",
+   drill:"Complete 3 sets of 10 pike push-ups. Rest 2:00 - 3:00 between each set.",
+   note:"Complete when athlete logs 3 sets of 10 full ROM reps in a single session.",
+   videoLink:"XckEEwa1BPI",
+   isHSPULog:true, hspu_log_key:'pp_log', hspu_target:{sets:3,reps:10}, hspu_no_target:true},
+  {name:"Deficit Pike Push-Up",preview:"3 sets · 8 reps · Log box height",
+   drill:"Complete 3 sets of 8 deficit pike push-ups. Rest 2:00 - 3:00 between each set.",
+   note:"Complete when athlete logs 3 sets of 8 reps with a full deficit in a single session.",
+   videoLink:"sVFoWiE7CW8",
+   isHSPULog:true, hspu_log_key:'dpp_log', hspu_target:{sets:3,reps:8}, hspu_no_target:true, hspu_extra_field:{id:'box_height',label:'Box Height',placeholder:'e.g. 4 inches'}},
 ];
 
 // Branch steps — targets change each cycle. cycleNum is 0-indexed.
@@ -762,31 +763,32 @@ function hspuBranchSteps(cycle){
   const emomReps=2+c;
   const clusterReps=3+c;
   return [
-    {name:"HSPU Negative",
-     preview:`${negSets} sets · ${negReps} reps · 5s descent · Training log`,
-     drill:`Kick up to a handstand against the wall. Lower yourself as slowly as possible — target 5 seconds down. Head touches floor, then reset by kicking back up. No pressing back up yet. Every rep is a slow, controlled descent. Log every session.`,
-     note:`Complete when athlete logs ${negSets} sets of ${negReps} reps in a single session with a controlled descent.`,
-     isHSPULog:true, hspu_log_key:'neg_log', hspu_target:{sets:negSets,reps:negReps}},
     {name:"Kick-Up + Hold",
      preview:`${holdSets} sets · ${holdSecs}s each · Against wall`,
      drill:`Kick up to a handstand against the wall. Hands close to the wall, body tight, core braced, head neutral. Hold for as long as possible. Rest fully between sets. This builds the overhead endurance needed to grind out high-rep sets.`,
      note:`Complete when athlete logs ${holdSets} sets of ${holdSecs}+ seconds in a single session.`,
-     isHSPULog:true, hspu_log_key:'hold_log', hspu_target:{sets:holdSets,secs:holdSecs}},
-    {name:"Strict HSPU — Low Rep",
-     preview:`5 sets · ${strictReps} reps · Full ROM · Training log`,
-     drill:`Full ROM strict HSPU against the wall. Kick up, lower head all the way to the floor, press back to lockout. That is one rep. ${strictReps} reps per set, 5 sets. Rest 2 minutes between sets. Do not grind ugly reps — if form breaks, the set is over.`,
-     note:`Complete when athlete logs 5×${strictReps} full ROM in a single session. ${c>0?'Cycle '+( c+1)+' target — you added a rep from last cycle.':''}`,
-     isHSPULog:true, hspu_log_key:'strict_log', hspu_target:{sets:strictSets,reps:strictReps}},
-    {name:"EMOM Volume",
-     preview:`10 min EMOM · ${emomReps} reps/min · Full ROM`,
-     drill:`Every minute on the minute for 10 minutes: ${emomReps} strict HSPU. Full ROM every rep. Rest for the remainder of each minute. If you miss a minute, note it and keep going. The goal is 10 clean rounds.`,
-     note:`Complete when athlete logs all 10 rounds without missing. ${emomReps} reps per minute. ${c>0?'Cycle '+(c+1)+' — one more rep per minute than last time.':''}`,
-     isHSPULog:true, hspu_log_key:'emom_log', hspu_target:{reps:emomReps}},
-    {name:"Cluster Sets",
-     preview:`3 sets · ${clusterReps}+${clusterReps}+${clusterReps} · 15s rest within set`,
-     drill:`3 working sets. Each set is ${clusterReps} reps, rest 15 seconds, ${clusterReps} reps, rest 15 seconds, ${clusterReps} reps. That is one set — ${clusterReps*3} total reps per set, 9${c>0?' ('+clusterReps*3+'× 3 sets = '+(clusterReps*9)+' total)':''} reps total. Rest 2 minutes between sets. This builds the capacity to hit high-rep sets.`,
-     note:`Complete when athlete logs all 3 cluster sets in a single session. ${c>0?'Cycle '+(c+1)+' — '+clusterReps+' reps per mini-set vs last cycle.':''}`,
-     isHSPULog:true, hspu_log_key:'cluster_log', hspu_target:{reps:clusterReps}},
+     isHSPULog:true, hspu_log_key:'hold_log', hspu_target:{sets:holdSets,secs:holdSecs}, hspu_no_target:true},
+    {name:"HSPU Negative",
+     preview:`${negSets} sets · ${negReps} reps · 5s descent · Training log`,
+     drill:`Complete ${negSets} sets of ${negReps} slow negatives. Kick up to a handstand, lower as slowly as possible — target 5 seconds down. Head touches floor, then kick back up. Rest 2:00 - 3:00 between sets.`,
+     note:`Complete when athlete logs ${negSets} sets of ${negReps} reps in a single session with a controlled descent.`,
+     videoLink:'RKlbLQVEYyA',
+     isHSPULog:true, hspu_log_key:'neg_log', hspu_target:{sets:negSets,reps:negReps}, hspu_no_target:true},
+    {name:"3 Max Sets",
+     preview:"3 sets · Max reps each · Rest 2:00-3:00 · Training log",
+     drill:"3 max effort sets of strict HSPU. Kick up and go until you can no longer lock out. Full ROM every rep. Rest 2:00-3:00 between sets. Do not pace — each set is an all-out effort. Log your reps for each set.",
+     note:"Complete when athlete logs all 3 sets in a single session.",
+     isHSPULog:true, hspu_log_key:'maxsets_log', hspu_target:{sets:3,reps:1}, hspu_no_target:true},
+    {name:"The Ladder",
+     preview:"1, 2, 3... to failure · Rest 1:00-1:30 between each · Training log",
+     drill:"Start at 1 rep. Rest 1:00-1:30. Do 2 reps. Rest 1:00-1:30. Do 3 reps. Continue adding 1 rep per set, resting 1:00-1:30 between every set, until you cannot complete the next number. That last completed set is your max. Log every set and your peak.",
+     note:"Complete when athlete logs a full ladder session. Your peak number is your score.",
+     isHSPULog:true, hspu_log_key:'ladder_log', hspu_target:{sets:1,reps:1}, hspu_no_target:true},
+    {name:"3 Training Sets",
+     preview:"3 sets · Controlled reps · Rest 2:00-3:00 · Training log",
+     drill:"3 sets of strict HSPU at a controlled, repeatable rep count. Do not go to failure. Stop 1-2 reps before you think you'll fail. Early on this may be 3 sets of 1. That is fine — quality over quantity. Rest 2:00-3:00 between sets. Log your reps each set.",
+     note:"Complete when athlete logs all 3 sets in a single session.",
+     isHSPULog:true, hspu_log_key:'training_log', hspu_target:{sets:3,reps:1}, hspu_no_target:true},
     {name:"Max Set HSPU",
      preview:`1 max effort set · Full ROM · Leaderboard`,
      drill:`One all-out set. Kick up, go until you can't lock out. Full ROM every rep — no short reps. Log your score. Your PR goes on the leaderboard. After logging, you can restart the branch at the next cycle with increased targets.`,
@@ -964,7 +966,7 @@ function enterTrack(track){
   document.getElementById('track-views').style.display='block';
   ['du','pullup','hspu'].forEach(t=>document.getElementById('track-'+t).style.display='none');
   document.getElementById('track-'+track).style.display='block';
-  const labels={du:'Double Unders',pullup:'Pull-Up / Dip / MU',hspu:'Strict HSPU for Volume'};
+  const labels={du:'Double Unders',pullup:'Pull-Up / Dip / MU',hspu:'SHSPU Volume'};
   document.getElementById('track-breadcrumb').textContent='// '+labels[track];
   if(track==='du') try{renderDU();}catch(e){console.error('renderDU:',e);}
   if(track==='pullup') try{renderPU();}catch(e){console.error('renderPU:',e);}
@@ -1218,8 +1220,8 @@ function buildCard(s,i,completed,containerId,onComplete,onUndo,extraHTML=''){
 
   const videoLinkHTML=s.videoLink?
     '<div style="margin-top:12px">'+
-    '<a href="https://www.youtube.com/watch?v='+s.videoLink+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:transparent;border:2px solid var(--accent2);border-radius:2px;color:var(--accent2);font-family:\'Press Start 2P\',monospace;font-size:9px;letter-spacing:1px;padding:8px 14px;text-decoration:none;transition:all .15s;text-shadow:0 0 6px var(--accent2)" onmouseover="this.style.background=\'rgba(255,0,170,0.1)\'" onmouseout="this.style.background=\'transparent\'">'+
-    '📺 Tune In</a></div>':'';
+    '<a href="https://www.youtube.com/watch?v='+s.videoLink+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:transparent;border:2px solid var(--accent2);border-radius:2px;color:var(--accent2);font-family:\'Press Start 2P\',monospace;font-size:9px;letter-spacing:2px;padding:9px 14px;text-decoration:none;transition:all .15s;text-shadow:0 0 6px var(--accent2);text-transform:uppercase" onmouseover="this.style.background=\'var(--accent2)\';this.style.color=\'#000\';this.style.textShadow=\'none\'" onmouseout="this.style.background=\'transparent\';this.style.color=\'var(--accent2)\';this.style.textShadow=\'0 0 6px var(--accent2)\'">'+
+    '▶ TUNE IN</a></div>':'';
 
   return '<div class="'+cls+'" data-i="'+i+'" id="step-'+containerId+'-'+i+'">'+
     '<div class="step-corner tl"></div><div class="step-corner br"></div>'+
@@ -1757,6 +1759,7 @@ function hspuGenericLogHTML(s,log,logKey){
     '<div class="rr-entry-date">'+e.date+'</div>'+
     '<div class="rr-entry-pos" style="color:var(--accent)">'+
     (e.sets&&e.reps?e.sets+'×'+e.reps:e.secs?'Set '+(e.setNum||'')+' · '+e.secs+'s':e.rounds?e.rounds+'/10 rounds':'')+'</div>'+
+    (e.extra?'<div class="rr-entry-reps" style="color:var(--accent3)">'+e.extra+'</div>':'')+
     '<div class="rr-entry-notes">'+(e.notes||'')+'</div>'+
     '<button class="rr-entry-del" data-hspulog-key="'+logKey+'" data-hspulog-idx="'+(log.length-1-i)+'">x</button>'+
     '</div>'
@@ -1774,12 +1777,15 @@ function hspuGenericLogHTML(s,log,logKey){
       '<div class="rr-form-field"><div class="rr-form-label">Seconds</div><input class="rr-small-input" id="hf-secs-'+logKey+'" type="number" min="1" max="120" value="20" style="width:68px"></div>':
       '<div class="rr-form-field"><div class="rr-form-label">Rounds</div><input class="rr-small-input" id="hf-rounds-'+logKey+'" type="number" min="1" max="10" value="10" style="width:58px"></div>')+
     '<div class="rr-form-field"><div class="rr-form-label">Notes</div><input class="rr-notes-input" id="hf-notes-'+logKey+'" type="text" placeholder="form, fatigue, etc."></div>'+
+    (s.hspu_extra_field?'<div class="rr-form-field"><div class="rr-form-label">'+s.hspu_extra_field.label+'</div><input class="rr-notes-input" id="hf-extra-'+logKey+'" type="text" placeholder="'+s.hspu_extra_field.placeholder+'" style="width:120px"></div>':'')+
     '<div class="rr-form-field" style="justify-content:flex-end"><button class="btn-complete" id="hf-add-'+logKey+'" style="font-size:9px;padding:8px 12px">+ Log</button></div>'+
     '</div>';
   return '<div class="rr-log-block">'+
     '<div style="font-size:12px;color:var(--muted2);font-style:italic;margin-bottom:10px;padding:8px 10px;background:rgba(0,255,204,0.04);border-left:2px solid var(--accent);border-radius:0 2px 2px 0">'+HSPU_WARMUP+'</div>'+
-    '<div class="rr-pos-card '+(complete?'complete':'')+'" style="margin-bottom:12px;min-width:0">'+
-    '<div class="rr-pos-name">Target</div><div class="rr-pos-best">'+(complete?'✓ DONE':targetStr)+'</div></div>'+
+    (s.hspu_no_target?'':
+      '<div class="rr-pos-card '+(complete?'complete':'')+'" style="margin-bottom:12px;min-width:0">'+
+      '<div class="rr-pos-name">Target</div><div class="rr-pos-best">'+(complete?'✓ DONE':targetStr)+'</div></div>'
+    )+
     form+(entries?'<div class="rr-entries">'+entries+'</div>':'<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);padding:12px 0;text-align:center">No entries yet</div>')+
     '</div>';
 }
@@ -1849,7 +1855,7 @@ async function renderHSPU(){
   const allSteps=[...HSPU_FOUNDATION,...branchSteps];
   const allCompleted=new Set([...fc,...bc.map(i=>i+HSPU_FOUNDATION.length)]);
   dotsEl.innerHTML=allSteps.map((_,i)=>'<div class="step-dot '+(allCompleted.has(i)?'done':isActive([...allCompleted],i)?'active':'')+'" data-i="'+i+'"></div>').join('');
-  const logKeys=['ww_log','pp_log','dpp_log','neg_log','hold_log','strict_log','emom_log','cluster_log','maxhspu_log'];
+  const logKeys=['ww_log','pp_log','dpp_log','hold_log','neg_log','maxsets_log','ladder_log','training_log','maxhspu_log'];
   const logs={};
   await Promise.all(logKeys.map(async k=>{logs[k]=await getHSPULog(k);}));
   const hspuLB=await fetchHSPULeaderboard();
@@ -1885,6 +1891,8 @@ async function renderHSPU(){
       if(secEl) entry.secs=parseInt(secEl.value)||0;
       if(snEl) entry.setNum=parseInt(snEl.value)||1;
       if(rdEl) entry.rounds=parseInt(rdEl.value)||0;
+      const extraEl=document.getElementById('hf-extra-'+logKey);
+      if(extraEl&&extraEl.value.trim()) entry.extra=extraEl.value.trim();
       const log=await getHSPULog(logKey);
       log.push(entry);
       await saveHSPULog(logKey,log);
