@@ -50,7 +50,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .login-err{font-size:9px;color:var(--accent2);margin-top:12px;min-height:18px;font-family:'Press Start 2P',monospace;letter-spacing:1px}
 
 /* APP */
-#app{display:none;position:relative;z-index:1}
+#app{display:none;position:relative;z-index:1;min-height:100vh}
 header{background:rgba(10,10,26,.96);backdrop-filter:blur(12px);border-bottom:2px solid var(--border2);box-shadow:0 2px 0 var(--border);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;gap:12px}
 .logo{font-family:'Press Start 2P',monospace;font-size:clamp(9px,2vw,13px);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
 .logo span{color:var(--accent);text-shadow:0 0 10px var(--accent)}
@@ -65,7 +65,7 @@ header{background:rgba(10,10,26,.96);backdrop-filter:blur(12px);border-bottom:2p
 .nav-tab{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);padding:14px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;margin-bottom:-2px}
 .nav-tab:hover{color:var(--text)}
 .nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);text-shadow:0 0 8px var(--accent)}
-.page{display:none}.page.active{display:block}
+.page{display:none}.page.active{display:block;min-height:calc(100vh - 110px)}
 
 /* TRACK SELECTOR */
 .track-selector{max-width:860px;margin:0 auto;padding:28px 28px 0}
@@ -199,7 +199,7 @@ header{background:rgba(10,10,26,.96);backdrop-filter:blur(12px);border-bottom:2p
 .all-done-inner p{font-size:14px;color:var(--muted2);font-weight:500}
 
 /* LEADERBOARD */
-.leaderboard-wrap{max-width:860px;margin:0 auto;padding:32px 28px}
+.leaderboard-wrap{max-width:860px;margin:0 auto;padding:32px 28px;padding-top:40px}
 .lb-title{font-family:'Press Start 2P',monospace;font-size:clamp(20px,5vw,40px);text-transform:uppercase;line-height:1.25;margin-bottom:10px;animation:glitch 8s infinite}
 .lb-title span{color:var(--accent2);text-shadow:0 0 15px var(--accent2)}
 .lb-sub{font-size:14px;color:var(--muted2);font-weight:500;margin-bottom:24px}
@@ -1938,16 +1938,24 @@ async function renderHSPU(){
 
 // ── LEADERBOARD ───────────────────────────────────────────────────────────
 async function renderLB(){
-  document.getElementById('lb-content').innerHTML='<div class="lb-empty"><span class="blink">█</span> LOADING...</div>';
-  const entries=await fetchLB();
-  if(!entries.length){document.getElementById('lb-content').innerHTML='<div class="lb-empty">NO SCORES YET<br>Be the first to finish Annie Rx.</div>';return}
-  const sorted=[...entries].sort((a,b)=>parseSec(a.time)-parseSec(b.time));
-  const medals=['gold','silver','bronze'];
-  const sym=i=>i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
-  document.getElementById('lb-content').innerHTML='<table><thead><tr><th>#</th><th>Athlete</th><th style="text-align:right">Annie</th></tr></thead><tbody>'+
-    sorted.map((e,idx)=>{const me=e.name.toLowerCase()===currentUser.toLowerCase();return '<tr class="lb-row'+(me?' is-me':'')+'"><td class="lb-rank '+(medals[idx]||'')+'">'+sym(idx)+'</td><td class="lb-name">'+e.name+(me?'<span class="you-tag">YOU</span>':'')+
-    '</td><td class="lb-time">'+e.time+'</td></tr>'}).join('')+'</tbody></table>';
-  document.getElementById('lb-updated').textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  const el=document.getElementById('lb-content');
+  if(!el)return;
+  el.innerHTML='<div class="lb-empty"><span class="blink">█</span> LOADING...</div>';
+  try{
+    const entries=await fetchLB();
+    if(!entries.length){el.innerHTML='<div class="lb-empty">NO SCORES YET<br><br>Be the first to finish Annie Rx.</div>';return}
+    const sorted=[...entries].sort((a,b)=>parseSec(a.time)-parseSec(b.time));
+    const medals=['gold','silver','bronze'];
+    const sym=i=>i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
+    el.innerHTML='<table><thead><tr><th>#</th><th>Athlete</th><th style="text-align:right">Annie</th></tr></thead><tbody>'+
+      sorted.map((e,idx)=>{const me=e.name.toLowerCase()===currentUser.toLowerCase();return '<tr class="lb-row'+(me?' is-me':'')+'"><td class="lb-rank '+(medals[idx]||'')+'">'+sym(idx)+'</td><td class="lb-name">'+e.name+(me?'<span class="you-tag">YOU</span>':'')+
+      '</td><td class="lb-time">'+e.time+'</td></tr>'}).join('')+'</tbody></table>';
+    const upd=document.getElementById('lb-updated');
+    if(upd)upd.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  }catch(e){
+    console.error('renderLB error:',e);
+    el.innerHTML='<div class="lb-empty">!! ERROR LOADING SCORES !!<br><br>'+e.message+'</div>';
+  }
 }
 document.getElementById('lb-refresh-btn').addEventListener('click',renderLB);
 
