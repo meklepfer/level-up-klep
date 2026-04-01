@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -18,327 +19,328 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 50%,rgba(0,255,204,0.05) 0%,transparent 55%),radial-gradient(ellipse at 85% 20%,rgba(255,0,170,0.05) 0%,transparent 55%);pointer-events:none;z-index:0}
 
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-@keyframes glitch{0%,88%,100%{transform:none;filter:none}90%{transform:translateX(-3px);filter:drop-shadow(3px 0 var(--accent2))}93%{transform:translateX(3px);filter:drop-shadow(-3px 0 var(--accent))}96%{transform:translateX(-1px)}}
+@keyframes glitch{0%,88%,100%{transform:none;filter:none}90%{transform:translateX(-3px);filter:drop-shadow(3px 0 var(–accent2))}93%{transform:translateX(3px);filter:drop-shadow(-3px 0 var(–accent))}96%{transform:translateX(-1px)}}
 @keyframes pulse-border{0%,100%{box-shadow:0 0 8px rgba(255,204,0,.2),0 0 20px rgba(255,204,0,.06)}50%{box-shadow:0 0 20px rgba(255,204,0,.4),0 0 40px rgba(255,204,0,.12)}}
 @keyframes float-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @keyframes flicker{0%,19%,21%,25%,55%,100%{opacity:1}20%,24%,54%{opacity:.75}}
 
 /* LOGIN */
 #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;z-index:1}
-.login-box{background:var(--surface);border:2px solid var(--border2);box-shadow:0 0 0 1px var(--border),0 0 50px rgba(0,255,204,.06),inset 0 1px 0 rgba(0,255,204,.05);border-radius:3px;padding:48px 40px;width:100%;max-width:460px;text-align:center;animation:float-in .5s ease both;position:relative}
-.corner{position:absolute;width:14px;height:14px;border-style:solid;border-color:var(--accent)}
+.login-box{background:var(–surface);border:2px solid var(–border2);box-shadow:0 0 0 1px var(–border),0 0 50px rgba(0,255,204,.06),inset 0 1px 0 rgba(0,255,204,.05);border-radius:3px;padding:48px 40px;width:100%;max-width:460px;text-align:center;animation:float-in .5s ease both;position:relative}
+.corner{position:absolute;width:14px;height:14px;border-style:solid;border-color:var(–accent)}
 .corner.tl{top:-2px;left:-2px;border-width:2px 0 0 2px}
 .corner.tr{top:-2px;right:-2px;border-width:2px 2px 0 0}
 .corner.bl{bottom:-2px;left:-2px;border-width:0 0 2px 2px}
 .corner.br{bottom:-2px;right:-2px;border-width:0 2px 2px 0}
 .login-hero{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:20px}
 .login-title-wrap{text-align:left}
-.login-title-big{font-family:'Press Start 2P',monospace;font-size:clamp(32px,8vw,52px);line-height:1;text-transform:uppercase;color:var(--text);animation:glitch 7s infinite}
-.login-title-big span{color:var(--accent);text-shadow:0 0 20px var(--accent)}
-.login-title-small{font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:2px;color:var(--muted2);margin-top:8px;text-transform:uppercase}
-.login-logo{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:3px;color:var(--accent);margin-bottom:28px;text-shadow:0 0 12px var(--accent);animation:flicker 5s infinite}
-.login-title{font-family:'Press Start 2P',monospace;font-size:clamp(18px,4.5vw,30px);line-height:1.4;text-transform:uppercase;margin-bottom:8px;animation:glitch 7s infinite}
-.login-title span{color:var(--accent2);text-shadow:0 0 20px var(--accent2)}
-.login-sub{font-size:15px;color:var(--muted2);font-weight:500;margin-bottom:24px;line-height:1.6}
+.login-title-big{font-family:‘Press Start 2P’,monospace;font-size:clamp(32px,8vw,52px);line-height:1;text-transform:uppercase;color:var(–text);animation:glitch 7s infinite}
+.login-title-big span{color:var(–accent);text-shadow:0 0 20px var(–accent)}
+.login-title-small{font-family:‘Press Start 2P’,monospace;font-size:11px;letter-spacing:2px;color:var(–muted2);margin-top:8px;text-transform:uppercase}
+.login-logo{font-family:‘Press Start 2P’,monospace;font-size:9px;letter-spacing:3px;color:var(–accent);margin-bottom:28px;text-shadow:0 0 12px var(–accent);animation:flicker 5s infinite}
+.login-title{font-family:‘Press Start 2P’,monospace;font-size:clamp(18px,4.5vw,30px);line-height:1.4;text-transform:uppercase;margin-bottom:8px;animation:glitch 7s infinite}
+.login-title span{color:var(–accent2);text-shadow:0 0 20px var(–accent2)}
+.login-sub{font-size:15px;color:var(–muted2);font-weight:500;margin-bottom:24px;line-height:1.6}
 .login-field{margin-bottom:12px;text-align:left}
-.login-field label{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px;color:var(--muted2);display:block;margin-bottom:6px}
-.login-input{width:100%;background:var(--bg);border:2px solid var(--border2);color:var(--accent);font-family:'Press Start 2P',monospace;font-size:13px;letter-spacing:2px;padding:12px 14px;text-transform:uppercase;transition:border-color .15s,box-shadow .15s;border-radius:2px;caret-color:var(--accent)}
-.login-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px rgba(0,255,204,.12)}
-.login-input::placeholder{color:var(--muted);font-size:10px;letter-spacing:1px;font-weight:400}
-.login-btn{width:100%;background:transparent;color:var(--accent3);border:2px solid var(--accent3);border-radius:2px;padding:14px;font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .15s;margin-top:8px}
-.login-btn:hover{background:var(--accent3);color:#000;box-shadow:0 0 24px rgba(255,204,0,.3)}
-.login-err{font-size:9px;color:var(--accent2);margin-top:12px;min-height:18px;font-family:'Press Start 2P',monospace;letter-spacing:1px}
+.login-field label{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:1px;color:var(–muted2);display:block;margin-bottom:6px}
+.login-input{width:100%;background:var(–bg);border:2px solid var(–border2);color:var(–accent);font-family:‘Press Start 2P’,monospace;font-size:13px;letter-spacing:2px;padding:12px 14px;text-transform:uppercase;transition:border-color .15s,box-shadow .15s;border-radius:2px;caret-color:var(–accent)}
+.login-input:focus{outline:none;border-color:var(–accent);box-shadow:0 0 0 2px rgba(0,255,204,.12)}
+.login-input::placeholder{color:var(–muted);font-size:10px;letter-spacing:1px;font-weight:400}
+.login-btn{width:100%;background:transparent;color:var(–accent3);border:2px solid var(–accent3);border-radius:2px;padding:14px;font-family:‘Press Start 2P’,monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .15s;margin-top:8px}
+.login-btn:hover{background:var(–accent3);color:#000;box-shadow:0 0 24px rgba(255,204,0,.3)}
+.login-err{font-size:9px;color:var(–accent2);margin-top:12px;min-height:18px;font-family:‘Press Start 2P’,monospace;letter-spacing:1px}
 
 /* APP */
 #app{display:none;position:relative;z-index:1}
-header{background:rgba(10,10,26,.96);backdrop-filter:blur(12px);border-bottom:2px solid var(--border2);box-shadow:0 2px 0 var(--border);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;gap:12px}
-.logo{font-family:'Press Start 2P',monospace;font-size:clamp(9px,2vw,13px);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
-.logo span{color:var(--accent);text-shadow:0 0 10px var(--accent)}
+header{background:rgba(10,10,26,.96);backdrop-filter:blur(12px);border-bottom:2px solid var(–border2);box-shadow:0 2px 0 var(–border);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;gap:12px}
+.logo{font-family:‘Press Start 2P’,monospace;font-size:clamp(9px,2vw,13px);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.logo span{color:var(–accent);text-shadow:0 0 10px var(–accent)}
 .header-right{display:flex;align-items:center;gap:10px}
-.athlete-tag{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;color:var(--accent3);background:rgba(255,204,0,.08);border:1px solid rgba(255,204,0,.3);border-radius:2px;padding:6px 12px;text-shadow:0 0 8px var(--accent3)}
-.athlete-tag::before{content:'P1 · '}
-.switch-btn{background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted2);font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:6px 10px;cursor:pointer;transition:all .15s}
-.switch-btn:hover{color:var(--accent2);border-color:var(--accent2)}
+.athlete-tag{font-family:‘Press Start 2P’,monospace;font-size:9px;letter-spacing:1px;color:var(–accent3);background:rgba(255,204,0,.08);border:1px solid rgba(255,204,0,.3);border-radius:2px;padding:6px 12px;text-shadow:0 0 8px var(–accent3)}
+.athlete-tag::before{content:’P1 · ’}
+.switch-btn{background:none;border:1px solid var(–border2);border-radius:2px;color:var(–muted2);font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:6px 10px;cursor:pointer;transition:all .15s}
+.switch-btn:hover{color:var(–accent2);border-color:var(–accent2)}
 
 /* NAV */
-.nav-tabs{display:flex;border-bottom:2px solid var(--border2);background:rgba(10,10,26,.92);position:sticky;top:53px;z-index:100;padding:0 28px}
-.nav-tab{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);padding:14px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;margin-bottom:-2px}
-.nav-tab:hover{color:var(--text)}
-.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);text-shadow:0 0 8px var(--accent)}
+.nav-tabs{display:flex;border-bottom:2px solid var(–border2);background:rgba(10,10,26,.92);position:sticky;top:53px;z-index:100;padding:0 28px}
+.nav-tab{font-family:‘Press Start 2P’,monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(–muted2);padding:14px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;margin-bottom:-2px}
+.nav-tab:hover{color:var(–text)}
+.nav-tab.active{color:var(–accent);border-bottom-color:var(–accent);text-shadow:0 0 8px var(–accent)}
 .page{display:none}.page.active{display:block}
 
 /* TRACK SELECTOR */
 .track-selector{max-width:860px;margin:0 auto;padding:28px 28px 0}
-.track-selector-label{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted2);margin-bottom:12px}
+.track-selector-label{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(–muted2);margin-bottom:12px}
 .track-btns{display:flex;gap:8px;flex-wrap:wrap}
-.track-btn{background:var(--card);border:2px solid var(--border2);border-radius:2px;padding:10px 16px;font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);cursor:pointer;transition:all .15s;position:relative}
-.track-btn:hover{border-color:var(--accent);color:var(--text)}
-.track-btn.active{border-color:var(--accent);color:var(--accent);text-shadow:0 0 8px var(--accent);background:rgba(0,255,204,.04)}
-.track-btn .track-badge{position:absolute;top:-8px;right:-8px;background:var(--accent2);color:#000;font-size:7px;padding:2px 5px;border-radius:2px;font-family:'Press Start 2P',monospace}
+.track-btn{background:var(–card);border:2px solid var(–border2);border-radius:2px;padding:10px 16px;font-family:‘Press Start 2P’,monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(–muted2);cursor:pointer;transition:all .15s;position:relative}
+.track-btn:hover{border-color:var(–accent);color:var(–text)}
+.track-btn.active{border-color:var(–accent);color:var(–accent);text-shadow:0 0 8px var(–accent);background:rgba(0,255,204,.04)}
+.track-btn .track-badge{position:absolute;top:-8px;right:-8px;background:var(–accent2);color:#000;font-size:7px;padding:2px 5px;border-radius:2px;font-family:‘Press Start 2P’,monospace}
 
 /* HERO */
 .hero{padding:28px 28px 20px;max-width:860px;margin:0 auto}
-.hero-label{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;text-shadow:0 0 8px var(--accent)}
+.hero-label{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(–accent);margin-bottom:14px;text-shadow:0 0 8px var(–accent)}
 .hero-title-row{display:flex;align-items:flex-end;gap:24px;margin-bottom:12px}
-.hero-title{font-family:'Press Start 2P',monospace;font-size:clamp(16px,4vw,36px);line-height:1.3;text-transform:uppercase;letter-spacing:-1px;animation:glitch 9s infinite;margin-bottom:0}
-.hero-title .highlight{color:var(--accent);text-shadow:0 0 20px var(--accent),0 0 40px rgba(0,255,204,.25)}
-.hero-title .highlight2{color:var(--accent2);text-shadow:0 0 20px var(--accent2)}
-.hero-sub{font-size:15px;color:var(--muted2);max-width:480px;line-height:1.6;font-weight:500}
+.hero-title{font-family:‘Press Start 2P’,monospace;font-size:clamp(16px,4vw,36px);line-height:1.3;text-transform:uppercase;letter-spacing:-1px;animation:glitch 9s infinite;margin-bottom:0}
+.hero-title .highlight{color:var(–accent);text-shadow:0 0 20px var(–accent),0 0 40px rgba(0,255,204,.25)}
+.hero-title .highlight2{color:var(–accent2);text-shadow:0 0 20px var(–accent2)}
+.hero-sub{font-size:15px;color:var(–muted2);max-width:480px;line-height:1.6;font-weight:500}
 
 /* BRANCH LABEL */
-.branch-label{max-width:860px;margin:0 auto;padding:16px 28px 0;font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:12px}
-.branch-label .bl-line{flex:1;height:1px;background:var(--border2)}
-.branch-label.trunk{color:var(--accent)}
-.branch-label.split{color:var(--accent3)}
-.branch-label.boss{color:var(--accent2)}
+.branch-label{max-width:860px;margin:0 auto;padding:16px 28px 0;font-family:‘Press Start 2P’,monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.branch-label .bl-line{flex:1;height:1px;background:var(–border2)}
+.branch-label.trunk{color:var(–accent)}
+.branch-label.split{color:var(–accent3)}
+.branch-label.boss{color:var(–accent2)}
 
 /* XP BAR */
 .progress-wrap{max-width:860px;margin:0 auto 24px;padding:0 28px}
 .progress-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
-.progress-label{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted2)}
-.progress-fraction{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)}
-.progress-fraction span{color:var(--muted2);font-size:9px}
-.xp-bar-wrap{height:18px;background:var(--card);border:2px solid var(--border2);border-radius:2px;overflow:hidden;position:relative;box-shadow:inset 0 2px 6px rgba(0,0,0,.6)}
-.xp-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:1px;transition:width .6s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 10px var(--accent);position:relative}
-.xp-bar-fill::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 14px,rgba(255,255,255,.12) 14px,rgba(255,255,255,.12) 16px)}
-.xp-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,255,255,.85);white-space:nowrap;z-index:2;text-shadow:0 1px 3px rgba(0,0,0,.9);pointer-events:none}
+.progress-label{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(–muted2)}
+.progress-fraction{font-family:‘Press Start 2P’,monospace;font-size:11px;color:var(–accent3);text-shadow:0 0 8px var(–accent3)}
+.progress-fraction span{color:var(–muted2);font-size:9px}
+.xp-bar-wrap{height:18px;background:var(–card);border:2px solid var(–border2);border-radius:2px;overflow:hidden;position:relative;box-shadow:inset 0 2px 6px rgba(0,0,0,.6)}
+.xp-bar-fill{height:100%;background:linear-gradient(90deg,var(–accent),var(–accent2));border-radius:1px;transition:width .6s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 10px var(–accent);position:relative}
+.xp-bar-fill::after{content:’’;position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 14px,rgba(255,255,255,.12) 14px,rgba(255,255,255,.12) 16px)}
+.xp-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:‘Press Start 2P’,monospace;font-size:7px;color:rgba(255,255,255,.85);white-space:nowrap;z-index:2;text-shadow:0 1px 3px rgba(0,0,0,.9);pointer-events:none}
 .step-dots{display:flex;gap:4px;margin-top:8px}
-.step-dot{flex:1;height:4px;background:var(--border2);border-radius:1px;transition:all .3s;cursor:pointer}
-.step-dot.done{background:var(--accent);box-shadow:0 0 4px var(--accent)}
-.step-dot.active{background:var(--accent3);box-shadow:0 0 6px var(--accent3);animation:pulse-border 1.5s infinite}
+.step-dot{flex:1;height:4px;background:var(–border2);border-radius:1px;transition:all .3s;cursor:pointer}
+.step-dot.done{background:var(–accent);box-shadow:0 0 4px var(–accent)}
+.step-dot.active{background:var(–accent3);box-shadow:0 0 6px var(–accent3);animation:pulse-border 1.5s infinite}
 
 /* STEP CARDS */
 .steps{max-width:860px;margin:0 auto;padding:0 28px;display:flex;flex-direction:column;gap:12px}
-.step-card{background:var(--card);border:2px solid var(--border2);border-radius:2px;overflow:hidden;transition:border-color .2s,box-shadow .2s;position:relative}
+.step-card{background:var(–card);border:2px solid var(–border2);border-radius:2px;overflow:hidden;transition:border-color .2s,box-shadow .2s;position:relative}
 .step-card.is-done{border-color:rgba(0,255,204,.35);box-shadow:0 0 14px rgba(0,255,204,.05)}
 .step-card.is-active{border-color:rgba(255,204,0,.4);box-shadow:0 0 18px rgba(255,204,0,.08);animation:pulse-border 2s infinite}
 .step-card.is-locked{opacity:.3;pointer-events:none}
 .step-corner{position:absolute;width:10px;height:10px;border-style:solid;pointer-events:none}
-.step-corner.tl{top:-1px;left:-1px;border-width:2px 0 0 2px;border-color:var(--border2)}
-.step-corner.br{bottom:-1px;right:-1px;border-width:0 2px 2px 0;border-color:var(--border2)}
-.is-done .step-corner{border-color:var(--accent)}
-.is-active .step-corner{border-color:var(--accent3)}
+.step-corner.tl{top:-1px;left:-1px;border-width:2px 0 0 2px;border-color:var(–border2)}
+.step-corner.br{bottom:-1px;right:-1px;border-width:0 2px 2px 0;border-color:var(–border2)}
+.is-done .step-corner{border-color:var(–accent)}
+.is-active .step-corner{border-color:var(–accent3)}
 .step-header{display:flex;align-items:center;gap:14px;padding:14px 16px;cursor:pointer;user-select:none}
-.step-num{font-family:'Press Start 2P',monospace;font-size:20px;line-height:1;color:var(--border2);min-width:44px;transition:color .2s}
-.is-done .step-num{color:var(--accent);text-shadow:0 0 8px var(--accent)}
-.is-active .step-num{color:var(--accent3);text-shadow:0 0 8px var(--accent3)}
+.step-num{font-family:‘Press Start 2P’,monospace;font-size:20px;line-height:1;color:var(–border2);min-width:44px;transition:color .2s}
+.is-done .step-num{color:var(–accent);text-shadow:0 0 8px var(–accent)}
+.is-active .step-num{color:var(–accent3);text-shadow:0 0 8px var(–accent3)}
 .step-info{flex:1;min-width:0}
-.step-name{font-family:'Press Start 2P',monospace;font-size:clamp(9px,2vw,11px);letter-spacing:.5px;text-transform:uppercase;line-height:1.4;margin-bottom:4px}
-.step-preview{font-size:13px;color:var(--muted2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.step-badge{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:4px 8px;border-radius:2px;white-space:nowrap;flex-shrink:0}
-.badge-done{background:rgba(0,255,204,.08);color:var(--accent);border:1px solid rgba(0,255,204,.3);text-shadow:0 0 6px var(--accent)}
-.badge-active{background:rgba(255,204,0,.08);color:var(--accent3);border:1px solid rgba(255,204,0,.3);text-shadow:0 0 6px var(--accent3)}
-.badge-locked{background:var(--border);color:var(--muted);border:1px solid transparent}
-.step-chevron{color:var(--muted2);font-size:14px;transition:transform .2s;margin-left:6px;font-family:'Press Start 2P',monospace}
+.step-name{font-family:‘Press Start 2P’,monospace;font-size:clamp(9px,2vw,11px);letter-spacing:.5px;text-transform:uppercase;line-height:1.4;margin-bottom:4px}
+.step-preview{font-size:13px;color:var(–muted2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.step-badge{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:4px 8px;border-radius:2px;white-space:nowrap;flex-shrink:0}
+.badge-done{background:rgba(0,255,204,.08);color:var(–accent);border:1px solid rgba(0,255,204,.3);text-shadow:0 0 6px var(–accent)}
+.badge-active{background:rgba(255,204,0,.08);color:var(–accent3);border:1px solid rgba(255,204,0,.3);text-shadow:0 0 6px var(–accent3)}
+.badge-locked{background:var(–border);color:var(–muted);border:1px solid transparent}
+.step-chevron{color:var(–muted2);font-size:14px;transition:transform .2s;margin-left:6px;font-family:‘Press Start 2P’,monospace}
 .step-card.open .step-chevron{transform:rotate(180deg)}
-.step-body{display:none;padding:0 16px 16px 74px;border-top:1px solid var(--border2)}
+.step-body{display:none;padding:0 16px 16px 74px;border-top:1px solid var(–border2)}
 .step-card.open .step-body{display:block}
-.drill-label{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin:14px 0 8px;text-shadow:0 0 6px var(--accent2)}
-.drill-text{font-size:15px;font-weight:600;line-height:1.6;color:var(--text);background:var(--bg);border-left:3px solid var(--accent);padding:12px 14px;border-radius:0 2px 2px 0}
-.is-done .drill-text{border-left-color:var(--accent)}
-.completion-note{font-size:13px;color:var(--muted2);font-style:italic;line-height:1.5;margin-top:10px;padding:10px 13px;background:rgba(255,255,255,.015);border-radius:2px;border:1px solid var(--border2)}
-.completion-note::before{content:'■ COMPLETE WHEN: ';font-style:normal;font-weight:700;color:var(--accent3);font-size:9px;font-family:'Press Start 2P',monospace;letter-spacing:1px;display:block;margin-bottom:5px;text-shadow:0 0 6px var(--accent3)}
-.is-done .completion-note::before{color:var(--accent);text-shadow:0 0 6px var(--accent)}
+.drill-label{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(–accent2);margin:14px 0 8px;text-shadow:0 0 6px var(–accent2)}
+.drill-text{font-size:15px;font-weight:600;line-height:1.6;color:var(–text);background:var(–bg);border-left:3px solid var(–accent);padding:12px 14px;border-radius:0 2px 2px 0}
+.is-done .drill-text{border-left-color:var(–accent)}
+.completion-note{font-size:13px;color:var(–muted2);font-style:italic;line-height:1.5;margin-top:10px;padding:10px 13px;background:rgba(255,255,255,.015);border-radius:2px;border:1px solid var(–border2)}
+.completion-note::before{content:’■ COMPLETE WHEN: ’;font-style:normal;font-weight:700;color:var(–accent3);font-size:9px;font-family:‘Press Start 2P’,monospace;letter-spacing:1px;display:block;margin-bottom:5px;text-shadow:0 0 6px var(–accent3)}
+.is-done .completion-note::before{color:var(–accent);text-shadow:0 0 6px var(–accent)}
 .step-actions{display:flex;gap:10px;margin-top:14px}
-.btn-complete{background:transparent;color:var(--accent);border:2px solid var(--accent);border-radius:2px;padding:9px 18px;font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .15s;text-shadow:0 0 6px var(--accent)}
-.btn-complete:hover{background:var(--accent);color:#000;box-shadow:0 0 16px var(--accent);text-shadow:none}
-.btn-undo{background:transparent;color:var(--muted2);border:1px solid var(--border2);border-radius:2px;padding:9px 14px;font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .15s}
-.btn-undo:hover{border-color:var(--accent2);color:var(--accent2)}
+.btn-complete{background:transparent;color:var(–accent);border:2px solid var(–accent);border-radius:2px;padding:9px 18px;font-family:‘Press Start 2P’,monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .15s;text-shadow:0 0 6px var(–accent)}
+.btn-complete:hover{background:var(–accent);color:#000;box-shadow:0 0 16px var(–accent);text-shadow:none}
+.btn-undo{background:transparent;color:var(–muted2);border:1px solid var(–border2);border-radius:2px;padding:9px 14px;font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .15s}
+.btn-undo:hover{border-color:var(–accent2);color:var(–accent2)}
 
 /* BENCHMARK */
-.benchmark-block{margin-top:14px;background:var(--bg);border:1px solid var(--border2);border-radius:2px;padding:16px}
-.benchmark-title{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px;text-shadow:0 0 6px var(--accent2)}
+.benchmark-block{margin-top:14px;background:var(–bg);border:1px solid var(–border2);border-radius:2px;padding:16px}
+.benchmark-title{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(–accent2);margin-bottom:14px;text-shadow:0 0 6px var(–accent2)}
 .annie-breakdown{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
-.annie-round{background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:52px;transition:border-color .15s}
-.annie-round:hover{border-color:var(--accent)}
-.annie-reps{font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);line-height:1;text-shadow:0 0 8px var(--accent3)}
-.annie-movements{font-size:8px;color:var(--muted2);text-transform:uppercase;letter-spacing:.5px;margin-top:4px;font-family:'Press Start 2P',monospace}
+.annie-round{background:var(–surface);border:1px solid var(–border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:52px;transition:border-color .15s}
+.annie-round:hover{border-color:var(–accent)}
+.annie-reps{font-family:‘Press Start 2P’,monospace;font-size:18px;color:var(–accent3);line-height:1;text-shadow:0 0 8px var(–accent3)}
+.annie-movements{font-size:8px;color:var(–muted2);text-transform:uppercase;letter-spacing:.5px;margin-top:4px;font-family:‘Press Start 2P’,monospace}
 .time-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.time-label{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);white-space:nowrap}
-.time-input{background:var(--surface);border:2px solid var(--border2);border-radius:2px;color:var(--accent3);font-family:'Press Start 2P',monospace;font-size:18px;letter-spacing:3px;padding:8px 12px;width:120px;text-align:center;transition:border-color .15s}
-.time-input:focus{outline:none;border-color:var(--accent3);box-shadow:0 0 12px rgba(255,204,0,.2)}
-.time-input::placeholder{color:var(--muted);font-size:12px;font-weight:400;letter-spacing:1px}
-.pr-display{font-family:'Press Start 2P',monospace;font-size:22px;color:var(--done);margin-bottom:12px;text-shadow:0 0 12px var(--done)}
-.pr-display span{font-size:9px;font-weight:400;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;display:block;margin-top:5px}
+.time-label{font-family:‘Press Start 2P’,monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(–muted2);white-space:nowrap}
+.time-input{background:var(–surface);border:2px solid var(–border2);border-radius:2px;color:var(–accent3);font-family:‘Press Start 2P’,monospace;font-size:18px;letter-spacing:3px;padding:8px 12px;width:120px;text-align:center;transition:border-color .15s}
+.time-input:focus{outline:none;border-color:var(–accent3);box-shadow:0 0 12px rgba(255,204,0,.2)}
+.time-input::placeholder{color:var(–muted);font-size:12px;font-weight:400;letter-spacing:1px}
+.pr-display{font-family:‘Press Start 2P’,monospace;font-size:22px;color:var(–done);margin-bottom:12px;text-shadow:0 0 12px var(–done)}
+.pr-display span{font-size:9px;font-weight:400;color:var(–muted2);text-transform:uppercase;letter-spacing:1px;display:block;margin-top:5px}
 
 /* RING ROW LOG */
-.rr-log-block{margin-top:14px;background:var(--bg);border:1px solid var(--border2);border-radius:2px;padding:16px}
-.rr-log-title{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px;text-shadow:0 0 6px var(--accent2)}
+.rr-log-block{margin-top:14px;background:var(–bg);border:1px solid var(–border2);border-radius:2px;padding:16px}
+.rr-log-title{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(–accent2);margin-bottom:14px;text-shadow:0 0 6px var(–accent2)}
 .rr-positions{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-.rr-pos-card{background:var(--surface);border:2px solid var(--border2);border-radius:2px;padding:10px 12px;flex:1;min-width:100px;text-align:center;cursor:pointer;transition:all .15s}
-.rr-pos-card:hover{border-color:var(--accent)}
-.rr-pos-card.unlocked{border-color:var(--accent);background:rgba(0,255,204,.05)}
-.rr-pos-card.complete{border-color:var(--done);background:rgba(0,255,204,.08)}
-.rr-pos-name{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);margin-bottom:6px}
-.rr-pos-card.unlocked .rr-pos-name{color:var(--accent)}
-.rr-pos-card.complete .rr-pos-name{color:var(--done)}
-.rr-pos-best{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--accent3)}
-.rr-add-form{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px;padding:12px;background:var(--surface);border:1px solid var(--border2);border-radius:2px}
+.rr-pos-card{background:var(–surface);border:2px solid var(–border2);border-radius:2px;padding:10px 12px;flex:1;min-width:100px;text-align:center;cursor:pointer;transition:all .15s}
+.rr-pos-card:hover{border-color:var(–accent)}
+.rr-pos-card.unlocked{border-color:var(–accent);background:rgba(0,255,204,.05)}
+.rr-pos-card.complete{border-color:var(–done);background:rgba(0,255,204,.08)}
+.rr-pos-name{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(–muted2);margin-bottom:6px}
+.rr-pos-card.unlocked .rr-pos-name{color:var(–accent)}
+.rr-pos-card.complete .rr-pos-name{color:var(–done)}
+.rr-pos-best{font-family:‘Press Start 2P’,monospace;font-size:11px;color:var(–accent3)}
+.rr-add-form{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px;padding:12px;background:var(–surface);border:1px solid var(–border2);border-radius:2px}
 .rr-form-field{display:flex;flex-direction:column;gap:4px}
-.rr-form-label{font-family:'Press Start 2P',monospace;font-size:7px;letter-spacing:1px;text-transform:uppercase;color:var(--muted2)}
-.rr-select,.rr-small-input{background:var(--bg);border:1px solid var(--border2);border-radius:2px;color:var(--text);font-family:'Press Start 2P',monospace;font-size:9px;padding:7px 10px;transition:border-color .15s}
-.rr-select:focus,.rr-small-input:focus{outline:none;border-color:var(--accent)}
+.rr-form-label{font-family:‘Press Start 2P’,monospace;font-size:7px;letter-spacing:1px;text-transform:uppercase;color:var(–muted2)}
+.rr-select,.rr-small-input{background:var(–bg);border:1px solid var(–border2);border-radius:2px;color:var(–text);font-family:‘Press Start 2P’,monospace;font-size:9px;padding:7px 10px;transition:border-color .15s}
+.rr-select:focus,.rr-small-input:focus{outline:none;border-color:var(–accent)}
 .rr-small-input{width:60px;text-align:center}
-.rr-notes-input{background:var(--bg);border:1px solid var(--border2);border-radius:2px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:500;padding:7px 10px;width:160px;transition:border-color .15s}
-.rr-notes-input:focus{outline:none;border-color:var(--accent)}
+.rr-notes-input{background:var(–bg);border:1px solid var(–border2);border-radius:2px;color:var(–text);font-family:‘Rajdhani’,sans-serif;font-size:13px;font-weight:500;padding:7px 10px;width:160px;transition:border-color .15s}
+.rr-notes-input:focus{outline:none;border-color:var(–accent)}
 .rr-entries{max-height:180px;overflow-y:auto;margin-top:8px}
-.rr-entry{display:flex;align-items:center;gap:10px;padding:8px 10px;border-bottom:1px solid var(--border);font-size:12px;font-weight:500}
+.rr-entry{display:flex;align-items:center;gap:10px;padding:8px 10px;border-bottom:1px solid var(–border);font-size:12px;font-weight:500}
 .rr-entry:last-child{border-bottom:none}
-.rr-entry-date{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--muted2);white-space:nowrap}
-.rr-entry-pos{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--accent);min-width:80px}
-.rr-entry-reps{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent3)}
-.rr-entry-notes{color:var(--muted2);font-size:12px;flex:1;font-style:italic}
-.rr-entry-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:0 4px;transition:color .15s}
-.rr-entry-del:hover{color:var(--accent2)}
+.rr-entry-date{font-family:‘Press Start 2P’,monospace;font-size:7px;color:var(–muted2);white-space:nowrap}
+.rr-entry-pos{font-family:‘Press Start 2P’,monospace;font-size:8px;color:var(–accent);min-width:80px}
+.rr-entry-reps{font-family:‘Press Start 2P’,monospace;font-size:9px;color:var(–accent3)}
+.rr-entry-notes{color:var(–muted2);font-size:12px;flex:1;font-style:italic}
+.rr-entry-del{background:none;border:none;color:var(–muted);cursor:pointer;font-size:14px;padding:0 4px;transition:color .15s}
+.rr-entry-del:hover{color:var(–accent2)}
 
 /* ALL DONE */
 .all-done-banner{max-width:860px;margin:20px auto 0;padding:0 28px;display:none}
 .all-done-banner.show{display:block}
-.all-done-inner{background:rgba(0,255,204,.04);border:2px solid var(--accent);border-radius:2px;padding:28px;text-align:center;box-shadow:0 0 30px rgba(0,255,204,.1);animation:pulse-border 2s infinite}
-.all-done-inner h2{font-family:'Press Start 2P',monospace;font-size:clamp(14px,3.5vw,22px);text-transform:uppercase;color:var(--accent);letter-spacing:2px;margin-bottom:10px;text-shadow:0 0 20px var(--accent);animation:glitch 4s infinite}
-.all-done-inner p{font-size:14px;color:var(--muted2);font-weight:500}
+.all-done-inner{background:rgba(0,255,204,.04);border:2px solid var(–accent);border-radius:2px;padding:28px;text-align:center;box-shadow:0 0 30px rgba(0,255,204,.1);animation:pulse-border 2s infinite}
+.all-done-inner h2{font-family:‘Press Start 2P’,monospace;font-size:clamp(14px,3.5vw,22px);text-transform:uppercase;color:var(–accent);letter-spacing:2px;margin-bottom:10px;text-shadow:0 0 20px var(–accent);animation:glitch 4s infinite}
+.all-done-inner p{font-size:14px;color:var(–muted2);font-weight:500}
 
 /* LEADERBOARD */
 .leaderboard-wrap{max-width:860px;margin:0 auto;padding:32px 28px}
-.lb-title{font-family:'Press Start 2P',monospace;font-size:clamp(20px,5vw,40px);text-transform:uppercase;line-height:1.25;margin-bottom:10px;animation:glitch 8s infinite}
-.lb-title span{color:var(--accent2);text-shadow:0 0 15px var(--accent2)}
-.lb-sub{font-size:14px;color:var(--muted2);font-weight:500;margin-bottom:24px}
+.lb-title{font-family:‘Press Start 2P’,monospace;font-size:clamp(20px,5vw,40px);text-transform:uppercase;line-height:1.25;margin-bottom:10px;animation:glitch 8s infinite}
+.lb-title span{color:var(–accent2);text-shadow:0 0 15px var(–accent2)}
+.lb-sub{font-size:14px;color:var(–muted2);font-weight:500;margin-bottom:24px}
 table{width:100%;border-collapse:collapse}
-thead th{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);text-align:left;padding:10px 16px;border-bottom:2px solid var(--border2)}
+thead th{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(–accent);text-align:left;padding:10px 16px;border-bottom:2px solid var(–border2)}
 thead th:last-child{text-align:right}
-.lb-row{border-bottom:1px solid var(--border2);transition:background .1s}
+.lb-row{border-bottom:1px solid var(–border2);transition:background .1s}
 .lb-row:hover{background:rgba(0,255,204,.02)}
-.lb-row.is-me{background:rgba(255,204,0,.04);border-left:2px solid var(--accent3)}
+.lb-row.is-me{background:rgba(255,204,0,.04);border-left:2px solid var(–accent3)}
 .lb-row td{padding:14px 16px;vertical-align:middle}
-.lb-rank{font-family:'Press Start 2P',monospace;font-size:18px;color:var(--muted);width:50px}
+.lb-rank{font-family:‘Press Start 2P’,monospace;font-size:18px;color:var(–muted);width:50px}
 .lb-rank.gold{color:#ffd700;text-shadow:0 0 10px #ffd700}
 .lb-rank.silver{color:#c0c0c0;text-shadow:0 0 8px #c0c0c0}
 .lb-rank.bronze{color:#cd7f32;text-shadow:0 0 8px #cd7f32}
-.lb-name{font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase}
-.you-tag{font-size:8px;color:var(--accent3);background:rgba(255,204,0,.1);border:1px solid rgba(255,204,0,.3);border-radius:2px;padding:2px 6px;margin-left:8px;letter-spacing:1px;vertical-align:middle;font-family:'Press Start 2P',monospace}
-.lb-time{font-family:'Press Start 2P',monospace;font-size:16px;color:var(--done);text-align:right;text-shadow:0 0 8px var(--done)}
-.lb-empty{text-align:center;padding:60px 20px;font-size:11px;color:var(--muted2);font-family:'Press Start 2P',monospace;line-height:2.5}
-.lb-empty .blink{animation:blink 1s infinite;color:var(--accent2)}
+.lb-name{font-family:‘Press Start 2P’,monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase}
+.you-tag{font-size:8px;color:var(–accent3);background:rgba(255,204,0,.1);border:1px solid rgba(255,204,0,.3);border-radius:2px;padding:2px 6px;margin-left:8px;letter-spacing:1px;vertical-align:middle;font-family:‘Press Start 2P’,monospace}
+.lb-time{font-family:‘Press Start 2P’,monospace;font-size:16px;color:var(–done);text-align:right;text-shadow:0 0 8px var(–done)}
+.lb-empty{text-align:center;padding:60px 20px;font-size:11px;color:var(–muted2);font-family:‘Press Start 2P’,monospace;line-height:2.5}
+.lb-empty .blink{animation:blink 1s infinite;color:var(–accent2)}
 .lb-footer{display:flex;align-items:center;gap:12px;margin-top:20px}
-.lb-refresh-btn{background:var(--card);border:1px solid var(--border2);border-radius:2px;color:var(--muted2);font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;cursor:pointer;transition:all .15s}
-.lb-refresh-btn:hover{color:var(--accent);border-color:var(--accent)}
-.lb-updated{font-size:9px;color:var(--muted);font-family:'Press Start 2P',monospace}
+.lb-refresh-btn{background:var(–card);border:1px solid var(–border2);border-radius:2px;color:var(–muted2);font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;cursor:pointer;transition:all .15s}
+.lb-refresh-btn:hover{color:var(–accent);border-color:var(–accent)}
+.lb-updated{font-size:9px;color:var(–muted);font-family:‘Press Start 2P’,monospace}
 
-.chat-msg{padding:10px 12px;border-bottom:1px solid var(--border);position:relative}
+.chat-msg{padding:10px 12px;border-bottom:1px solid var(–border);position:relative}
 .chat-msg:last-child{border-bottom:none}
 .chat-msg-header{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
-.chat-msg-user{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase}
-.chat-msg-user.is-coach{color:var(--accent3);text-shadow:0 0 6px var(--accent3)}
-.chat-msg-user.is-me{color:var(--accent)}
-.chat-msg-user.is-other{color:var(--muted2)}
-.chat-msg-time{font-size:10px;color:var(--muted);font-family:'Press Start 2P',monospace}
-.chat-msg-text{font-size:15px;font-weight:500;line-height:1.5;color:var(--text);white-space:pre-wrap;word-break:break-word}
+.chat-msg-user{font-family:‘Press Start 2P’,monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase}
+.chat-msg-user.is-coach{color:var(–accent3);text-shadow:0 0 6px var(–accent3)}
+.chat-msg-user.is-me{color:var(–accent)}
+.chat-msg-user.is-other{color:var(–muted2)}
+.chat-msg-time{font-size:10px;color:var(–muted);font-family:‘Press Start 2P’,monospace}
+.chat-msg-text{font-size:15px;font-weight:500;line-height:1.5;color:var(–text);white-space:pre-wrap;word-break:break-word}
 .chat-msg-actions{position:absolute;top:10px;right:10px;display:flex;gap:6px;opacity:0;transition:opacity .15s}
 .chat-msg:hover .chat-msg-actions{opacity:1}
-.chat-pin-btn,.chat-del-btn{background:none;border:1px solid var(--border2);border-radius:2px;font-family:'Press Start 2P',monospace;font-size:7px;padding:3px 6px;cursor:pointer;transition:all .15s}
-.chat-pin-btn{color:var(--accent3)}
-.chat-pin-btn:hover{border-color:var(--accent3);background:rgba(255,204,0,.08)}
-.chat-del-btn{color:var(--accent2)}
-.chat-del-btn:hover{border-color:var(--accent2);background:rgba(255,0,170,.08)}
+.chat-pin-btn,.chat-del-btn{background:none;border:1px solid var(–border2);border-radius:2px;font-family:‘Press Start 2P’,monospace;font-size:7px;padding:3px 6px;cursor:pointer;transition:all .15s}
+.chat-pin-btn{color:var(–accent3)}
+.chat-pin-btn:hover{border-color:var(–accent3);background:rgba(255,204,0,.08)}
+.chat-del-btn{color:var(–accent2)}
+.chat-del-btn:hover{border-color:var(–accent2);background:rgba(255,0,170,.08)}
 .chat-pinned-block{background:rgba(255,204,0,.06);border:1px solid rgba(255,204,0,.3);border-radius:2px;padding:12px 14px}
-.chat-pinned-label{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;color:var(--accent3);margin-bottom:6px;text-shadow:0 0 6px var(--accent3)}
-.chat-pinned-text{font-size:14px;font-weight:500;color:var(--text);line-height:1.5;white-space:pre-wrap}
-.chat-pinned-by{font-size:11px;color:var(--muted2);margin-top:4px}
-.chat-input:focus{outline:none;border-color:var(--accent)}
+.chat-pinned-label{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:2px;color:var(–accent3);margin-bottom:6px;text-shadow:0 0 6px var(–accent3)}
+.chat-pinned-text{font-size:14px;font-weight:500;color:var(–text);line-height:1.5;white-space:pre-wrap}
+.chat-pinned-by{font-size:11px;color:var(–muted2);margin-top:4px}
+.chat-input:focus{outline:none;border-color:var(–accent)}
 
 .crt-wrap{margin-top:16px;display:flex;justify-content:center}
 .crt-tv{position:relative;background:#1a1008;border-radius:16px 16px 20px 20px;padding:18px 20px 28px;border:4px solid #3a2a10;box-shadow:0 0 0 2px #2a1a08,0 8px 24px rgba(0,0,0,.8),inset 0 2px 0 rgba(255,255,255,.05);max-width:420px;width:100%}
-.crt-tv::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,transparent 50%);pointer-events:none}
+.crt-tv::before{content:’’;position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,transparent 50%);pointer-events:none}
 .crt-screen-wrap{position:relative;border-radius:8px;overflow:hidden;border:3px solid #111;box-shadow:inset 0 0 12px rgba(0,0,0,.9),0 0 8px rgba(0,255,204,.15)}
-.crt-screen-wrap::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.15) 2px,rgba(0,0,0,.15) 4px);pointer-events:none;z-index:2}
-.crt-screen-wrap::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,.5) 100%);pointer-events:none;z-index:3;border-radius:8px}
+.crt-screen-wrap::before{content:’’;position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.15) 2px,rgba(0,0,0,.15) 4px);pointer-events:none;z-index:2}
+.crt-screen-wrap::after{content:’’;position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,.5) 100%);pointer-events:none;z-index:3;border-radius:8px}
 .crt-screen-wrap iframe{display:block;width:100%;aspect-ratio:16/9;border:none}
-.crt-brand{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;color:#8b6914;text-align:center;margin-top:10px;text-shadow:0 1px 0 rgba(0,0,0,.8)}
+.crt-brand{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:2px;color:#8b6914;text-align:center;margin-top:10px;text-shadow:0 1px 0 rgba(0,0,0,.8)}
 .crt-knobs{display:flex;justify-content:flex-end;gap:8px;margin-top:8px;padding-right:4px}
 .crt-knob{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#555,#222);border:1px solid #111;box-shadow:0 1px 2px rgba(0,0,0,.6)}
 .crt-knob.big{width:14px;height:14px}
 .crt-feet{display:flex;justify-content:space-between;padding:0 20px;margin-top:-2px}
 .crt-foot{width:24px;height:8px;background:#1a1008;border-radius:0 0 4px 4px;border:2px solid #3a2a10;border-top:none}
 
-.coach-filter.active{color:var(--accent);border-color:var(--accent);box-shadow:0 0 8px rgba(0,255,204,.2)}
+.coach-filter.active{color:var(–accent);border-color:var(–accent);box-shadow:0 0 8px rgba(0,255,204,.2)}
 
 /* MODE BUTTONS */
-.mode-btn{flex:1;background:var(--card);border:2px solid var(--border2);border-radius:3px;padding:16px;cursor:pointer;transition:all .2s;text-align:left;display:flex;flex-direction:column;gap:4px}
-.mode-btn:hover{border-color:var(--accent);background:rgba(0,255,204,.03)}
-.mode-btn.active{border-color:var(--accent);background:rgba(0,255,204,.05);box-shadow:0 0 20px rgba(0,255,204,.08)}
+.mode-btn{flex:1;background:var(–card);border:2px solid var(–border2);border-radius:3px;padding:16px;cursor:pointer;transition:all .2s;text-align:left;display:flex;flex-direction:column;gap:4px}
+.mode-btn:hover{border-color:var(–accent);background:rgba(0,255,204,.03)}
+.mode-btn.active{border-color:var(–accent);background:rgba(0,255,204,.05);box-shadow:0 0 20px rgba(0,255,204,.08)}
 .mode-icon{font-size:22px;margin-bottom:4px;display:block}
-.mode-label{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;color:var(--text);text-transform:uppercase}
-.mode-btn.active .mode-label{color:var(--accent);text-shadow:0 0 8px var(--accent)}
-.mode-sub{font-size:12px;color:var(--muted2);font-weight:500}
+.mode-label{font-family:‘Press Start 2P’,monospace;font-size:9px;letter-spacing:1px;color:var(–text);text-transform:uppercase}
+.mode-btn.active .mode-label{color:var(–accent);text-shadow:0 0 8px var(–accent)}
+.mode-sub{font-size:12px;color:var(–muted2);font-weight:500}
 
 /* SKILL TREE */
 .st-node{display:inline-flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:transform .15s}
-.st-node:hover .st-box{border-color:var(--accent);box-shadow:0 0 16px rgba(0,255,204,.2)}
+.st-node:hover .st-box{border-color:var(–accent);box-shadow:0 0 16px rgba(0,255,204,.2)}
 .st-node:hover{transform:translateY(-2px)}
-.st-box{background:var(--card);border:2px solid var(--border2);border-radius:3px;padding:14px 16px;text-align:center;min-width:120px;transition:all .2s;position:relative}
-.st-box.st-active{border-color:var(--accent3);box-shadow:0 0 18px rgba(255,204,0,.12);animation:pulse-border 2s infinite}
-.st-box.st-locked{border-color:var(--border);opacity:.4;cursor:default;pointer-events:none}
+.st-box{background:var(–card);border:2px solid var(–border2);border-radius:3px;padding:14px 16px;text-align:center;min-width:120px;transition:all .2s;position:relative}
+.st-box.st-active{border-color:var(–accent3);box-shadow:0 0 18px rgba(255,204,0,.12);animation:pulse-border 2s infinite}
+.st-box.st-locked{border-color:var(–border);opacity:.4;cursor:default;pointer-events:none}
 .st-icon{font-size:22px;margin-bottom:6px;display:block}
-.st-name{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:.5px;color:var(--text);text-transform:uppercase;line-height:1.5}
-.st-box.st-active .st-name{color:var(--accent3)}
-.st-box.st-locked .st-name{color:var(--muted)}
-.st-lock{font-size:9px;color:var(--muted);margin-top:4px;font-family:'Press Start 2P',monospace}
-.st-pct{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);text-shadow:0 0 6px var(--accent);margin-top:4px}
+.st-name{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:.5px;color:var(–text);text-transform:uppercase;line-height:1.5}
+.st-box.st-active .st-name{color:var(–accent3)}
+.st-box.st-locked .st-name{color:var(–muted)}
+.st-lock{font-size:9px;color:var(–muted);margin-top:4px;font-family:‘Press Start 2P’,monospace}
+.st-pct{font-family:‘Press Start 2P’,monospace;font-size:9px;color:var(–accent);text-shadow:0 0 6px var(–accent);margin-top:4px}
 .st-col{display:flex;flex-direction:column;align-items:center}
-.st-vline{width:2px;height:28px;background:var(--border2)}
-.st-hline{height:2px;background:var(--border2);flex:1}
+.st-vline{width:2px;height:28px;background:var(–border2)}
+.st-hline{height:2px;background:var(–border2);flex:1}
 .st-row{display:flex;align-items:flex-start;justify-content:center}
 .st-branch-row{display:flex;align-items:flex-start;justify-content:center;gap:0}
 .st-branch-col{display:flex;flex-direction:column;align-items:center}
 .st-merge{display:flex;align-items:center;justify-content:center;width:100%}
 
 /* UPGRADE CARDS */
-.upgrade-card{background:var(--card);border:2px solid var(--border2);border-radius:3px;padding:18px 20px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all .2s}
-.upgrade-card:hover{border-color:var(--accent2);box-shadow:0 0 18px rgba(255,0,170,.08);transform:translateY(-1px)}
+.upgrade-card{background:var(–card);border:2px solid var(–border2);border-radius:3px;padding:18px 20px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all .2s}
+.upgrade-card:hover{border-color:var(–accent2);box-shadow:0 0 18px rgba(255,0,170,.08);transform:translateY(-1px)}
 .upgrade-card-locked{opacity:.4;pointer-events:none}
 .upgrade-card-icon{font-size:28px;flex-shrink:0}
 .upgrade-card-body{flex:1}
-.upgrade-card-name{font-family:'Press Start 2P',monospace;font-size:10px;letter-spacing:.5px;color:var(--text);text-transform:uppercase;margin-bottom:6px}
-.upgrade-card:hover .upgrade-card-name{color:var(--accent2)}
-.upgrade-card-desc{font-size:13px;color:var(--muted2);font-weight:500;line-height:1.5}
-.upgrade-card-arrow{font-family:'Press Start 2P',monospace;font-size:14px;color:var(--accent2);flex-shrink:0}
+.upgrade-card-name{font-family:‘Press Start 2P’,monospace;font-size:10px;letter-spacing:.5px;color:var(–text);text-transform:uppercase;margin-bottom:6px}
+.upgrade-card:hover .upgrade-card-name{color:var(–accent2)}
+.upgrade-card-desc{font-size:13px;color:var(–muted2);font-weight:500;line-height:1.5}
+.upgrade-card-arrow{font-family:‘Press Start 2P’,monospace;font-size:14px;color:var(–accent2);flex-shrink:0}
 
 #disclaimer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(4px);background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,204,.02) 2px,rgba(0,255,204,.02) 4px)}
-#disclaimer-box{background:var(--bg);border:3px solid var(--accent2);border-radius:2px;padding:36px 32px;max-width:460px;width:100%;position:relative;box-shadow:0 0 0 1px var(--border),0 0 40px rgba(255,0,170,.2),inset 0 0 60px rgba(255,0,170,.03);animation:float-in .4s ease both}
-#disclaimer-box .corner{border-color:var(--accent2)}
-.disclaimer-title{font-family:'Press Start 2P',monospace;font-size:14px;letter-spacing:3px;color:var(--accent2);text-shadow:0 0 16px var(--accent2);margin-bottom:10px;text-transform:uppercase;text-align:center}
-.disclaimer-body{font-size:14px;color:var(--muted2);line-height:1.8;font-weight:500;margin-bottom:24px;border-left:3px solid var(--accent2);padding-left:14px}
-.disclaimer-body strong{color:var(--text)}
-.disclaimer-btn{width:100%;background:transparent;color:var(--accent2);border:2px solid var(--accent2);border-radius:2px;padding:14px;font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .15s;text-shadow:0 0 8px var(--accent2)}
-.disclaimer-btn:hover{background:var(--accent2);color:#000;box-shadow:0 0 24px rgba(255,0,170,.4);text-shadow:none}
-.coach-athlete-card{background:var(--card);border:2px solid var(--border2);border-radius:2px;margin-bottom:16px;overflow:hidden}
-.coach-athlete-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;border-bottom:1px solid var(--border2)}
-.coach-athlete-name{font-family:'Press Start 2P',monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--accent3)}
-.coach-athlete-meta{font-size:12px;color:var(--muted2);font-weight:500}
+#disclaimer-box{background:var(–bg);border:3px solid var(–accent2);border-radius:2px;padding:36px 32px;max-width:460px;width:100%;position:relative;box-shadow:0 0 0 1px var(–border),0 0 40px rgba(255,0,170,.2),inset 0 0 60px rgba(255,0,170,.03);animation:float-in .4s ease both}
+#disclaimer-box .corner{border-color:var(–accent2)}
+.disclaimer-title{font-family:‘Press Start 2P’,monospace;font-size:14px;letter-spacing:3px;color:var(–accent2);text-shadow:0 0 16px var(–accent2);margin-bottom:10px;text-transform:uppercase;text-align:center}
+.disclaimer-body{font-size:14px;color:var(–muted2);line-height:1.8;font-weight:500;margin-bottom:24px;border-left:3px solid var(–accent2);padding-left:14px}
+.disclaimer-body strong{color:var(–text)}
+.disclaimer-btn{width:100%;background:transparent;color:var(–accent2);border:2px solid var(–accent2);border-radius:2px;padding:14px;font-family:‘Press Start 2P’,monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .15s;text-shadow:0 0 8px var(–accent2)}
+.disclaimer-btn:hover{background:var(–accent2);color:#000;box-shadow:0 0 24px rgba(255,0,170,.4);text-shadow:none}
+.coach-athlete-card{background:var(–card);border:2px solid var(–border2);border-radius:2px;margin-bottom:16px;overflow:hidden}
+.coach-athlete-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;border-bottom:1px solid var(–border2)}
+.coach-athlete-name{font-family:‘Press Start 2P’,monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(–accent3)}
+.coach-athlete-meta{font-size:12px;color:var(–muted2);font-weight:500}
 .coach-athlete-body{display:none;padding:16px 18px}
 .coach-athlete-card.open .coach-athlete-body{display:block}
-.coach-track-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--border)}
+.coach-track-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(–border)}
 .coach-track-row:last-child{border-bottom:none}
-.coach-track-name{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px;color:var(--muted2);min-width:120px}
-.coach-track-bar-wrap{flex:1;height:10px;background:var(--bg);border:1px solid var(--border2);border-radius:1px;overflow:hidden}
-.coach-track-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .4s ease}
-.coach-track-pct{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--accent3);min-width:36px;text-align:right}
-.coach-rr-log{margin-top:10px;padding:10px;background:var(--bg);border:1px solid var(--border2);border-radius:2px}
-.coach-rr-title{font-family:'Press Start 2P',monospace;font-size:7px;letter-spacing:2px;color:var(--accent2);margin-bottom:8px}
-.coach-rr-entry{font-size:12px;color:var(--muted2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;gap:10px}
+.coach-track-name{font-family:‘Press Start 2P’,monospace;font-size:8px;letter-spacing:1px;color:var(–muted2);min-width:120px}
+.coach-track-bar-wrap{flex:1;height:10px;background:var(–bg);border:1px solid var(–border2);border-radius:1px;overflow:hidden}
+.coach-track-bar-fill{height:100%;background:linear-gradient(90deg,var(–accent),var(–accent2));transition:width .4s ease}
+.coach-track-pct{font-family:‘Press Start 2P’,monospace;font-size:8px;color:var(–accent3);min-width:36px;text-align:right}
+.coach-rr-log{margin-top:10px;padding:10px;background:var(–bg);border:1px solid var(–border2);border-radius:2px}
+.coach-rr-title{font-family:‘Press Start 2P’,monospace;font-size:7px;letter-spacing:2px;color:var(–accent2);margin-bottom:8px}
+.coach-rr-entry{font-size:12px;color:var(–muted2);padding:4px 0;border-bottom:1px solid var(–border);display:flex;gap:10px}
 .coach-rr-entry:last-child{border-bottom:none}
 
 @media(max-width:600px){
-  .hero,.leaderboard-wrap,.track-selector{padding-left:16px;padding-right:16px}
-  .steps,.progress-wrap{padding:0 16px}
-  .step-body{padding-left:16px}
-  header{padding:10px 16px}
-  .nav-tabs{padding:0 16px;top:49px}
-  .logo{font-size:9px}
-  .login-box{padding:36px 20px}
-  .hero-title{font-size:20px}
+.hero,.leaderboard-wrap,.track-selector{padding-left:16px;padding-right:16px}
+.steps,.progress-wrap{padding:0 16px}
+.step-body{padding-left:16px}
+header{padding:10px 16px}
+.nav-tabs{padding:0 16px;top:49px}
+.logo{font-size:9px}
+.login-box{padding:36px 20px}
+.hero-title{font-size:20px}
 }
 </style>
+
 </head>
 <body>
 
@@ -359,6 +361,7 @@ thead th:last-child{text-align:right}
 </div>
 
 <!-- CELEBRATION MODAL -->
+
 <div id="celebrate-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9998;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)">
   <div style="background:var(--surface);border:2px solid var(--accent3);border-radius:3px;padding:24px;max-width:500px;width:100%;position:relative;box-shadow:0 0 60px rgba(255,204,0,.15);text-align:center">
     <div class="corner tl" style="border-color:var(--accent3)"></div><div class="corner tr" style="border-color:var(--accent3)"></div>
@@ -415,228 +418,231 @@ thead th:last-child{text-align:right}
 
   <div class="page active" id="page-roadmap">
 
-    <!-- MODE SELECTOR -->
-    <div style="max-width:860px;margin:0 auto;padding:28px 28px 0;display:flex;gap:12px">
-      <button class="mode-btn active" id="mode-unlock" onclick="setMode('unlock')">
-        <span class="mode-icon">🗺</span>
-        <span class="mode-label">Unlock a Skill</span>
-        <span class="mode-sub">Learn something new</span>
-      </button>
-      <button class="mode-btn" id="mode-upgrade" onclick="setMode('upgrade')">
-        <span class="mode-icon">⬆</span>
-        <span class="mode-label">Upgrade a Skill</span>
-        <span class="mode-sub">More volume · More strength</span>
-      </button>
-    </div>
+```
+<!-- MODE SELECTOR -->
+<div style="max-width:860px;margin:0 auto;padding:28px 28px 0;display:flex;gap:12px">
+  <button class="mode-btn active" id="mode-unlock" onclick="setMode('unlock')">
+    <span class="mode-icon">🗺</span>
+    <span class="mode-label">Unlock a Skill</span>
+    <span class="mode-sub">Learn something new</span>
+  </button>
+  <button class="mode-btn" id="mode-upgrade" onclick="setMode('upgrade')">
+    <span class="mode-icon">⬆</span>
+    <span class="mode-label">Upgrade a Skill</span>
+    <span class="mode-sub">More volume · More strength</span>
+  </button>
+</div>
 
-    <!-- UNLOCK MODE: ARCADE SKILL TREE -->
-    <div id="mode-unlock-content">
-      <div style="max-width:860px;margin:0 auto;padding:20px 28px 0">
-        <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;color:var(--accent);margin-bottom:4px;text-shadow:0 0 8px var(--accent)">// SKILL TREE</div>
-        <div style="font-size:13px;color:var(--muted2);font-weight:500;margin-bottom:20px">Tap a node to enter that track. Complete skills to unlock the next branch.</div>
-      </div>
-      <div id="skill-tree-wrap" style="max-width:860px;margin:0 auto;padding:0 28px 28px;overflow-x:auto">
-        <div id="skill-tree" style="min-width:320px;padding:8px 0"></div>
-      </div>
-    </div>
+<!-- UNLOCK MODE: ARCADE SKILL TREE -->
+<div id="mode-unlock-content">
+  <div style="max-width:860px;margin:0 auto;padding:20px 28px 0">
+    <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;color:var(--accent);margin-bottom:4px;text-shadow:0 0 8px var(--accent)">// SKILL TREE</div>
+    <div style="font-size:13px;color:var(--muted2);font-weight:500;margin-bottom:20px">Tap a node to enter that track. Complete skills to unlock the next branch.</div>
+  </div>
+  <div id="skill-tree-wrap" style="max-width:860px;margin:0 auto;padding:0 28px 28px;overflow-x:auto">
+    <div id="skill-tree" style="min-width:320px;padding:8px 0"></div>
+  </div>
+</div>
 
-    <!-- UPGRADE MODE: LIST -->
-    <div id="mode-upgrade-content" style="display:none">
-      <div style="max-width:860px;margin:0 auto;padding:20px 28px 0">
-        <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;color:var(--accent2);margin-bottom:4px;text-shadow:0 0 8px var(--accent2)">// UPGRADE PROGRAMS</div>
-        <div style="font-size:13px;color:var(--muted2);font-weight:500;margin-bottom:20px">Targeted programs to build volume and strength on skills you already have.</div>
+<!-- UPGRADE MODE: LIST -->
+<div id="mode-upgrade-content" style="display:none">
+  <div style="max-width:860px;margin:0 auto;padding:20px 28px 0">
+    <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;color:var(--accent2);margin-bottom:4px;text-shadow:0 0 8px var(--accent2)">// UPGRADE PROGRAMS</div>
+    <div style="font-size:13px;color:var(--muted2);font-weight:500;margin-bottom:20px">Targeted programs to build volume and strength on skills you already have.</div>
+  </div>
+  <div style="max-width:860px;margin:0 auto;padding:0 28px 28px;display:flex;flex-direction:column;gap:12px">
+    <div class="upgrade-card" onclick="setMode('unlock');enterTrack('hspu')">
+      <div class="upgrade-card-icon">🤸</div>
+      <div class="upgrade-card-body">
+        <div class="upgrade-card-name">Strict HSPU for Volume</div>
+        <div class="upgrade-card-desc">Build from 1-3 reps to consistent sets of 10+. 4-cycle progressive program with cycle-specific targets.</div>
       </div>
-      <div style="max-width:860px;margin:0 auto;padding:0 28px 28px;display:flex;flex-direction:column;gap:12px">
-        <div class="upgrade-card" onclick="setMode('unlock');enterTrack('hspu')">
-          <div class="upgrade-card-icon">🤸</div>
-          <div class="upgrade-card-body">
-            <div class="upgrade-card-name">Strict HSPU for Volume</div>
-            <div class="upgrade-card-desc">Build from 1-3 reps to consistent sets of 10+. 4-cycle progressive program with cycle-specific targets.</div>
-          </div>
-          <div class="upgrade-card-arrow">▶</div>
-        </div>
-        <div class="upgrade-card upgrade-card-locked">
-          <div class="upgrade-card-icon">🔒</div>
-          <div class="upgrade-card-body">
-            <div class="upgrade-card-name">Double Under Volume</div>
-            <div class="upgrade-card-desc">Coming soon</div>
-          </div>
-        </div>
-        <div class="upgrade-card upgrade-card-locked">
-          <div class="upgrade-card-icon">🔒</div>
-          <div class="upgrade-card-body">
-            <div class="upgrade-card-name">Pull-Up Volume</div>
-            <div class="upgrade-card-desc">Coming soon</div>
-          </div>
-        </div>
+      <div class="upgrade-card-arrow">▶</div>
+    </div>
+    <div class="upgrade-card upgrade-card-locked">
+      <div class="upgrade-card-icon">🔒</div>
+      <div class="upgrade-card-body">
+        <div class="upgrade-card-name">Double Under Volume</div>
+        <div class="upgrade-card-desc">Coming soon</div>
       </div>
     </div>
-
-    <!-- TRACK VIEWS (hidden until selected from tree) -->
-    <div id="track-views" style="display:none">
-      <div style="max-width:860px;margin:0 auto;padding:16px 28px 0;display:flex;align-items:center;gap:10px">
-        <button onclick="closeTrack()" style="background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted2);font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px;padding:6px 12px;cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted2)'">← Back</button>
-        <div id="track-breadcrumb" style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--muted2);letter-spacing:1px"></div>
+    <div class="upgrade-card upgrade-card-locked">
+      <div class="upgrade-card-icon">🔒</div>
+      <div class="upgrade-card-body">
+        <div class="upgrade-card-name">Pull-Up Volume</div>
+        <div class="upgrade-card-desc">Coming soon</div>
       </div>
-
-      <!-- DU TRACK -->
-      <div id="track-du" style="display:none">
-        <div class="hero">
-          <div class="hero-label">// SKILL TRACK · JUMP ROPE</div>
-          <div class="hero-title-row">
-            <h1 class="hero-title">Double<br><span class="highlight">Unders</span></h1>
-            <div class="pixel-guy-wrap"><canvas id="pixel-guy-du" width="64" height="80" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(0,255,204,.4))"></canvas></div>
-          </div>
-        </div>
-        <div class="progress-wrap">
-          <div class="progress-meta">
-            <div class="progress-label">XP Progress</div>
-            <div class="progress-fraction"><span id="du-done-count">0</span> / 10 <span>stages</span></div>
-          </div>
-          <div class="xp-bar-wrap"><div class="xp-bar-fill" id="du-track-fill" style="width:0%"></div><div class="xp-label" id="du-xp-label">0%</div></div>
-          <div class="step-dots" id="du-step-dots"></div>
-        </div>
-        <div class="all-done-banner" id="du-all-done">
-          <div class="all-done-inner"><h2>🏆 Achievement Unlocked!</h2><p>Double-Unders complete. All 10 stages cleared. Now go put them in a WOD.</p></div>
-        </div>
-        <div class="steps" id="du-steps-container"></div>
-        <div class="branch-label boss" id="du-bonus-label" style="display:none"><div class="bl-line"></div>⭐ BONUS LEVEL<div class="bl-line"></div></div>
-        <div id="du-bonus-container" style="display:none;max-width:860px;margin:0 auto;padding:0 28px 28px">
-          <div class="step-card" style="border-color:rgba(255,204,0,0.35);box-shadow:0 0 18px rgba(255,204,0,.06)">
-            <div class="step-corner tl" style="border-color:var(--accent3)"></div><div class="step-corner br" style="border-color:var(--accent3)"></div>
-            <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
-              <div class="step-num" style="font-size:20px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">Rx</div>
-              <div class="step-info">
-                <div class="step-name" style="color:var(--accent3)">Annie</div>
-                <div class="step-preview">50-40-30-20-10 · DUs & Sit-Ups · For Time</div>
-              </div>
-              <div class="step-chevron">▾</div>
-            </div>
-            <div class="step-body" style="padding-left:16px">
-              <div class="drill-label" style="color:var(--accent3)">// The Workout</div>
-              <div class="drill-text" style="border-left-color:var(--accent3)">
-                <div style="display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
-                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">50</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
-                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">40</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
-                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">30</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
-                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">20</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
-                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">10</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
-                </div>
-                <div style="font-size:13px;color:var(--muted2);line-height:1.7">For time. All double-unders must be Rx — no singles. Abmat sit-ups. This is the benchmark that proves you've got the DU volume to compete.</div>
-              </div>
-              <div class="completion-note" style="margin-top:12px;border-color:rgba(255,204,0,.3)">Record your time below. Your score goes on the leaderboard.</div>
-              <div id="du-annie-block"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PULL-UP TRACK -->
-      <div id="track-pullup" style="display:none">
-        <div class="hero">
-          <div class="hero-label">// SKILL TRACK · GYMNASTICS</div>
-          <div class="hero-title-row">
-            <h1 class="hero-title">Pull-ups, Dips<br>&amp; Muscle-Ups...<br><span class="highlight2">Oh My!</span></h1>
-            <div class="pixel-guy-wrap"><canvas id="pixel-guy-pu" width="64" height="80" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(255,0,170,.4))"></canvas></div>
-          </div>
-        </div>
-        <div class="progress-wrap">
-          <div class="progress-meta">
-            <div class="progress-label">XP Progress</div>
-            <div class="progress-fraction"><span id="pu-done-count">0</span> / <span id="pu-total-count">8</span> <span>stages</span></div>
-          </div>
-          <div class="xp-bar-wrap"><div class="xp-bar-fill" id="pu-track-fill" style="width:0%"></div><div class="xp-label" id="pu-xp-label">0%</div></div>
-          <div class="step-dots" id="pu-step-dots"></div>
-        </div>
-        <div class="branch-label trunk"><div class="bl-line"></div>FOUNDATION<div class="bl-line"></div></div>
-        <div class="steps" id="pu-foundation-container"></div>
-        <div class="branch-label split"><div class="bl-line"></div>PULL-UP BRANCH<div class="bl-line"></div></div>
-        <div class="steps" id="pu-trunk-container"></div>
-      </div>
-
-      <!-- HSPU TRACK -->
-      <div id="track-hspu" style="display:none">
-        <div class="hero">
-          <div class="hero-label">// SKILL TRACK · GYMNASTICS</div>
-          <div class="hero-title-row">
-            <h1 class="hero-title">Strict HSPU<br><span class="highlight2">for Volume</span></h1>
-            <div class="pixel-guy-wrap"><canvas id="pixel-hspu" width="80" height="96" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(255,0,170,.4))"></canvas></div>
-          </div>
-          <p class="hero-sub" style="display:block;margin-top:8px">The intent of this track is to add strength and volume of Strict HSPU for athletes who are already capable of doing a strict HSPU with full ROM.</p>
-        </div>
-        <div class="progress-wrap">
-          <div class="progress-meta">
-            <div class="progress-label">XP Progress</div>
-            <div class="progress-fraction"><span id="hspu-done-count">0</span> / <span id="hspu-total-count">0</span> <span>stages</span></div>
-          </div>
-          <div class="xp-bar-wrap"><div class="xp-bar-fill" id="hspu-track-fill" style="width:0%"></div><div class="xp-label" id="hspu-xp-label">0%</div></div>
-          <div class="step-dots" id="hspu-step-dots"></div>
-        </div>
-        <div class="branch-label trunk"><div class="bl-line"></div>OPTIONAL WARM-UP<div class="bl-line"></div></div>
-        <div class="steps" style="padding-bottom:0">
-          <div class="step-card" style="border-color:rgba(0,255,204,0.2)">
-            <div class="step-corner tl"></div><div class="step-corner br"></div>
-            <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
-              <div class="step-num" style="font-size:14px;color:var(--accent)">▶</div>
-              <div class="step-info">
-                <div class="step-name">Optional HSPU Warm-Up</div>
-                <div class="step-preview">~3 min · Do this before every HSPU session</div>
-              </div>
-              <div class="step-chevron">▾</div>
-            </div>
-            <div class="step-body" style="padding-left:16px">
-              <div class="drill-label">// The Warm-Up</div>
-              <div class="drill-text">
-                <div style="margin-bottom:10px"><strong>AMRAP 5:00</strong> (or more as needed)</div>
-                <div style="margin-bottom:10px">1. <strong>Wrist/Forearm Stretch</strong> — 5-10 seconds. Place hands flat on the wall and apply light pressure to stretch wrists and forearms.</div>
-                <div style="margin-bottom:10px">2. <strong>Wrist Circles</strong> — 5 circles in each direction per arm.</div>
-                <div style="margin-bottom:10px">3. <strong>Scap Push-Ups</strong> — 5 reps. From a push-up position, protract and retract the shoulder blades. No arm bend.</div>
-                <div style="margin-bottom:10px">4. <strong>Pike Push-Ups</strong> — 5 reps. Hips high, head to floor, full range of motion.</div>
-                <div>5. <strong>Handstand Shoulder Taps</strong> — 10 reps. Hands on floor, feet on wall. Tap each shoulder alternately while maintaining a tight body position.</div>
-              </div>
-              <div class="completion-note" style="margin-top:12px">This warm-up is optional but recommended before every session. It takes 3 minutes and makes every rep safer and more productive.</div>
-            </div>
-          </div>
-        </div>
-        <div class="branch-label trunk"><div class="bl-line"></div>FOUNDATION<div class="bl-line"></div></div>
-        <div class="steps" id="hspu-foundation-container"></div>
-        <div class="branch-label split" id="hspu-branch-label"><div class="bl-line"></div>HSPU BRANCH · CYCLE <span id="hspu-cycle-num">1</span><div class="bl-line"></div></div>
-        <div class="steps" id="hspu-branch-container"></div>
-        <div class="branch-label boss" id="hspu-bonus-label" style="display:none"><div class="bl-line"></div>⭐ BONUS LEVEL<div class="bl-line"></div></div>
-        <div class="steps" id="hspu-bonus-container" style="display:none;padding-bottom:28px">
-          <div class="step-card" id="diane-card" style="border-color:rgba(255,0,170,0.35);box-shadow:0 0 18px rgba(255,0,170,.06)">
-            <div class="step-corner tl" style="border-color:var(--accent2)"></div><div class="step-corner br" style="border-color:var(--accent2)"></div>
-            <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
-              <div class="step-num" style="font-size:20px;color:var(--accent2);text-shadow:0 0 8px var(--accent2)">Rx</div>
-              <div class="step-info">
-                <div class="step-name" style="color:var(--accent2)">Diane</div>
-                <div class="step-preview">21-15-9 · Deadlift + HSPU · For Time</div>
-              </div>
-              <div class="step-chevron">▾</div>
-            </div>
-            <div class="step-body" style="padding-left:16px">
-              <div class="drill-label" style="color:var(--accent2)">// The Workout</div>
-              <div class="drill-text" style="border-left-color:var(--accent2)">
-                <div style="font-family:'Press Start 2P',monospace;font-size:22px;color:var(--accent2);text-align:center;margin-bottom:16px;text-shadow:0 0 12px var(--accent2)">21 — 15 — 9</div>
-                <div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
-                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 20px;text-align:center;flex:1;min-width:120px">
-                    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted2);margin-bottom:6px">DEADLIFT</div>
-                    <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent3)">225 / 155</div>
-                    <div style="font-size:11px;color:var(--muted2);margin-top:4px">lb</div>
-                  </div>
-                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 20px;text-align:center;flex:1;min-width:120px">
-                    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted2);margin-bottom:6px">HSPU</div>
-                    <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent2)">Kipping OK</div>
-                    <div style="font-size:11px;color:var(--muted2);margin-top:4px">head to mat</div>
-                  </div>
-                </div>
-                <div style="font-size:13px;color:var(--muted2);line-height:1.7">Diane uses kipping HSPU — but the strict strength you've built is exactly what makes kipping HSPU fast and sustainable. More strict capacity means more reps before you blow up. Test it here.</div>
-              </div>
-              <div class="completion-note" style="margin-top:12px;border-color:rgba(255,0,170,.3)">This is a bonus — not a requirement. Log a max set score first, then attempt Diane. Or skip it and start another cycle.</div>
-            </div>
-          </div>
-        </div>
     </div>
+  </div>
+</div>
+
+<!-- TRACK VIEWS (hidden until selected from tree) -->
+<div id="track-views" style="display:none">
+  <div style="max-width:860px;margin:0 auto;padding:16px 28px 0;display:flex;align-items:center;gap:10px">
+    <button onclick="closeTrack()" style="background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted2);font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px;padding:6px 12px;cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted2)'">← Back</button>
+    <div id="track-breadcrumb" style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--muted2);letter-spacing:1px"></div>
+  </div>
+
+  <!-- DU TRACK -->
+  <div id="track-du" style="display:none">
+    <div class="hero">
+      <div class="hero-label">// SKILL TRACK · JUMP ROPE</div>
+      <div class="hero-title-row">
+        <h1 class="hero-title">Double<br><span class="highlight">Unders</span></h1>
+        <div class="pixel-guy-wrap"><canvas id="pixel-guy-du" width="64" height="80" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(0,255,204,.4))"></canvas></div>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <div class="progress-label">XP Progress</div>
+        <div class="progress-fraction"><span id="du-done-count">0</span> / 10 <span>stages</span></div>
+      </div>
+      <div class="xp-bar-wrap"><div class="xp-bar-fill" id="du-track-fill" style="width:0%"></div><div class="xp-label" id="du-xp-label">0%</div></div>
+      <div class="step-dots" id="du-step-dots"></div>
+    </div>
+    <div class="all-done-banner" id="du-all-done">
+      <div class="all-done-inner"><h2>🏆 Achievement Unlocked!</h2><p>Double-Unders complete. All 10 stages cleared. Now go put them in a WOD.</p></div>
+    </div>
+    <div class="steps" id="du-steps-container"></div>
+    <div class="branch-label boss" id="du-bonus-label" style="display:none"><div class="bl-line"></div>⭐ BONUS LEVEL<div class="bl-line"></div></div>
+    <div id="du-bonus-container" style="display:none;max-width:860px;margin:0 auto;padding:0 28px 28px">
+      <div class="step-card" style="border-color:rgba(255,204,0,0.35);box-shadow:0 0 18px rgba(255,204,0,.06)">
+        <div class="step-corner tl" style="border-color:var(--accent3)"></div><div class="step-corner br" style="border-color:var(--accent3)"></div>
+        <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
+          <div class="step-num" style="font-size:20px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">Rx</div>
+          <div class="step-info">
+            <div class="step-name" style="color:var(--accent3)">Annie</div>
+            <div class="step-preview">50-40-30-20-10 · DUs & Sit-Ups · For Time</div>
+          </div>
+          <div class="step-chevron">▾</div>
+        </div>
+        <div class="step-body" style="padding-left:16px">
+          <div class="drill-label" style="color:var(--accent3)">// The Workout</div>
+          <div class="drill-text" style="border-left-color:var(--accent3)">
+            <div style="display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
+              <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">50</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
+              <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">40</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
+              <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">30</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
+              <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">20</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
+              <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 8px;text-align:center;flex:1;min-width:44px"><div style="font-family:'Press Start 2P',monospace;font-size:18px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">10</div><div style="font-size:8px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">DU+SU</div></div>
+            </div>
+            <div style="font-size:13px;color:var(--muted2);line-height:1.7">For time. All double-unders must be Rx — no singles. Abmat sit-ups. This is the benchmark that proves you've got the DU volume to compete.</div>
+          </div>
+          <div class="completion-note" style="margin-top:12px;border-color:rgba(255,204,0,.3)">Record your time below. Your score goes on the leaderboard.</div>
+          <div id="du-annie-block"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PULL-UP TRACK -->
+  <div id="track-pullup" style="display:none">
+    <div class="hero">
+      <div class="hero-label">// SKILL TRACK · GYMNASTICS</div>
+      <div class="hero-title-row">
+        <h1 class="hero-title">Pull-ups, Dips<br>&amp; Muscle-Ups...<br><span class="highlight2">Oh My!</span></h1>
+        <div class="pixel-guy-wrap"><canvas id="pixel-guy-pu" width="64" height="80" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(255,0,170,.4))"></canvas></div>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <div class="progress-label">XP Progress</div>
+        <div class="progress-fraction"><span id="pu-done-count">0</span> / <span id="pu-total-count">8</span> <span>stages</span></div>
+      </div>
+      <div class="xp-bar-wrap"><div class="xp-bar-fill" id="pu-track-fill" style="width:0%"></div><div class="xp-label" id="pu-xp-label">0%</div></div>
+      <div class="step-dots" id="pu-step-dots"></div>
+    </div>
+    <div class="branch-label trunk"><div class="bl-line"></div>FOUNDATION<div class="bl-line"></div></div>
+    <div class="steps" id="pu-foundation-container"></div>
+    <div class="branch-label split"><div class="bl-line"></div>PULL-UP BRANCH<div class="bl-line"></div></div>
+    <div class="steps" id="pu-trunk-container"></div>
+  </div>
+
+  <!-- HSPU TRACK -->
+  <div id="track-hspu" style="display:none">
+    <div class="hero">
+      <div class="hero-label">// SKILL TRACK · GYMNASTICS</div>
+      <div class="hero-title-row">
+        <h1 class="hero-title">Strict HSPU<br><span class="highlight2">for Volume</span></h1>
+        <div class="pixel-guy-wrap"><canvas id="pixel-hspu" width="80" height="96" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(255,0,170,.4))"></canvas></div>
+      </div>
+      <p class="hero-sub" style="display:block;margin-top:8px">The intent of this track is to add strength and volume of Strict HSPU for athletes who are already capable of doing a strict HSPU with full ROM.</p>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <div class="progress-label">XP Progress</div>
+        <div class="progress-fraction"><span id="hspu-done-count">0</span> / <span id="hspu-total-count">0</span> <span>stages</span></div>
+      </div>
+      <div class="xp-bar-wrap"><div class="xp-bar-fill" id="hspu-track-fill" style="width:0%"></div><div class="xp-label" id="hspu-xp-label">0%</div></div>
+      <div class="step-dots" id="hspu-step-dots"></div>
+    </div>
+    <div class="branch-label trunk"><div class="bl-line"></div>OPTIONAL WARM-UP<div class="bl-line"></div></div>
+    <div class="steps" style="padding-bottom:0">
+      <div class="step-card" style="border-color:rgba(0,255,204,0.2)">
+        <div class="step-corner tl"></div><div class="step-corner br"></div>
+        <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
+          <div class="step-num" style="font-size:14px;color:var(--accent)">▶</div>
+          <div class="step-info">
+            <div class="step-name">Optional HSPU Warm-Up</div>
+            <div class="step-preview">~3 min · Do this before every HSPU session</div>
+          </div>
+          <div class="step-chevron">▾</div>
+        </div>
+        <div class="step-body" style="padding-left:16px">
+          <div class="drill-label">// The Warm-Up</div>
+          <div class="drill-text">
+            <div style="margin-bottom:10px"><strong>AMRAP 5:00</strong> (or more as needed)</div>
+            <div style="margin-bottom:10px">1. <strong>Wrist/Forearm Stretch</strong> — 5-10 seconds. Place hands flat on the wall and apply light pressure to stretch wrists and forearms.</div>
+            <div style="margin-bottom:10px">2. <strong>Wrist Circles</strong> — 5 circles in each direction per arm.</div>
+            <div style="margin-bottom:10px">3. <strong>Scap Push-Ups</strong> — 5 reps. From a push-up position, protract and retract the shoulder blades. No arm bend.</div>
+            <div style="margin-bottom:10px">4. <strong>Pike Push-Ups</strong> — 5 reps. Hips high, head to floor, full range of motion.</div>
+            <div>5. <strong>Handstand Shoulder Taps</strong> — 10 reps. Hands on floor, feet on wall. Tap each shoulder alternately while maintaining a tight body position.</div>
+          </div>
+          <div class="completion-note" style="margin-top:12px">This warm-up is optional but recommended before every session. It takes 3 minutes and makes every rep safer and more productive.</div>
+        </div>
+      </div>
+    </div>
+    <div class="branch-label trunk"><div class="bl-line"></div>FOUNDATION<div class="bl-line"></div></div>
+    <div class="steps" id="hspu-foundation-container"></div>
+    <div class="branch-label split" id="hspu-branch-label"><div class="bl-line"></div>HSPU BRANCH · CYCLE <span id="hspu-cycle-num">1</span><div class="bl-line"></div></div>
+    <div class="steps" id="hspu-branch-container"></div>
+    <div class="branch-label boss" id="hspu-bonus-label" style="display:none"><div class="bl-line"></div>⭐ BONUS LEVEL<div class="bl-line"></div></div>
+    <div class="steps" id="hspu-bonus-container" style="display:none;padding-bottom:28px">
+      <div class="step-card" id="diane-card" style="border-color:rgba(255,0,170,0.35);box-shadow:0 0 18px rgba(255,0,170,.06)">
+        <div class="step-corner tl" style="border-color:var(--accent2)"></div><div class="step-corner br" style="border-color:var(--accent2)"></div>
+        <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
+          <div class="step-num" style="font-size:20px;color:var(--accent2);text-shadow:0 0 8px var(--accent2)">Rx</div>
+          <div class="step-info">
+            <div class="step-name" style="color:var(--accent2)">Diane</div>
+            <div class="step-preview">21-15-9 · Deadlift + HSPU · For Time</div>
+          </div>
+          <div class="step-chevron">▾</div>
+        </div>
+        <div class="step-body" style="padding-left:16px">
+          <div class="drill-label" style="color:var(--accent2)">// The Workout</div>
+          <div class="drill-text" style="border-left-color:var(--accent2)">
+            <div style="font-family:'Press Start 2P',monospace;font-size:22px;color:var(--accent2);text-align:center;margin-bottom:16px;text-shadow:0 0 12px var(--accent2)">21 — 15 — 9</div>
+            <div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
+              <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 20px;text-align:center;flex:1;min-width:120px">
+                <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted2);margin-bottom:6px">DEADLIFT</div>
+                <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent3)">225 / 155</div>
+                <div style="font-size:11px;color:var(--muted2);margin-top:4px">lb</div>
+              </div>
+              <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 20px;text-align:center;flex:1;min-width:120px">
+                <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted2);margin-bottom:6px">HSPU</div>
+                <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent2)">Kipping OK</div>
+                <div style="font-size:11px;color:var(--muted2);margin-top:4px">head to mat</div>
+              </div>
+            </div>
+            <div style="font-size:13px;color:var(--muted2);line-height:1.7">Diane uses kipping HSPU — but the strict strength you've built is exactly what makes kipping HSPU fast and sustainable. More strict capacity means more reps before you blow up. Test it here.</div>
+          </div>
+          <div class="completion-note" style="margin-top:12px;border-color:rgba(255,0,170,.3)">This is a bonus — not a requirement. Log a max set score first, then attempt Diane. Or skip it and start another cycle.</div>
+        </div>
+      </div>
+    </div>
+</div>
+```
+
   </div>
 
   <div class="page" id="page-leaderboard">
@@ -684,7 +690,9 @@ thead th:last-child{text-align:right}
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
 <script>
 // ── TRACK DATA ────────────────────────────────────────────────────────────
 const DU_STEPS=[
@@ -797,10 +805,20 @@ const firebaseConfig={
   messagingSenderId:"616259528679",
   appId:"1:616259528679:web:b614c68ce644dfe84d3f42"
 };
-firebase.initializeApp(firebaseConfig);
-const db=firebase.database();
+let db;
+try {
+  firebase.initializeApp(firebaseConfig);
+  db=firebase.database();
+} catch(e) {
+  console.error('Firebase init failed:', e);
+  // Show error in UI if app is visible
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const err = document.getElementById('login-err');
+    if(err) err.textContent = '!! CONNECTION ERROR — CHECK NETWORK !!';
+  });
+}
 
-function fbRef(path){return db.ref(path)}
+function fbRef(path){if(!db)throw new Error('No DB');return db.ref(path)}
 async function fbGet(path){
   const snap=await fbRef(path).once('value');
   return snap.exists()?snap.val():null;
@@ -874,7 +892,7 @@ function launchApp(){
   document.getElementById('mode-unlock-content').style.display='block';
   document.getElementById('mode-upgrade-content').style.display='none';
   document.getElementById('track-views').style.display='none';
-  renderSkillTree();
+  try{renderSkillTree();}catch(e){console.error('renderSkillTree error:',e);}
 }
 
 document.getElementById('switch-btn').addEventListener('click',()=>{
@@ -887,22 +905,29 @@ document.getElementById('switch-btn').addEventListener('click',()=>{
 });
 
 // ── NAV ───────────────────────────────────────────────────────────────────
-document.querySelectorAll('.nav-tab').forEach(tab=>tab.addEventListener('click',()=>{
-  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  tab.classList.add('active');
-  document.getElementById('page-'+tab.dataset.page).classList.add('active');
-  if(tab.dataset.page==='leaderboard')renderLB();
-  if(tab.dataset.page==='coach')renderCoach();
-  if(tab.dataset.page==='chat'){
-    renderChat();
-    // realtime listener
-    if(chatListener) fbRef('chat').off('value',chatListener);
-    chatListener=fbRef('chat').on('value',()=>renderChat());
-  } else {
-    if(chatListener){fbRef('chat').off('value',chatListener);chatListener=null;}
-  }
-}));
+function switchPage(page){
+  try{
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+    const tab=document.querySelector('.nav-tab[data-page="'+page+'"]');
+    if(tab) tab.classList.add('active');
+    ['roadmap','leaderboard','chat','coach'].forEach(p=>{
+      const el=document.getElementById('page-'+p);
+      if(el) el.classList.remove('active');
+    });
+    const target=document.getElementById('page-'+page);
+    if(target) target.classList.add('active');
+    if(page==='leaderboard') renderLB();
+    if(page==='coach') renderCoach();
+    if(page==='chat'){
+      renderChat();
+      if(chatListener) fbRef('chat').off('value',chatListener);
+      chatListener=fbRef('chat').on('value',()=>renderChat());
+    } else {
+      if(chatListener){fbRef('chat').off('value',chatListener);chatListener=null;}
+    }
+  }catch(e){console.error('switchPage error:',e);}
+}
+document.querySelectorAll('.nav-tab').forEach(tab=>tab.addEventListener('click',()=>switchPage(tab.dataset.page)));
 
 // ── TRACK SELECTOR ────────────────────────────────────────────────────────
 document.querySelectorAll('.track-btn').forEach(btn=>btn.addEventListener('click',()=>{
@@ -941,9 +966,9 @@ function enterTrack(track){
   document.getElementById('track-'+track).style.display='block';
   const labels={du:'Double Unders',pullup:'Pull-Up / Dip / MU',hspu:'Strict HSPU for Volume'};
   document.getElementById('track-breadcrumb').textContent='// '+labels[track];
-  if(track==='du') renderDU();
-  if(track==='pullup') renderPU();
-  if(track==='hspu') renderHSPU();
+  if(track==='du') try{renderDU();}catch(e){console.error('renderDU:',e);}
+  if(track==='pullup') try{renderPU();}catch(e){console.error('renderPU:',e);}
+  if(track==='hspu') try{renderHSPU();}catch(e){console.error('renderHSPU:',e);}
 }
 
 function closeTrack(){
@@ -957,7 +982,7 @@ function closeTrack(){
 function setActiveTrack(t){ enterTrack(t); }
 
 async function renderSkillTree(){
-  // Get progress percentages
+  try{
   const duC=await getDUCompleted();
   const puC=await getPUCompleted();
   const duPct=Math.round(duC.length/DU_STEPS.length*100);
@@ -1030,6 +1055,7 @@ async function renderSkillTree(){
 
     </div>
   `;
+  }catch(e){console.error('renderSkillTree error:',e);}
 }
 
 // ── DU STORAGE ────────────────────────────────────────────────────────────
@@ -2357,5 +2383,6 @@ function drawCFDude(ctx, S, frame, yOff){
   animate();
 })();
 </script>
+
 </body>
 </html>
