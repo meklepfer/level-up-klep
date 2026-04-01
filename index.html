@@ -303,7 +303,7 @@ thead th:last-child{text-align:right}
 .upgrade-card-desc{font-size:13px;color:var(--muted2);font-weight:500;line-height:1.5}
 .upgrade-card-arrow{font-family:'Press Start 2P',monospace;font-size:14px;color:var(--accent2);flex-shrink:0}
 
-#disclaimer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(4px);background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,204,.02) 2px,rgba(0,255,204,.02) 4px)}
+#disclaimer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(4px);background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,204,.02) 2px,rgba(0,255,204,.02) 4px)}
 #disclaimer-box{background:var(--bg);border:3px solid var(--accent2);border-radius:2px;padding:36px 32px;max-width:460px;width:100%;position:relative;box-shadow:0 0 0 1px var(--border),0 0 40px rgba(255,0,170,.2),inset 0 0 60px rgba(255,0,170,.03);animation:float-in .4s ease both}
 #disclaimer-box .corner{border-color:var(--accent2)}
 .disclaimer-title{font-family:'Press Start 2P',monospace;font-size:14px;letter-spacing:3px;color:var(--accent2);text-shadow:0 0 16px var(--accent2);margin-bottom:10px;text-transform:uppercase;text-align:center}
@@ -383,6 +383,7 @@ thead th:last-child{text-align:right}
     <div class="corner tl"></div><div class="corner tr"></div>
     <div class="corner bl"></div><div class="corner br"></div>
     <div class="login-hero">
+      <canvas id="pixel-login" width="52" height="84" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 10px rgba(0,255,204,.5))"></canvas>
       <div class="login-title-wrap">
         <div class="login-title-big">LEVEL<br><span>UP</span></div>
         <div class="login-title-small">with Klep</div>
@@ -2111,70 +2112,103 @@ function closeCelebration(){
 document.getElementById('disclaimer-btn').addEventListener('click',()=>{
   document.getElementById('disclaimer-overlay').style.display='none';
 });
+// Show disclaimer on load
+document.getElementById('disclaimer-overlay').style.display='flex';
 
 
 document.getElementById('chat-input').addEventListener('focus',function(){this.style.borderColor='var(--accent)'});
 document.getElementById('chat-input').addEventListener('blur',function(){this.style.borderColor='var(--border2)'});
 
-// ── PIXEL HSPU GUY ────────────────────────────────────────────────────────
+// ── MOHAWK DUDE HSPU ──────────────────────────────────────────────────────
 (function(){
   const C=document.getElementById('pixel-hspu');
   if(!C)return;
   const ctx=C.getContext('2d');
   const S=4;
-  // Colors
-  const SK='#f0c8a0',SK2='#d4a070'; // skin
-  const SH='#cc3366',SH2='#992244'; // hot pink shirt (accent2)
-  const PN='#2a2a4a',PN2='#1a1a3a'; // dark pants
-  const SN='#c8c8d8',SN2='#a0a0b8'; // shoes
-  const HR='#3a2010';                // hair
-  const AC='#ff00aa';                // accent glow
-
+  C.width=16*S; C.height=24*S;
+  const SK='#d4956a'; const MH='#cc2200'; const BD='#5a3010';
+  const VS='#6a1515',VS2='#8a2020'; const SH='#888898';
+  const SN='#228822',SN2='#115511'; const WH='#e8e8f0'; const PU='#222244';
   function clear(){ctx.clearRect(0,0,C.width,C.height)}
   function px(x,y,c,w,h){w=w||1;h=h||1;ctx.fillStyle=c;ctx.fillRect(x*S,y*S,w*S,h*S)}
 
-  // Frame: 0=stand, 1=hands up, 2=inverted (handstand)
-  function drawGuy(frame){
-    if(frame===0){
-      // Standing — neutral
-      px(5,0,HR,6,2);px(4,1,HR,8,1);
-      px(4,2,SK,8,5);px(4,3,SK2,1,2);px(11,3,SK2,1,2);
-      px(4,7,SH,8,4);px(3,8,SH,1,3);px(12,8,SH,1,3);
-      px(3,9,SK,1,2);px(12,9,SK,1,2);
-      px(5,11,PN,6,5);px(4,13,PN2,1,3);px(11,13,PN2,1,3);
-      px(4,15,SN,3,2);px(9,15,SN,3,2);
-    } else if(frame===1){
-      // Arms raised overhead — preparing to kick up
-      px(5,0,HR,6,2);px(4,1,HR,8,1);
-      px(4,2,SK,8,5);
-      // arms up
-      px(3,2,SK,2,1);px(2,1,SK,1,2);px(11,2,SK,2,1);px(13,1,SK,1,2);
-      px(2,0,SH2,1,1);px(13,0,SH2,1,1);
-      px(4,7,SH,8,4);
-      px(5,11,PN,6,5);px(4,13,PN2,1,3);px(11,13,PN2,1,3);
-      px(4,15,SN,3,2);px(9,15,SN,3,2);
+  function drawHSPU(pose){
+    // pose 0 = standing upright, 1 = kicking up, 2 = inverted HSPU top, 3 = inverted descending
+    if(pose===0){
+      // standing — arms at sides
+      px(4,0,MH,1,2);px(5,0,MH,2,3);px(7,0,MH,1,2);
+      px(3,2,SK,6,4); px(4,4,WH,1,1);px(7,4,WH,1,1); px(4,4,PU,1,1);px(7,4,PU,1,1);
+      px(3,5,BD,6,2);px(2,6,BD,8,1);
+      px(2,7,VS,8,4);px(3,7,VS2,6,3);
+      px(1,8,SK,2,3);px(9,8,SK,2,3);
+      px(2,11,SH,8,3); px(2,14,SK,3,3);px(7,14,SK,3,3);
+      px(1,16,SN,4,1);px(7,16,SN,4,1);
+    } else if(pose===1){
+      // arms going up, leaning
+      px(4,0,MH,1,2);px(5,0,MH,2,3);px(7,0,MH,1,2);
+      px(3,2,SK,6,4); px(4,4,WH,1,1);px(7,4,WH,1,1);
+      px(3,5,BD,6,2);px(2,6,BD,8,1);
+      px(2,7,VS,8,4);
+      px(0,5,SK,2,2);px(10,5,SK,2,2); // arms raised
+      px(0,4,SK,2,2);px(10,4,SK,2,2);
+      px(2,11,SH,8,3); px(2,14,SK,3,3);px(7,14,SK,3,3);
+      px(1,16,SN,4,1);px(7,16,SN,4,1);
+    } else if(pose===2){
+      // fully inverted, arms locked out (top of HSPU)
+      // feet up, hands down — wall on right side implied
+      px(4,0,SN,4,1);px(8,0,SN,4,1); // shoe soles at top
+      px(4,1,SH,8,3); // shorts
+      px(3,4,SK,3,3);px(8,4,SK,3,3); // legs skin
+      px(2,7,VS,8,4);px(3,7,VS2,6,3); // vest inverted
+      px(1,8,SK,2,2);px(9,8,SK,2,2); // arms inverted — locked
+      px(3,11,SK,6,4); // head inverted
+      px(4,12,WH,1,1);px(7,12,WH,1,1); px(4,12,PU,1,1);px(7,12,PU,1,1);
+      px(3,13,BD,6,2);px(2,14,BD,8,1);
+      px(4,14,MH,1,2);px(5,14,MH,2,3);px(7,14,MH,1,2);
+      px(2,17,SK,3,1);px(9,17,SK,3,1); // hands on floor
     } else {
-      // Inverted handstand against wall
-      // Feet up top, hands down
-      px(5,0,SN,3,2);px(8,0,SN,3,2); // feet at top
-      px(4,2,PN2,1,3);px(11,2,PN2,1,3);px(5,2,PN,6,5); // legs
-      px(4,7,SH,8,4); // shirt (inverted)
-      px(3,8,SH,1,3);px(12,8,SH,1,3);
-      px(4,11,SK,8,5);px(4,12,SK2,1,2);px(11,12,SK2,1,2);
-      px(5,15,HR,6,2);px(4,14,HR,8,1); // hair at bottom
-      // hands on floor
-      px(3,17,SK,2,1);px(11,17,SK,2,1);
+      // inverted, arms bent (descending/mid HSPU)
+      px(4,0,SN,4,1);px(8,0,SN,4,1);
+      px(4,1,SH,8,3);
+      px(3,4,SK,3,3);px(8,4,SK,3,3);
+      px(2,7,VS,8,4);px(3,7,VS2,6,3);
+      px(0,9,SK,2,2);px(10,9,SK,2,2); // bent arms
+      px(3,11,SK,6,4);
+      px(4,12,WH,1,1);px(7,12,WH,1,1);px(4,12,PU,1,1);px(7,12,PU,1,1);
+      px(3,13,BD,6,2);px(2,14,BD,8,1);
+      px(4,14,MH,1,2);px(5,14,MH,2,3);px(7,14,MH,1,2);
+      px(2,19,SK,3,1);px(9,19,SK,3,1);
     }
   }
 
-  // Sequence: stand → arms up → arms up → handstand × 3 → arms up → stand
-  const SEQ=[[0,20],[1,8],[1,6],[2,16],[2,16],[2,16],[1,8],[0,20]];
+  const SEQ=[[0,20],[1,8],[2,16],[3,12],[2,16],[3,12],[1,8],[0,20]];
   let si=0,hc=0;
   function animate(){
+    clear();drawHSPU(SEQ[si][0]);
+    hc++;if(hc>=SEQ[si][1]){hc=0;si=(si+1)%SEQ.length;}
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ── MOHAWK DUDE LOGIN ──────────────────────────────────────────────────────
+(function(){
+  const C=document.getElementById('pixel-login');
+  if(!C)return;
+  const ctx=C.getContext('2d');
+  const S=4;
+  C.width=13*S; C.height=21*S;
+  function clear(){ctx.clearRect(0,0,C.width,C.height)}
+  // Reuse drawCFDude frame 0 with idle bob
+  const BOB=[0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1];
+  let tick=0;
+  function animate(){
     clear();
-    drawGuy(SEQ[si][0]);
-    hc++;
-    if(hc>=SEQ[si][1]){hc=0;si=(si+1)%SEQ.length;}
+    const yo=BOB[tick%BOB.length];
+    ctx.save();ctx.translate(0,yo*S);
+    drawCFDude(ctx,S,0,0);
+    ctx.restore();
+    tick++;
     requestAnimationFrame(animate);
   }
   animate();
