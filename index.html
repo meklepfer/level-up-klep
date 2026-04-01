@@ -1429,226 +1429,171 @@ async function delMsg(i){
 document.getElementById('chat-input').addEventListener('focus',function(){this.style.borderColor='var(--accent)'});
 document.getElementById('chat-input').addEventListener('blur',function(){this.style.borderColor='var(--border2)'});
 
-// ── 16-BIT BISON KLEP — shared palette & draw function ───────────────────
-function drawBisonKlep(ctx, S, yOff, pose){
-  // pose: 'stand' | 'jump_squat' | 'jump_mid' | 'jump_peak' | 'hang' | 'pull_mid' | 'pull_top'
-  yOff=yOff||0;
-  function px(x,y,c,w,h){w=w||1;h=h||1;ctx.fillStyle=c;ctx.fillRect(x*S,(y+yOff)*S,w*S,h*S);}
+// ── 8-BIT BISON KLEP ─────────────────────────────────────────────────────
+const BP = {
+  'K':'#060202', // black outline
+  'D':'#3a0c06', // darkest shadow
+  'V':'#6b2208', // dark brown legs
+  'B':'#8f3a12', // brown body
+  'M':'#b84e18', // mid orange-brown
+  'O':'#d66518', // main orange fur
+  'L':'#e88020', // light orange
+  'Y':'#f5a020', // golden highlight
+  'Z':'#fbbe28', // bright hump peak
+  'z':'#ffd84a', // hump peak brightest
+  'H':'#cca028', // horn
+  'I':'#e8d060', // horn bright
+  'N':'#140406', // nostril
+  'n':'#7a1e0a', // snout
+  'S':'#060610', // sunglass frame
+  'G':'#0e2860', // blue lens dark
+  'g':'#1e4898', // blue lens
+  'w':'#90b8e0', // lens shine
+  'P':'#1e0628', // hoof dark
+  'p':'#341040', // hoof
+  'F':'#160602', // beard darkest
+  'f':'#341006', // beard
+  'e':'#4a1a08', // beard light
+  '.':null
+};
 
-  // ── PALETTE ──
-  const BD='#5c3a1e'; // bison dark brown body
-  const BM='#7a4e2d'; // bison mid brown
-  const BL='#9b6840'; // bison light brown highlight
-  const BS='#3a2010'; // bison shadow/outline
-  const HU='#c8860a'; // hump warm highlight
-  const FUR='#2e1a08';// fur dark
-  const HAT='#2d6e2d';// green hat
-  const HAT2='#1a4a1a';// dark green hat
-  const HATB='#d4c9a0';// tan brim
-  const GL='#111';    // glasses frame
-  const GLL='#1a4a2a';// green lens
-  const HORN='#d4b060';// horn
-  const EYE='#00ffcc';// glowing cyan eye
-  const NOS='#1a0a04';// nose
-  const ROPE='#ff00aa';
+// 36 wide x 30 tall — proper bison side view
+// Big hump dominates upper-left, head lower-left, body fills right
+const BS_ROWS = [
+//  0         1         2         3
+//  012345678901234567890123456789012345
+  '....................................', //  0
+  '...........KHHHIIIKK................', //  1  horns up and back
+  '..........KHHHHIIIIKK...............', //  2
+  '.........KHHHHHHHHIKK...............', //  3
+  '........KHHHHHHHHKK.................', //  4
+  '.......KHHHHHHHHK......KZZZK........', //  5  hump starts
+  '......KHHHHHHHKK......KZZZZzK.......', //  6
+  '.....KKKKKKKKK.......KZZZZzzK.......', //  7
+  '.....KVBBBBBK.......KZZZZzzzK.......', //  8  head top
+  '....KVBBMMMBk......KZZZZzzzzK.......', //  9
+  '....KVBBMOOBk.....KZZZZZZZZZZK......', // 10
+  '....KVBBSOOBk....KZZZZZZZZZZZK......', // 11  shades row
+  '....KVBBSGgSk...KYZZZZZZZZZZYk.....', // 12
+  '....KVBBSgwSk..KOYZZZZZZZZZYKa.....', // 13
+  '....KVBBBSSBk.KOOOYZZZZZZZYKaa.....', // 14
+  '....KVBBBBBKKKOOOOOOYYYYYKaaa......', // 15
+  'KnnnnKKVVBKKOOOLLLLLLLLOOKaaaa.....', // 16  snout
+  'KfffffKKVKKOOLLLLLLLLLOOOK.........', // 17  beard top
+  'KFfffeeKKKOOLLLLLLLLLOOOOK.........', // 18
+  'KFFFffK..KOOLLLLLLLLLOOOOOOK........', // 19
+  '.KFffK...KOOLLLLLLLLOOOOOOOOK.......', // 20
+  '.KFfK....KOOLLLLOOOOOOOOOOOOOK......', // 21
+  '..KNK....KOOLOOOOOOOOOOOOOOOOOK.....', // 22  nostril
+  '..KNK....KOOOOOOOOOOOOOOOOOOOOOK....', // 23
+  '.........KVVVOOBBBOOBBBOOOVVVk.....', // 24  legs
+  '.........KVVBDDDVVVBBDDDVVVBVk.....', // 25
+  '.........KVBDDDDVVVVDDDDVVVBVk.....', // 26
+  '.........KPpppDDKKKKDDpppPPPkk.....', // 27  hooves
+  '.........KPPPPKKKkkkKKKPPPPkk......', // 28
+  '....................................', // 29
+];
 
-  if(pose==='stand'){
-    // ── BODY ── big bison hump
-    px(6,14,BS,20,1);
-    px(4,15,BD,24,8);
-    px(5,15,BM,22,6);
-    px(8,15,BL,10,3); // highlight top
-    px(4,23,BS,24,1);
-    // hump
-    px(8,10,BD,12,5);
-    px(9,10,BM,10,4);
-    px(10,10,HU,8,2);
-    px(8,9,BS,12,1);
-    // legs
-    px(6,23,BD,4,6); px(6,23,BM,3,5);
-    px(18,23,BD,4,6); px(18,23,BM,3,5);
-    px(9,23,BD,4,6); px(9,23,BM,3,5);
-    px(15,23,BD,4,6); px(15,23,BM,3,5);
-    // hooves
-    px(6,28,BS,4,1); px(9,28,BS,4,1); px(15,28,BS,4,1); px(18,28,BS,4,1);
-    px(6,27,FUR,4,2); px(9,27,FUR,4,2); px(15,27,FUR,4,2); px(18,27,FUR,4,2);
-    // tail
-    px(27,15,BD,2,4); px(28,18,FUR,2,3);
-    // ── HEAD ──
-    px(1,13,BS,9,1);
-    px(0,14,BD,10,7);
-    px(1,14,BM,8,5);
-    px(1,21,BS,10,1);
-    // snout
-    px(0,18,BM,4,3); px(0,19,BD,3,2);
-    px(0,21,NOS,2,1); px(2,21,NOS,2,1);
-    // ── HORN ──
-    px(3,11,HORN,2,1); px(2,10,HORN,2,1); px(1,9,HORN,1,1);
-    // ── EYE ──
-    px(5,16,GL,3,2); px(6,16,EYE,1,1);
-    // ── FUR BEARD ──
-    px(0,20,FUR,5,3); px(1,22,FUR,4,3);
-    // ── GREEN HAT ──
-    px(4,8,HAT2,8,1);
-    px(3,9,HAT,9,1);
-    px(2,10,HAT,10,3);
-    px(2,13,HAT2,10,1);
-    px(1,13,HATB,12,1); // brim
-    // hat logo dot
-    px(7,10,HAT2,2,2);
-    // ── SUNGLASSES ──
-    px(4,16,GL,1,2); px(5,15,GL,2,1); px(7,15,GL,2,1); px(9,16,GL,1,2); px(5,17,GL,2,1); px(7,17,GL,2,1);
-    px(5,16,GLL,2,1);
-    px(10,16,GL,2,1); // bridge
-    px(12,16,GL,1,2); px(13,15,GL,2,1); px(15,15,GL,2,1); px(17,16,GL,1,2); px(13,17,GL,2,1); px(15,17,GL,2,1);
-    px(13,16,GLL,2,1);
-    px(3,16,GL,1,1); px(18,16,GL,1,1); // arms
-
-  } else if(pose==='jump_squat'||pose==='jump_mid'||pose==='jump_peak'){
-    const legY=pose==='jump_squat'?0:pose==='jump_mid'?-2:-4;
-    // body same
-    px(6,14,BS,20,1);
-    px(4,15,BD,24,7);
-    px(5,15,BM,22,5);
-    px(8,15,BL,10,2);
-    px(4,22,BS,24,1);
-    px(8,10,BD,12,4);
-    px(9,10,BM,10,3);
-    px(10,10,HU,8,2);
-    px(8,9,BS,12,1);
-    // legs adjust
-    const lbY=pose==='jump_peak'?2:pose==='jump_mid'?1:0;
-    px(6,22+lbY,BD,4,4); px(9,22+lbY,BD,4,4); px(15,22+lbY,BD,4,4); px(18,22+lbY,BD,4,4);
-    px(6,25+lbY,FUR,4,1); px(9,25+lbY,FUR,4,1); px(15,25+lbY,FUR,4,1); px(18,25+lbY,FUR,4,1);
-    px(27,15,BD,2,3); px(28,17,FUR,2,2);
-    // head
-    px(1,13,BS,9,1); px(0,14,BD,10,7); px(1,14,BM,8,5); px(1,21,BS,10,1);
-    px(0,18,BM,4,3); px(0,19,BD,3,2);
-    px(0,21,NOS,2,1); px(2,21,NOS,2,1);
-    px(3,11,HORN,2,1); px(2,10,HORN,2,1); px(1,9,HORN,1,1);
-    px(5,16,GL,3,2); px(6,16,EYE,1,1);
-    px(0,20,FUR,5,3); px(1,22,FUR,4,3);
-    px(4,8,HAT2,8,1); px(3,9,HAT,9,1); px(2,10,HAT,10,3); px(2,13,HAT2,10,1); px(1,13,HATB,12,1);
-    px(7,10,HAT2,2,2);
-    px(4,16,GL,1,2); px(5,15,GL,2,1); px(7,15,GL,2,1); px(9,16,GL,1,2); px(5,17,GL,2,1); px(7,17,GL,2,1);
-    px(5,16,GLL,2,1); px(10,16,GL,2,1);
-    px(12,16,GL,1,2); px(13,15,GL,2,1); px(15,15,GL,2,1); px(17,16,GL,1,2); px(13,17,GL,2,1); px(15,17,GL,2,1);
-    px(13,16,GLL,2,1); px(3,16,GL,1,1); px(18,16,GL,1,1);
-
-  } else if(pose==='hang'||pose==='pull_mid'||pose==='pull_top'){
-    const hY=pose==='hang'?8:pose==='pull_mid'?4:0;
-    // body
-    px(6,10+hY,BS,20,1); px(4,11+hY,BD,24,7); px(5,11+hY,BM,22,5); px(8,11+hY,BL,10,2); px(4,18+hY,BS,24,1);
-    px(8,6+hY,BD,12,5); px(9,6+hY,BM,10,4); px(10,6+hY,HU,8,2); px(8,5+hY,BS,12,1);
-    // legs hang
-    px(7,18+hY,BD,4,5); px(10,18+hY,BD,3,5); px(15,18+hY,BD,4,5); px(18,18+hY,BD,3,5);
-    px(7,22+hY,FUR,4,1); px(10,22+hY,FUR,3,1); px(15,22+hY,FUR,4,1); px(18,22+hY,FUR,3,1);
-    px(27,11+hY,BD,2,3); px(28,13+hY,FUR,2,2);
-    // front legs grip bar
-    px(5,2,BD,3,4); px(5,2,BM,2,3);
-    px(20,2,BD,3,4); px(20,2,BM,2,3);
-    // hooves on bar
-    px(4,2,FUR,4,2); px(20,2,FUR,4,2);
-    // head
-    px(1,9+hY,BS,9,1); px(0,10+hY,BD,10,7); px(1,10+hY,BM,8,5); px(1,17+hY,BS,10,1);
-    px(0,14+hY,BM,4,3); px(0,15+hY,BD,3,2);
-    px(0,17+hY,NOS,2,1); px(2,17+hY,NOS,2,1);
-    px(3,7+hY,HORN,2,1); px(2,6+hY,HORN,2,1); px(1,5+hY,HORN,1,1);
-    px(5,12+hY,GL,3,2); px(6,12+hY,EYE,1,1);
-    px(0,16+hY,FUR,5,3);
-    // hat
-    px(4,4+hY,HAT2,8,1); px(3,5+hY,HAT,9,1); px(2,6+hY,HAT,10,3); px(2,9+hY,HAT2,10,1); px(1,9+hY,HATB,12,1);
-    px(7,6+hY,HAT2,2,2);
-    // shades
-    px(4,12+hY,GL,1,2); px(5,11+hY,GL,2,1); px(7,11+hY,GL,2,1); px(9,12+hY,GL,1,2); px(5,13+hY,GL,2,1); px(7,13+hY,GL,2,1);
-    px(5,12+hY,GLL,2,1); px(10,12+hY,GL,2,1);
-    px(12,12+hY,GL,1,2); px(13,11+hY,GL,2,1); px(15,11+hY,GL,2,1); px(17,12+hY,GL,1,2); px(13,13+hY,GL,2,1); px(15,13+hY,GL,2,1);
-    px(13,12+hY,GLL,2,1); px(3,12+hY,GL,1,1); px(18,12+hY,GL,1,1);
-    // smile at top
-    if(pose==='pull_top'){px(4,16,BD,1,1);px(3,17,BD,3,1);px(6,17,BL,2,1);}
+function drawBison8bit(ctx, S, xOff, yOff) {
+  xOff=xOff||0; yOff=yOff||0;
+  for(let r=0;r<BS_ROWS.length;r++){
+    const row=BS_ROWS[r];
+    for(let c=0;c<row.length;c++){
+      const col=BP[row[c]];
+      if(col){ctx.fillStyle=col;ctx.fillRect((c+xOff)*S,(r+yOff)*S,S,S);}
+    }
   }
 }
 
-// ── BISON KLEP LOGIN ─────────────────────────────────────────────────────
+// ── LOGIN BISON ───────────────────────────────────────────────────────────
 (function(){
-  const C=document.getElementById('klep-sprite');
-  if(!C)return;
-  const ctx=C.getContext('2d');
-  const S=3;
-  function clear(){ctx.clearRect(0,0,C.width,C.height)}
-  const BOB=[0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1];
-  let tick=0;
-  function animate(){
-    clear();
-    const yo=BOB[tick%BOB.length];
-    ctx.save();ctx.translate(0,yo*S);
-    drawBisonKlep(ctx,S,0,'stand');
-    ctx.restore();
+  const C = document.getElementById('klep-sprite');
+  if (!C) return;
+  const ctx = C.getContext('2d');
+  const S = 3;
+  C.width = 36*S; C.height = 30*S;
+  const BOB = [0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1];
+  let tick = 0;
+  function animate() {
+    ctx.clearRect(0,0,C.width,C.height);
+    const yo = BOB[tick % BOB.length];
+    drawBison8bit(ctx, S, 0, yo);
     tick++;
     requestAnimationFrame(animate);
   }
   animate();
 })();
 
-// ── BISON KLEP JUMPING ROPE ───────────────────────────────────────────────
+// ── DU TRACK BISON (jumping rope) ─────────────────────────────────────────
 (function(){
-  const C=document.getElementById('pixel-guy');
-  if(!C)return;
-  const ctx=C.getContext('2d');
-  const S=3;
-  const ROPE='#ff00aa';
-  function clear(){ctx.clearRect(0,0,C.width,C.height)}
-  function drawRope(rf,fY){
-    ctx.save();ctx.strokeStyle=ROPE;ctx.lineWidth=2;ctx.shadowColor=ROPE;ctx.shadowBlur=8;
+  const C = document.getElementById('pixel-guy');
+  if (!C) return;
+  const ctx = C.getContext('2d');
+  const S = 3;
+  C.width = 36*S; C.height = 38*S;
+  const ROPE = '#ff00aa';
+  const SEQ = [[0,0,12],[-1,1,6],[-3,2,8],[-1,1,6],[0,0,12]];
+  let si = 0, hc = 0;
+
+  function drawRope(frame, yOff) {
+    ctx.save();
+    ctx.strokeStyle = ROPE; ctx.lineWidth = 2;
+    ctx.shadowColor = ROPE; ctx.shadowBlur = 6;
     ctx.beginPath();
-    if(rf===0){ctx.moveTo(0,(28+fY)*S);ctx.quadraticCurveTo(14*S,(34+fY)*S,28*S,(28+fY)*S);}
-    else if(rf===1){ctx.moveTo(0,(24+fY)*S);ctx.quadraticCurveTo(14*S,(8+fY)*S,28*S,(24+fY)*S);}
-    else{ctx.moveTo(0,(18+fY)*S);ctx.quadraticCurveTo(14*S,(2+fY)*S,28*S,(18+fY)*S);}
-    ctx.stroke();ctx.restore();
+    const mid = 18*S;
+    if (frame === 0) {
+      ctx.moveTo(0, (27+yOff)*S);
+      ctx.quadraticCurveTo(mid, (33+yOff)*S, 36*S, (27+yOff)*S);
+    } else if (frame === 1) {
+      ctx.moveTo(0, (22+yOff)*S);
+      ctx.quadraticCurveTo(mid, (8+yOff)*S, 36*S, (22+yOff)*S);
+    } else {
+      ctx.moveTo(0, (16+yOff)*S);
+      ctx.quadraticCurveTo(mid, (1+yOff)*S, 36*S, (16+yOff)*S);
+    }
+    ctx.stroke(); ctx.restore();
   }
-  const POSES=['jump_squat','jump_mid','jump_peak','jump_mid','jump_squat'];
-  const FYS=[0,-1,-3,-1,0];
-  const RFS=[0,1,2,1,0];
-  const HOLDS=[10,6,8,6,10];
-  let seqIdx=0,holdCount=0;
-  function animate(){
-    clear();
-    const fY=FYS[seqIdx];
-    drawRope(RFS[seqIdx],fY);
-    drawBisonKlep(ctx,S,fY,POSES[seqIdx]);
-    holdCount++;
-    if(holdCount>=HOLDS[seqIdx]){holdCount=0;seqIdx=(seqIdx+1)%POSES.length;}
+
+  function animate() {
+    ctx.clearRect(0,0,C.width,C.height);
+    const [yOff, rf] = SEQ[si];
+    drawRope(rf, yOff);
+    drawBison8bit(ctx, S, 0, yOff);
+    hc++;
+    if (hc >= SEQ[si][2]) { hc = 0; si = (si+1) % SEQ.length; }
     requestAnimationFrame(animate);
   }
   animate();
 })();
 
-// ── BISON KLEP PULL-UP ────────────────────────────────────────────────────
+// ── PULL-UP TRACK BISON ───────────────────────────────────────────────────
 (function(){
-  const C=document.getElementById('pixel-pullup');
-  if(!C)return;
-  const ctx=C.getContext('2d');
-  const S=3;
-  const BARB='#8B5E3C',BARG='#00ffcc';
-  function clear(){ctx.clearRect(0,0,C.width,C.height)}
-  function drawBar(){
-    ctx.save();ctx.shadowColor=BARG;ctx.shadowBlur=10;
-    ctx.fillStyle=BARB;ctx.fillRect(0,S,C.width,S);
+  const C = document.getElementById('pixel-pullup');
+  if (!C) return;
+  const ctx = C.getContext('2d');
+  const S = 3;
+  C.width = 36*S; C.height = 36*S;
+  const BARC = '#8B5E3C', BARG = '#00ffcc';
+
+  function drawBar() {
+    ctx.save(); ctx.shadowColor = BARG; ctx.shadowBlur = 10;
+    ctx.fillStyle = BARC; ctx.fillRect(0, S, C.width, S*2);
     ctx.restore();
-    ctx.fillStyle='#c8843c';ctx.fillRect(0,S,C.width,S);
+    ctx.fillStyle = '#c8a050'; ctx.fillRect(0, S, C.width, S);
   }
-  const POSES=['hang','pull_mid','pull_top','pull_mid','hang'];
-  const HOLDS=[18,10,14,10,18];
-  let seqIdx=0,holdCount=0;
-  function animate(){
-    clear();drawBar();
-    drawBisonKlep(ctx,S,0,POSES[seqIdx]);
-    holdCount++;
-    if(holdCount>=HOLDS[seqIdx]){holdCount=0;seqIdx=(seqIdx+1)%POSES.length;}
+
+  const SEQ = [[0,18],[2,10],[4,14],[2,10],[0,18]];
+  let si = 0, hc = 0;
+
+  function animate() {
+    ctx.clearRect(0,0,C.width,C.height);
+    drawBar();
+    drawBison8bit(ctx, S, 0, SEQ[si][0]);
+    hc++;
+    if (hc >= SEQ[si][1]) { hc = 0; si = (si+1) % SEQ.length; }
     requestAnimationFrame(animate);
   }
   animate();
 })();
+
 </script>
-</body>
-</html>
