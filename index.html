@@ -766,11 +766,6 @@ function hspuBranchSteps(cycle){
      note:`Complete when athlete logs ${negSets} sets of ${negReps} reps in a single session with a controlled descent.`,
      videoLink:'RKlbLQVEYyA',
      isHSPULog:true, hspu_log_key:'neg_log', hspu_target:{sets:negSets,reps:negReps}, hspu_no_target:true},
-    {name:"3 Max Sets",
-     preview:"3 sets · Max reps each · Rest 2:00-3:00 · Training log",
-     drill:"3 max effort sets of strict HSPU. Kick up and go until you can no longer lock out. Full ROM every rep. Rest 2:00-3:00 between sets. Do not pace — each set is an all-out effort. Log your reps for each set.",
-     note:"Complete when athlete logs all 3 sets in a single session.",
-     isHSPULog:true, hspu_log_key:'maxsets_log', hspu_target:{sets:3,reps:1}, hspu_no_target:true},
     {name:"The Ladder",
      preview:"1, 2, 3... to failure · Rest 1:00-1:30 between each · Training log",
      drill:"Start at 1 rep. Rest 1:00-1:30. Do 2 reps. Rest 1:00-1:30. Do 3 reps. Continue adding 1 rep per set, resting 1:00-1:30 between every set, until you cannot complete the next number. That last completed set is your max. Log every set and your peak.",
@@ -781,11 +776,11 @@ function hspuBranchSteps(cycle){
      drill:"3 sets of strict HSPU at a controlled, repeatable rep count. Do not go to failure. Stop 1-2 reps before you think you'll fail. Early on this may be 3 sets of 1. That is fine — quality over quantity. Rest 2:00-3:00 between sets. Log your reps each set.",
      note:"Complete when athlete logs all 3 sets in a single session.",
      isHSPULog:true, hspu_log_key:'training_log', hspu_target:{sets:3,reps:1}, hspu_no_target:true},
-    {name:"Max Set HSPU",
-     preview:`1 max effort set · Full ROM · Leaderboard`,
-     drill:`One all-out set. Kick up, go until you can't lock out. Full ROM every rep — no short reps. Log your score. Your PR goes on the leaderboard. After logging, you can restart the branch at the next cycle with increased targets.`,
-     note:`No completion requirement — this IS the benchmark. Log your attempts, post your PR, and restart the branch to chase the next level.`,
-     isHSPUMax:true, hspu_log_key:'maxhspu_log'}
+    {name:"3 Max Sets",
+     preview:"3 sets · Max reps each · Rest 2:00-3:00 · Training log",
+     drill:"3 max effort sets of strict HSPU. Kick up and go until you can no longer lock out. Full ROM every rep. Rest 2:00-3:00 between sets. Do not pace — each set is an all-out effort. Log your reps for each set.",
+     note:"Log all 3 sets. Then choose — keep upgrading or go on an adventure.",
+     isHSPUMaxSets:true, hspu_log_key:'maxsets_log', hspu_no_target:true}
   ];
 }
 
@@ -1782,53 +1777,46 @@ function hspuGenericLogHTML(s,log,logKey){
     '</div>';
 }
 
-function hspuMaxHTML(log,lbData){
-  log=log||[]; lbData=lbData||[];
-  const pr=log.reduce((b,e)=>e.reps>b?e.reps:b,0);
-  const sorted=[...lbData].sort((a,b)=>b.reps-a.reps);
-  const medals=['🥇','🥈','🥉'];
-  const hsBoard=sorted.length?
-    '<div style="background:var(--bg);border:2px solid var(--accent2);border-radius:2px;padding:16px;margin-bottom:14px;text-align:center">'+
-    '<div style="font-family:\'Press Start 2P\',monospace;font-size:10px;letter-spacing:3px;color:var(--accent2);text-shadow:0 0 10px var(--accent2);margin-bottom:16px;animation:flicker 4s infinite">── HIGH SCORES ──</div>'+
-    sorted.slice(0,10).map((e,i)=>{
-      const isMe=e.name.toLowerCase()===currentUser.toLowerCase();
-      return '<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);justify-content:space-between">'+
-        '<span style="font-family:\'Press Start 2P\',monospace;font-size:10px;color:'+(i<3?'var(--accent2)':'var(--muted2)')+'">'+
-        (i<3?medals[i]:(i+1)+'.')+'</span>'+
-        '<span style="font-family:\'Press Start 2P\',monospace;font-size:10px;text-transform:uppercase;color:'+(isMe?'var(--accent)':'var(--text)')+'">'+
-        e.name+(isMe?' ◀':'')+'</span>'+
-        '<span style="font-family:\'Press Start 2P\',monospace;font-size:14px;color:var(--accent2);text-shadow:0 0 8px var(--accent2)">'+
-        e.reps+' <span style="font-size:8px;color:var(--muted2)">REPS</span></span></div>';
-    }).join('')+'</div>':
-    '<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);text-align:center;padding:16px;border:2px solid var(--border2);border-radius:2px;margin-bottom:14px">NO SCORES YET — BE THE FIRST</div>';
-  const myLog=log.slice().reverse().slice(0,8).map((e,i)=>
-    '<div class="rr-entry">'+
-    '<div class="rr-entry-date">'+e.date+'</div>'+
-    '<div class="rr-entry-pos" style="color:'+(e.reps===pr?'var(--accent2)':'var(--accent)')+'">'+
-    (e.reps===pr?'★ PR':'')+'</div>'+
-    '<div class="rr-entry-reps" style="font-size:16px;color:var(--accent2)">'+e.reps+' reps</div>'+
-    '<div class="rr-entry-notes">'+(e.notes||'')+'</div>'+
-    '<button class="rr-entry-del" data-hspulog-key="maxhspu_log" data-hspulog-idx="'+(log.length-1-i)+'">x</button>'+
+function hspuMaxSetsHTML(log){
+  log=log||[];
+  // Group entries by date session — show last 5 sessions
+  const sessions=[];
+  const seen={};
+  log.slice().reverse().forEach(e=>{
+    if(!seen[e.date]){seen[e.date]=[];sessions.push({date:e.date,sets:seen[e.date]});}
+    seen[e.date].push(e);
+  });
+  const entries=sessions.slice(0,5).map((s,si)=>
+    '<div class="rr-entry" style="flex-wrap:wrap;gap:8px">'+
+    '<div class="rr-entry-date" style="width:100%">'+s.date+'</div>'+
+    s.sets.map(e=>'<div style="display:flex;gap:6px;align-items:center"><span style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2)">Set '+e.setNum+'</span><span style="font-family:\'Press Start 2P\',monospace;font-size:13px;color:var(--accent3)">'+e.reps+'</span></div>').join('')+
+    (s.sets[0]&&s.sets[0].notes?'<div style="font-size:12px;color:var(--muted2);font-style:italic;width:100%">'+s.sets[0].notes+'</div>':'')+
     '</div>'
   ).join('');
   return '<div class="rr-log-block">'+
     '<div style="font-size:12px;color:var(--muted2);font-style:italic;margin-bottom:10px;padding:8px 10px;background:rgba(0,255,204,0.04);border-left:2px solid var(--accent);border-radius:0 2px 2px 0">'+HSPU_WARMUP+'</div>'+
-    (pr?'<div style="font-family:\'Press Start 2P\',monospace;font-size:22px;color:var(--accent2);text-align:center;margin-bottom:12px;text-shadow:0 0 12px var(--accent2)">PR: '+pr+' <span style="font-size:10px;color:var(--muted2)">REPS</span></div>':'')+
-    hsBoard+
-    '<div class="rr-log-title">// Your Attempts</div>'+
-    '<div class="rr-add-form">'+
-    '<div class="rr-form-field"><div class="rr-form-label">Reps</div><input class="rr-small-input" id="maxhspu-reps" type="number" min="1" max="100" value="1" style="width:68px"></div>'+
-    '<div class="rr-form-field"><div class="rr-form-label">Notes</div><input class="rr-notes-input" id="maxhspu-notes" type="text" placeholder="form, ceiling, fatigue..."></div>'+
-    '<div class="rr-form-field" style="justify-content:flex-end"><button class="btn-complete" id="maxhspu-add-btn" style="font-size:9px;padding:8px 12px">▶ Log Score</button></div>'+
+    '<div class="rr-log-title">// Log Your 3 Sets</div>'+
+    '<div class="rr-add-form" style="flex-direction:column;gap:10px">'+
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">'+
+    '<div class="rr-form-field"><div class="rr-form-label">Set 1</div><input class="rr-small-input" id="maxsets-s1" type="number" min="0" max="100" value="" placeholder="reps" style="width:64px"></div>'+
+    '<div class="rr-form-field"><div class="rr-form-label">Set 2</div><input class="rr-small-input" id="maxsets-s2" type="number" min="0" max="100" value="" placeholder="reps" style="width:64px"></div>'+
+    '<div class="rr-form-field"><div class="rr-form-label">Set 3</div><input class="rr-small-input" id="maxsets-s3" type="number" min="0" max="100" value="" placeholder="reps" style="width:64px"></div>'+
     '</div>'+
-    (myLog?'<div class="rr-entries">'+myLog+'</div>':'')+
-    '<div style="margin-top:16px;padding:14px;background:rgba(255,0,170,0.05);border:1px solid rgba(255,0,170,0.25);border-radius:2px;text-align:center">'+
-    '<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--accent2);margin-bottom:8px;letter-spacing:1px">↺ NEXT CYCLE</div>'+
-    '<div style="font-size:13px;color:var(--muted2);margin-bottom:12px">Log a score first, then restart the branch with harder targets.</div>'+
-    '<button class="btn-complete" id="hspu-cycle-btn" style="border-color:var(--accent2);color:var(--accent2);font-size:8px;text-shadow:0 0 6px var(--accent2)">Restart Branch · Next Cycle</button>'+
-    '</div></div>';
+    '<div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap">'+
+    '<div class="rr-form-field" style="flex:1"><div class="rr-form-label">Notes</div><input class="rr-notes-input" id="maxsets-notes" type="text" placeholder="how it felt..." style="width:100%"></div>'+
+    '<div class="rr-form-field"><button class="btn-complete" id="maxsets-add-btn" style="font-size:9px;padding:8px 12px">+ Log</button></div>'+
+    '</div>'+
+    '</div>'+
+    (entries?'<div class="rr-entries" style="margin-top:8px">'+entries+'</div>':'<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);padding:12px 0;text-align:center">No entries yet</div>')+
+    '<div style="margin-top:20px;padding:16px;background:rgba(255,204,0,0.04);border:2px solid var(--accent3);border-radius:2px;text-align:center">'+
+    '<div style="font-family:\'Press Start 2P\',monospace;font-size:9px;color:var(--accent3);text-shadow:0 0 8px var(--accent3);margin-bottom:12px;letter-spacing:2px">CHOOSE YOUR PATH</div>'+
+    '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'+
+    '<button class="btn-complete" id="hspu-keep-upgrading" style="font-size:8px;border-color:var(--accent);color:var(--accent);text-shadow:0 0 6px var(--accent)">↺ Keep Upgrading</button>'+
+    '<button class="btn-complete" id="hspu-adventure" style="font-size:8px;border-color:var(--accent2);color:var(--accent2);text-shadow:0 0 6px var(--accent2)">⭐ Ready for Adventure</button>'+
+    '</div>'+
+    '</div>'+
+    '</div>';
 }
-
 // ── HSPU RENDER ───────────────────────────────────────────────────────────
 async function renderHSPU(){
   const cycle=await getHSPUCycle();
@@ -1847,15 +1835,15 @@ async function renderHSPU(){
   const allSteps=[...HSPU_FOUNDATION,...branchSteps];
   const allCompleted=new Set([...fc,...bc.map(i=>i+HSPU_FOUNDATION.length)]);
   dotsEl.innerHTML=allSteps.map((_,i)=>'<div class="step-dot '+(allCompleted.has(i)?'done':isActive([...allCompleted],i)?'active':'')+'" data-i="'+i+'"></div>').join('');
-  const logKeys=['ww_log','pp_log','dpp_log','hold_log','neg_log','maxsets_log','ladder_log','training_log','maxhspu_log'];
+  const logKeys=['ww_log','pp_log','dpp_log','hold_log','neg_log','ladder_log','training_log'];
   const logs={};
-  await Promise.all(logKeys.map(async k=>{logs[k]=await getHSPULog(k);}));
+  await Promise.all([...logKeys,'maxsets_log'].map(async k=>{logs[k]=await getHSPULog(k);}));
   const hspuLB=await fetchHSPULeaderboard();
   document.getElementById('hspu-foundation-container').innerHTML=HSPU_FOUNDATION.map((s,i)=>
     buildCard(s,i,fc,'hspu-foundation-container',null,null,hspuGenericLogHTML(s,logs[s.hspu_log_key],s.hspu_log_key))
   ).join('');
   document.getElementById('hspu-branch-container').innerHTML=branchSteps.map((s,i)=>{
-    const extra=s.isHSPUMax?hspuMaxHTML(logs['maxhspu_log'],hspuLB):hspuGenericLogHTML(s,logs[s.hspu_log_key],s.hspu_log_key);
+    const extra=s.isHSPUMaxSets?hspuMaxSetsHTML(logs['maxsets_log']):hspuGenericLogHTML(s,logs[s.hspu_log_key],s.hspu_log_key);
     return buildCard(s,i,bc,'hspu-branch-container',null,null,extra);
   }).join('');
   bindCards('hspu-foundation-container',
@@ -1900,39 +1888,51 @@ async function renderHSPU(){
     await saveHSPULog(key,log);
     renderHSPU();
   }));
-  const maxBtn=document.getElementById('maxhspu-add-btn');
-  if(maxBtn)maxBtn.addEventListener('click',async e=>{
+  // Max Sets — 3 individual set inputs
+  const maxSetsBtn=document.getElementById('maxsets-add-btn');
+  if(maxSetsBtn)maxSetsBtn.addEventListener('click',async e=>{
     e.stopPropagation();
-    const reps=parseInt(document.getElementById('maxhspu-reps').value)||0;
-    if(!reps)return;
     const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
-    const notes=document.getElementById('maxhspu-notes').value.trim();
-    const log=await getHSPULog('maxhspu_log');
-    log.push({reps,notes,date:today});
-    await saveHSPULog('maxhspu_log',log);
-    await pushHSPULeaderboard(currentUser,reps);
+    const notes=document.getElementById('maxsets-notes').value.trim();
+    const s1=parseInt(document.getElementById('maxsets-s1').value)||0;
+    const s2=parseInt(document.getElementById('maxsets-s2').value)||0;
+    const s3=parseInt(document.getElementById('maxsets-s3').value)||0;
+    if(!s1&&!s2&&!s3)return;
+    const log=await getHSPULog('maxsets_log');
+    if(s1) log.push({setNum:1,reps:s1,notes,date:today});
+    if(s2) log.push({setNum:2,reps:s2,notes:'',date:today});
+    if(s3) log.push({setNum:3,reps:s3,notes:'',date:today});
+    await saveHSPULog('maxsets_log',log);
     renderHSPU();
-    setTimeout(()=>celebrate('🤸 HSPU Beast!','MGyQarhoz8E'),400);
   });
-  const cycleBtn=document.getElementById('hspu-cycle-btn');
-  if(cycleBtn)cycleBtn.addEventListener('click',async e=>{
+  // Max Sets — keep upgrading
+  const keepUpgradingBtn=document.getElementById('hspu-keep-upgrading');
+  if(keepUpgradingBtn)keepUpgradingBtn.addEventListener('click',async e=>{
     e.stopPropagation();
-    const log=await getHSPULog('maxhspu_log');
-    if(!log.length){return;}
     const curCycle=await getHSPUCycle();
-    if(curCycle>=3){return;}
     await saveHSPUCycle(curCycle+1);
     await saveHSPUBranchCompleted([]);
     renderHSPU();
   });
+  // Ready for Adventure → unlock Bonus Level
+  const adventureBtn=document.getElementById('hspu-adventure');
+  if(adventureBtn)adventureBtn.addEventListener('click',async e=>{
+    e.stopPropagation();
+    // Mark adventure unlocked in Firebase
+    await fbSet(userPath()+'/hspu_adventure',true);
+    renderHSPU();
+    setTimeout(()=>celebrate('⭐ Adventure Unlocked!','MGyQarhoz8E'),300);
+  });
 
-  // Bonus level — unlocks once any max HSPU score is logged
+  // Bonus level — unlocks when athlete chooses adventure
   const bonusWrap=document.getElementById('hspu-bonus-container');
   const bonusLabel=bonusWrap?bonusWrap.previousElementSibling:null;
-  const hasMaxScore=logs['maxhspu_log']&&logs['maxhspu_log'].length>0;
+  const hasAdventure=await fbGet(userPath()+'/hspu_adventure').catch(()=>false);
+  const hasMaxSets=logs['maxsets_log']&&logs['maxsets_log'].length>0;
+  const bonusUnlocked=!!(hasAdventure);
   if(bonusWrap){
-    bonusWrap.style.display=hasMaxScore?'block':'none';
-    if(bonusLabel) bonusLabel.style.display=hasMaxScore?'flex':'none';
+    bonusWrap.style.display=bonusUnlocked?'block':'none';
+    if(bonusLabel) bonusLabel.style.display=bonusUnlocked?'flex':'none';
   }
 }
 
