@@ -740,7 +740,7 @@ const HSPU_FOUNDATION=[
   {name:"Wall Walk",preview:"3 sets · 5 reps · Controlled",
    drill:"Walk your feet up the wall and hands toward the wall until your chest touches. Hold 2 seconds. Walk back down under control.",
    note:"Complete when athlete logs 3 sets of 5 controlled wall walks in a single session. Chest must touch the wall every rep.",
-   video:"NK_OcHEm8yM",
+   videoLink:"NK_OcHEm8yM",
    isHSPULog:true, hspu_log_key:'ww_log'},
   {name:"Pike Push-Up",preview:"4 sets · 10 reps · Full ROM",
    drill:"Start in a downward dog position with hips high. Bend your elbows and lower your head toward the floor between your hands — full range of motion, head touches floor. Press back to the top. Keep hips high throughout. This is the movement pattern of the HSPU, just scaled.",
@@ -1216,6 +1216,11 @@ function buildCard(s,i,completed,containerId,onComplete,onUndo,extraHTML=''){
     '<div class="crt-feet"><div class="crt-foot"></div><div class="crt-foot"></div></div>'+
     '</div></div>':'';
 
+  const videoLinkHTML=s.videoLink?
+    '<div style="margin-top:12px">'+
+    '<a href="https://www.youtube.com/watch?v='+s.videoLink+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:transparent;border:2px solid var(--accent2);border-radius:2px;color:var(--accent2);font-family:\'Press Start 2P\',monospace;font-size:9px;letter-spacing:1px;padding:8px 14px;text-decoration:none;transition:all .15s;text-shadow:0 0 6px var(--accent2)" onmouseover="this.style.background=\'rgba(255,0,170,0.1)\'" onmouseout="this.style.background=\'transparent\'">'+
+    '📺 Tune In</a></div>':'';
+
   return '<div class="'+cls+'" data-i="'+i+'" id="step-'+containerId+'-'+i+'">'+
     '<div class="step-corner tl"></div><div class="step-corner br"></div>'+
     '<div class="step-header"><div class="step-num">'+(dn?'✓':String(i+1).padStart(2,'0'))+'</div>'+
@@ -1223,6 +1228,7 @@ function buildCard(s,i,completed,containerId,onComplete,onUndo,extraHTML=''){
     badge+'<div class="step-chevron">▾</div></div>'+
     '<div class="step-body">'+(s.drill?'<div class="drill-label">// The Drill</div><div class="drill-text">'+s.drill+'</div>':'')+
     videoHTML+
+    videoLinkHTML+
     disclaimerHTML+
     '<div class="completion-note">'+s.note+'</div><div class="step-actions">'+action+'</div>'+
     extraHTML+'</div></div>';
