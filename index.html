@@ -385,19 +385,6 @@ thead th:last-child{text-align:right}
       <div class="steps" id="pu-foundation-container"></div>
       <div class="branch-label split"><div class="bl-line"></div>PULL-UP BRANCH<div class="bl-line"></div></div>
       <div class="steps" id="pu-trunk-container"></div>
-      <div class="branch-label split"><div class="bl-line"></div>SPLIT — COMPLETE BOTH BRANCHES<div class="bl-line"></div></div>
-      <div style="max-width:860px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:16px" id="pu-branch-wrap">
-        <div>
-          <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;color:var(--accent);margin-bottom:10px;text-align:center;text-shadow:0 0 8px var(--accent)">BRANCH A · PULL</div>
-          <div class="steps" style="padding:0" id="pu-branchA-container"></div>
-        </div>
-        <div>
-          <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;color:var(--accent2);margin-bottom:10px;text-align:center;text-shadow:0 0 8px var(--accent2)">BRANCH B · PUSH/DIP</div>
-          <div class="steps" style="padding:0" id="pu-branchB-container"></div>
-        </div>
-      </div>
-      <div class="branch-label boss"><div class="bl-line"></div>BOSS — MUSCLE UP<div class="bl-line"></div></div>
-      <div class="steps" id="pu-boss-container"></div>
     </div>
   </div>
 
@@ -476,7 +463,7 @@ const PU_PULLUP=[
   {name:"Flexed Arm Hang",preview:"3 sets · 30s target · Log each set · Training log",drill:"Jump or step to the top of a pull-up position — chin over bar, arms fully bent. Hold for as long as possible. Rest fully between sets. Fight for every second.",note:"Complete when athlete logs 3 sets of 30+ seconds in a single session.",isFlexHang:true},
   {name:"Toes Assisted Pull-Up",preview:"3×10 · Toes on box · Training log",drill:"Place toes on a box in front of the bar. Use your legs as much as you need to get your chin over the bar. Full dead hang at the bottom between every rep. Reduce leg assistance over time — the goal is eventually not needing the box.",note:"Complete when athlete logs 3×10 with full ROM. Chin clears the bar every rep.",isToesAssist:true},
   {name:"Banded Pull-Up",preview:"3×10 · Log band + sets × reps · Training log",drill:"Loop a band around the bar and place your knees or feet in it. Start with the thickest band you need to complete 3×10. Work down in band resistance over time — thinner band means you are getting stronger.",note:"Complete when athlete logs 3×10 at their current band. Track band resistance each session — decreasing band thickness is the progress indicator.",isBanded:true},
-  {name:"Max Set Pull-Up",preview:"1 max effort set · Dead hang start · Log your score",drill:"One set. Dead hang start. Go until you can't get your chin over the bar. Strict pull-ups only — no kipping. Log every attempt. Your PR goes on the leaderboard.",note:"This step has no completion requirement — it IS the benchmark. Log your attempts, post your PR, and chase the high score.",isMaxPullup:true}
+  {name:"Max Set Pull-Up",preview:"1 max effort set · Dead hang start · Log your score",drill:"One set. Dead hang start. Go until you can't get your chin over the bar. Strict pull-ups only — no kipping. Log every attempt. Your PR goes on the leaderboard.",note:"This step has no completion requirement — it IS the benchmark. Log your attempts, post your PR, and chase the high score.",disclaimer:"⚠ If you cannot perform at least 1 strict pull-up, return to the Banded Pull-Up step and increase your volume before attempting this benchmark. Do not skip the progression.",isMaxPullup:true}
 ];
 
 // Combined for progress tracking
@@ -720,6 +707,9 @@ function buildCard(s,i,completed,containerId,onComplete,onUndo,extraHTML=''){
   const cls='step-card'+(dn?' is-done':ac?' is-active':lk?' is-locked':'')+(op?' open':'');
   const badge=dn?'<span class="step-badge badge-done">✓ DONE</span>':ac?'<span class="step-badge badge-active">▶ ACTIVE</span>':'<span class="step-badge badge-locked">🔒 LOCKED</span>';
   const action=dn?'<button class="btn-undo btn-undo-card" data-i="'+i+'">↩ Undo</button>':ac?'<button class="btn-complete btn-complete-card" data-i="'+i+'">✓ Mark Complete</button>':'';
+  const disclaimerHTML=s.disclaimer?
+    '<div style="margin-top:12px;padding:10px 14px;background:rgba(255,0,170,0.06);border:1px solid rgba(255,0,170,0.25);border-radius:2px;font-family:\'Press Start 2P\',monospace;font-size:8px;line-height:1.8;color:var(--accent2);letter-spacing:0.5px">'+s.disclaimer+'</div>':'';
+
   const videoHTML=s.video?
     '<div class="crt-wrap">'+
     '<div class="crt-tv">'+
@@ -738,6 +728,7 @@ function buildCard(s,i,completed,containerId,onComplete,onUndo,extraHTML=''){
     badge+'<div class="step-chevron">▾</div></div>'+
     '<div class="step-body"><div class="drill-label">// The Drill</div><div class="drill-text">'+s.drill+'</div>'+
     videoHTML+
+    disclaimerHTML+
     '<div class="completion-note">'+s.note+'</div><div class="step-actions">'+action+'</div>'+
     extraHTML+'</div></div>';
 }
@@ -1073,9 +1064,9 @@ async function renderPU(){
     return buildCard(s,idx,c,'pu-trunk-container',null,null,extra);
   }).join('');
 
-  document.getElementById('pu-branchA-container').innerHTML='<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted);padding:16px;text-align:center;line-height:2">COMING SOON<br>Complete trunk to unlock</div>';
-  document.getElementById('pu-branchB-container').innerHTML='<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted);padding:16px;text-align:center;line-height:2">COMING SOON<br>Complete trunk to unlock</div>';
-  document.getElementById('pu-boss-container').innerHTML='<div class="steps" style="padding:0"><div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted);padding:16px 28px;text-align:center;line-height:2">🔒 LOCKED — Complete both branches</div></div>';
+  document.getElementById('pu-branchA-container') && (document.getElementById('pu-branchA-container').innerHTML='');
+  document.getElementById('pu-branchB-container') && (document.getElementById('pu-branchB-container').innerHTML='');
+  document.getElementById('pu-boss-container') && (document.getElementById('pu-boss-container').innerHTML='');
 
   bindCards('pu-foundation-container',
     async i=>{const arr=await getPUCompleted();if(!arr.includes(i)){arr.push(i);await savePUCompleted(arr)}renderPU();setTimeout(()=>{const nx=document.getElementById('step-pu-trunk-container-'+(i+1));if(nx){nx.classList.add('open');nx.scrollIntoView({behavior:'smooth',block:'center'})}},100)},
