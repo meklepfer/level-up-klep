@@ -281,7 +281,39 @@ thead th:last-child{text-align:right}
   </div>
 </div>
 
-<!-- CELEBRATION MODAL -->
+<!-- CIGAR MODAL -->
+<div id="cigar-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9998;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)">
+  <div style="background:var(--surface);border:2px solid var(--accent2);border-radius:3px;padding:32px;max-width:440px;width:100%;position:relative;box-shadow:0 0 40px rgba(255,0,170,.15);text-align:center">
+    <div class="corner tl" style="border-color:var(--accent2)"></div><div class="corner tr" style="border-color:var(--accent2)"></div>
+    <div class="corner bl" style="border-color:var(--accent2)"></div><div class="corner br" style="border-color:var(--accent2)"></div>
+    <div style="font-size:40px;margin-bottom:16px">🚬</div>
+    <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--accent2);letter-spacing:2px;margin-bottom:20px;text-shadow:0 0 10px var(--accent2)">CLOSE BUT NO CIGAR</div>
+    <div style="font-size:15px;color:var(--muted2);line-height:1.8;font-weight:500;margin-bottom:28px">Great job so far! I see we still have work to do.<br><br>Go back to Step 4 and focus on doing more volume than you did last time.</div>
+    <button id="cigar-continue-btn" onclick="closeCigar()" style="width:100%;background:transparent;color:var(--accent2);border:2px solid var(--accent2);border-radius:2px;padding:14px;font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:3px;cursor:pointer;transition:all .15s;text-shadow:0 0 8px var(--accent2)" onmouseover="this.style.background='var(--accent2)';this.style.color='#000';this.style.textShadow='none'" onmouseout="this.style.background='transparent';this.style.color='var(--accent2)';this.style.textShadow='0 0 8px var(--accent2)'">▶ Continue... 9</button>
+  </div>
+</div>
+
+<!-- CONGRATS MODAL -->
+<div id="congrats-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9998;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)">
+  <div style="background:var(--surface);border:2px solid var(--accent);border-radius:3px;padding:32px;max-width:440px;width:100%;position:relative;box-shadow:0 0 40px rgba(0,255,204,.15);text-align:center;animation:float-in .4s ease both">
+    <div class="corner tl" style="border-color:var(--accent)"></div><div class="corner tr" style="border-color:var(--accent)"></div>
+    <div class="corner bl" style="border-color:var(--accent)"></div><div class="corner br" style="border-color:var(--accent)"></div>
+    <div style="font-size:40px;margin-bottom:16px">🏆</div>
+    <div style="font-family:'Press Start 2P',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;margin-bottom:20px;text-shadow:0 0 12px var(--accent);animation:flicker 3s infinite">GREAT JOB!</div>
+    <div style="font-size:14px;color:var(--muted2);line-height:1.8;font-weight:500;margin-bottom:20px">Take a break — you earned it.<br>See you in the Strict Pull-Up upgrade!</div>
+    <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+      <div class="rr-form-field" style="flex:1">
+        <div class="rr-form-label" style="text-align:left">Reps</div>
+        <input class="rr-small-input" id="maxpu-reps" type="number" min="1" max="100" placeholder="reps" style="width:100%">
+      </div>
+      <div class="rr-form-field" style="flex:3">
+        <div class="rr-form-label" style="text-align:left">Notes</div>
+        <input class="rr-notes-input" id="maxpu-notes" type="text" placeholder="grip, fatigue..." style="width:100%">
+      </div>
+    </div>
+    <button onclick="closeCongratsModal()" style="width:100%;background:transparent;color:var(--accent);border:2px solid var(--accent);border-radius:2px;padding:14px;font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:3px;cursor:pointer;transition:all .15s;text-shadow:0 0 8px var(--accent)" onmouseover="this.style.background='var(--accent)';this.style.color='#000';this.style.textShadow='none'" onmouseout="this.style.background='transparent';this.style.color='var(--accent)';this.style.textShadow='0 0 8px var(--accent)'">💾 Save Game</button>
+  </div>
+</div>
 <div id="celebrate-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9998;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)">
   <div style="background:var(--surface);border:2px solid var(--accent3);border-radius:3px;padding:24px;max-width:500px;width:100%;position:relative;box-shadow:0 0 60px rgba(255,204,0,.15);text-align:center">
     <div class="corner tl" style="border-color:var(--accent3)"></div><div class="corner tr" style="border-color:var(--accent3)"></div>
@@ -289,7 +321,8 @@ thead th:last-child{text-align:right}
     <div id="celebrate-title" style="font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:2px;color:var(--accent3);text-shadow:0 0 12px var(--accent3);margin-bottom:18px;text-transform:uppercase;animation:flicker 3s infinite">🏆 Achievement Unlocked!</div>
     <div class="crt-wrap" style="margin-top:0">
       <div class="crt-tv" style="max-width:100%">
-        <div class="crt-screen-wrap">
+        <div class="crt-screen-wrap" style="position:relative">
+          <canvas id="crt-static" style="position:absolute;inset:0;width:100%;height:100%;z-index:10;border-radius:6px"></canvas>
           <iframe id="celebrate-iframe" width="100%" style="aspect-ratio:16/9;display:block;border:none" allowfullscreen allow="autoplay"></iframe>
         </div>
         <div class="crt-brand">LEVEL UP</div>
@@ -580,6 +613,42 @@ thead th:last-child{text-align:right}
         <div class="steps" id="pu-foundation-container"></div>
         <div class="branch-label split"><div class="bl-line"></div>SKILL STEPS<div class="bl-line"></div></div>
         <div class="steps" id="pu-trunk-container"></div>
+        <div class="branch-label boss" id="pu-bonus-label" style="display:none"><div class="bl-line"></div>⭐ BONUS LEVEL<div class="bl-line"></div></div>
+        <div id="pu-bonus-container" style="display:none;max-width:860px;margin:0 auto;padding:0 28px 28px">
+          <div class="step-card" style="border-color:rgba(255,0,170,0.35);box-shadow:0 0 18px rgba(255,0,170,.06)">
+            <div class="step-corner tl" style="border-color:var(--accent2)"></div><div class="step-corner br" style="border-color:var(--accent2)"></div>
+            <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
+              <div class="step-num" style="font-size:20px;color:var(--accent2);text-shadow:0 0 8px var(--accent2)">Rx</div>
+              <div class="step-info">
+                <div class="step-name" style="color:var(--accent2)">Cindy</div>
+                <div class="step-preview">20 min AMRAP · 5 Pull-Ups / 10 Push-Ups / 15 Air Squats</div>
+              </div>
+              <div class="step-chevron">▾</div>
+            </div>
+            <div class="step-body" style="padding-left:16px">
+              <div class="drill-label" style="color:var(--accent2)">// The Workout</div>
+              <div class="drill-text" style="border-left-color:var(--accent2)">
+                <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent2);text-align:center;margin-bottom:16px;text-shadow:0 0 10px var(--accent2)">20 MIN AMRAP</div>
+                <div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
+                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 16px;text-align:center;flex:1;min-width:80px">
+                    <div style="font-family:'Press Start 2P',monospace;font-size:20px;color:var(--accent2);text-shadow:0 0 8px var(--accent2)">5</div>
+                    <div style="font-size:11px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">PULL-UPS</div>
+                  </div>
+                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 16px;text-align:center;flex:1;min-width:80px">
+                    <div style="font-family:'Press Start 2P',monospace;font-size:20px;color:var(--accent3);text-shadow:0 0 8px var(--accent3)">10</div>
+                    <div style="font-size:11px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">PUSH-UPS</div>
+                  </div>
+                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 16px;text-align:center;flex:1;min-width:80px">
+                    <div style="font-family:'Press Start 2P',monospace;font-size:20px;color:var(--accent);text-shadow:0 0 8px var(--accent)">15</div>
+                    <div style="font-size:11px;color:var(--muted2);margin-top:4px;font-family:'Press Start 2P',monospace">AIR SQUATS</div>
+                  </div>
+                </div>
+                <div style="font-size:13px;color:var(--muted2);line-height:1.7">Strict pull-ups. Full range on everything. Count your rounds and extra reps.</div>
+              </div>
+              <div id="pu-cindy-block" style="margin-top:14px"></div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- HSPU TRACK -->
@@ -697,9 +766,9 @@ const PU_PULLUP=[
   {name:"Ring Row Progression · 3×10",preview:"4 positions · 3×10 each · Training log",drill:"3 sets of 10 Ring Rows.",note:"Feet in Front of Rings is the easiest and as the feet move back it gets more difficult — elevating feet with a small box is the final progression at this step. Complete when the athlete logs 3 sets of 10 with elevated feet.",videoLink:"sEAOZc77wk8",isRingRow:true},
   {name:"Jumping Pull-Up + Slow Negative",preview:"3×10 · Log sets & reps · Training log",drill:"3 sets of 10 jumping pull-ups + a negative down.\n\nJump to the top position — chin over bar — then lower yourself as slowly as possible.",note:"Athlete completes 3x10 jumping pull-ups and negative.",videoLink:"BLX0O9t51oQ",isJumpNeg:true},
   {name:"Flexed Arm Hang",preview:"3 sets · 30s target · Log each set · Training log",drill:"3 sets of 30 second Flexed Arm Hangs.\n\nUse a box to get yourself over the bar if needed. Grip must be pronated (overhand). The clock stops not when your chin drops below the bar, but when your arms no longer have a bend in them. Rest fully between sets.",note:"Complete when athlete logs 3 sets of 30+ seconds in a single session.",videoLink:"uucpjux4y58",isFlexHang:true},
-  {name:"Toes Assisted Pull-Up",preview:"3×10 · Toes on box · Training log",drill:"Place toes on a box in front of the bar. Use your legs as much as you need to get your chin over the bar. Full dead hang at the bottom between every rep. Reduce leg assistance over time — the goal is eventually not needing the box.",note:"Complete when athlete logs 3×10 with full ROM. Chin clears the bar every rep.",isToesAssist:true},
-  {name:"Banded Pull-Up",preview:"3×10 · Log band + sets × reps · Training log",drill:"Loop a band around the bar and place your knees or feet in it. Start with the thickest band you need to complete 3×10. Work down in band resistance over time — thinner band means you are getting stronger.",note:"Complete when athlete logs 3×10 at their current band. Track band resistance each session — decreasing band thickness is the progress indicator.",isBanded:true},
-  {name:"Max Set Pull-Up",preview:"1 max effort set · Dead hang start · Log your score",drill:"One set. Dead hang start. Go until you can't get your chin over the bar. Strict pull-ups only — no kipping. Log every attempt. Your PR goes on the leaderboard.",note:"This step has no completion requirement — it IS the benchmark. Log your attempts, post your PR, and chase the high score.",disclaimer:"⚠ If you cannot perform at least 1 strict pull-up, return to the Banded Pull-Up step and increase your volume before attempting this benchmark. Do not skip the progression.",isMaxPullup:true}
+  {name:"Toes Assisted Pull-Up",preview:"3×10 · Toes on box · Training log",drill:"3 sets of 10 toes assisted pull-ups.\n\nPlace toes on a box under the bar. Use your legs as much as you need to get your chin over the bar. Full dead hang at the bottom between every rep. Reduce leg assistance over time.",note:"Complete when athlete logs 3×10 with full ROM. Chin clears the bar every rep.",videoLink:"P4Bt-lEa4-M",isToesAssist:true},
+  {name:"Banded Pull-Up",preview:"3×10 · Log band + sets × reps · Training log",drill:"3 sets of 10 banded pull-ups.\n\nStart with the thickest band you need. Work down in resistance over time — a thinner band means you're getting stronger.",note:"Complete when athlete logs 3×10 at their current band. Track band resistance each session — decreasing band thickness is the progress indicator.",videoLink:"5rR_bzBc1NA",isBanded:true},
+  {name:"Max Set Pull-Up",preview:"1 max effort set · Dead hang start",drill:"1 max effort set. You got this!\n\nDead hang start. Go until failure. Strict only — no kipping.",note:"",videoLink:"HRV5YKKaeVw",isMaxPullup:true}
 ];
 
 // Combined for progress tracking
@@ -849,6 +918,8 @@ async function doLogin(){
 }
 
 function launchApp(){
+  stopMusic();
+  playSelectSound();
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='block';
   document.getElementById('athlete-tag').textContent=currentUser+(isCoach?' 👑':'');
@@ -872,6 +943,7 @@ document.getElementById('switch-btn').addEventListener('click',()=>{
   document.getElementById('login-err').textContent='';
   document.getElementById('app').style.display='none';
   document.getElementById('login-screen').style.display='flex';
+  startMusic();
 });
 
 // ── TRACK SELECTOR ────────────────────────────────────────────────────────
@@ -1107,6 +1179,20 @@ async function getMaxPULog(){
 async function saveMaxPULog(a){
   try{await fbSet(userPath()+'/maxpu_log',a)}catch(e){}
 }
+async function getCindyLB(){
+  try{const d=await fbGet('leaderboard_cindy');return d?Object.values(d):[]}catch(e){return[]}
+}
+async function pushCindyLB(user,rounds,reps){
+  try{
+    const existing=await fbGet('leaderboard_cindy/'+user.toLowerCase().replace(/\s+/g,'_'));
+    const score=rounds*100+reps;
+    const existingScore=existing?(existing.rounds*100+(existing.reps||0)):0;
+    if(score>existingScore){
+      await fbSet('leaderboard_cindy/'+user.toLowerCase().replace(/\s+/g,'_'),
+        {name:user,rounds,reps:reps||0,ts:Date.now()});
+    }
+  }catch(e){}
+}
 
 // ── HELPERS ───────────────────────────────────────────────────────────────
 function isDone(c,i){return c.includes(i)}
@@ -1125,7 +1211,7 @@ function buildCard(s,i,completed,containerId,onComplete,onUndo,extraHTML=''){
   const op=openSet.has(i)||(ac&&completed.length===i);
   const cls='step-card'+(dn?' is-done':ac?' is-active':lk?' is-locked':'')+(op?' open':'');
   const badge=dn?'<span class="step-badge badge-done">✓ DONE</span>':ac?'<span class="step-badge badge-active">▶ ACTIVE</span>':'<span class="step-badge badge-locked">🔒 LOCKED</span>';
-  const action=dn?'<button class="btn-undo btn-undo-card" data-i="'+i+'">↩ Undo</button>':ac?'<button class="btn-complete btn-complete-card" data-i="'+i+'">✓ Mark Complete</button>':'';
+  const action=s.isMaxPullup?'':(dn?'<button class="btn-undo btn-undo-card" data-i="'+i+'">↩ Undo</button>':ac?'<button class="btn-complete btn-complete-card" data-i="'+i+'">✓ Mark Complete</button>':'');
   const disclaimerHTML=s.disclaimer?
     '<div style="margin-top:12px;padding:10px 14px;background:rgba(255,0,170,0.06);border:1px solid rgba(255,0,170,0.25);border-radius:2px;font-family:\'Press Start 2P\',monospace;font-size:8px;line-height:1.8;color:var(--accent2);letter-spacing:0.5px">'+s.disclaimer+'</div>':'';
 
@@ -1154,7 +1240,7 @@ function buildCard(s,i,completed,containerId,onComplete,onUndo,extraHTML=''){
     videoHTML+
     videoLinkHTML+
     disclaimerHTML+
-    '<div class="completion-note">'+s.note+'</div><div class="step-actions">'+action+'</div>'+
+    (s.isMaxPullup||!s.note?'':'<div class="completion-note">'+s.note+'</div>')+'<div class="step-actions">'+action+'</div>'+
     extraHTML+'</div></div>';
 }
 
@@ -1546,6 +1632,7 @@ function toesAssistHTML(log){
 function maxPullupHTML(log){
   log=log||[];
   const pr=log.reduce((best,e)=>e.reps>best?e.reps:best,0);
+  const hasLog=log.length>0;
 
   const myLog=log.slice().reverse().slice(0,10).map((e,i)=>
     '<div class="rr-entry">'+
@@ -1559,21 +1646,14 @@ function maxPullupHTML(log){
     '</div>'
   ).join('');
 
-  const form='<div class="rr-add-form">'+
-    '<div class="rr-form-field"><div class="rr-form-label">Reps</div>'+
-    '<input class="rr-small-input" id="maxpu-reps" type="number" min="1" max="100" value="1" style="width:70px"></div>'+
-    '<div class="rr-form-field"><div class="rr-form-label">Notes</div>'+
-    '<input class="rr-notes-input" id="maxpu-notes" type="text" placeholder="grip, fatigue, form broke at..."></div>'+
-    '<div class="rr-form-field" style="justify-content:flex-end">'+
-    '<button class="btn-complete" id="maxpu-add-btn" style="font-size:9px;padding:8px 12px">▶ Log Score</button></div>'+
-    '</div>';
-
   return '<div class="rr-log-block">'+
-    (pr?'<div style="font-family:\'Press Start 2P\',monospace;font-size:22px;color:var(--accent3);text-align:center;margin-bottom:12px;text-shadow:0 0 12px var(--accent3)">PR: '+pr+' <span style="font-size:10px;color:var(--muted2)">REPS</span></div>':'')+
-    '<div class="rr-log-title">// Your Attempts</div>'+
-    form+
-    (myLog?'<div class="rr-entries">'+myLog+'</div>':'<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);padding:12px 0;text-align:center">No attempts yet</div>')+
-    '</div>';
+    (pr?'<div style="font-family:\'Press Start 2P\',monospace;font-size:22px;color:var(--accent3);text-align:center;margin-bottom:16px;text-shadow:0 0 12px var(--accent3)">PR: '+pr+' <span style="font-size:10px;color:var(--muted2)">REPS</span></div>':'')+
+    '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">'+
+      '<button id="maxpu-add-btn" class="btn-complete" style="flex:1;font-size:9px;padding:10px;border-color:var(--accent);color:var(--accent);text-shadow:0 0 6px var(--accent)">💪 Log a Set of Strict Pull-Ups</button>'+
+      '<button id="maxpu-cigar-btn" class="btn-complete" style="flex:1;font-size:9px;padding:10px;border-color:var(--muted2);color:var(--muted2);text-shadow:none">🚬 Close but no Cigar</button>'+
+    '</div>'+
+    (myLog?'<div class="rr-entries">'+myLog+'</div>':'')+
+  '</div>';
 }
 
 function bandedHTML(log){
@@ -1754,21 +1834,60 @@ async function renderPU(){
 
   // Max pull-up add
   const maxPUBtn=document.getElementById('maxpu-add-btn');
-  if(maxPUBtn)maxPUBtn.addEventListener('click',async e=>{
+  if(maxPUBtn)maxPUBtn.addEventListener('click',e=>{
     e.stopPropagation();
-    const reps=parseInt(document.getElementById('maxpu-reps').value)||0;
-    if(!reps)return;
-    const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
-    const notes=document.getElementById('maxpu-notes').value.trim();
-    const log=await getMaxPULog();
-    log.push({reps,notes,date:today});
-    await saveMaxPULog(log);
-    renderPU();
-    setTimeout(()=>celebrate('💪 Pull-Up Beast Mode!','tTa_J7Sv8-0'),400);
+    // Show the log form and congrats modal
+    const form=document.getElementById('maxpu-form');
+    if(form) form.style.display='block';
+    showCongrats();
   });
+
   document.querySelectorAll('.rr-entry-del[data-maxpu-idx]').forEach(btn=>btn.addEventListener('click',async e=>{
     e.stopPropagation();const log=await getMaxPULog();log.splice(+btn.dataset.maxpuIdx,1);await saveMaxPULog(log);renderPU();
   }));
+
+  // Cigar button
+  const cigarBtn=document.getElementById('maxpu-cigar-btn');
+  if(cigarBtn)cigarBtn.addEventListener('click',e=>{e.stopPropagation();showCigar();});
+
+  // Cindy log
+  const cindyBtn=document.getElementById('cindy-add-btn');
+  if(cindyBtn)cindyBtn.addEventListener('click',async e=>{
+    e.stopPropagation();
+    const rounds=parseInt(document.getElementById('cindy-rounds').value)||0;
+    const reps=parseInt(document.getElementById('cindy-reps').value)||0;
+    const notes=document.getElementById('cindy-notes').value.trim();
+    if(!rounds)return;
+    const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    const log=await fbGet(userPath()+'/cindy_log')||[];
+    const logArr=Array.isArray(log)?log:Object.values(log);
+    logArr.push({rounds,reps,notes,date:today});
+    await fbSet(userPath()+'/cindy_log',logArr);
+    await pushCindyLB(currentUser,rounds,reps);
+    renderPU();
+  });
+  document.querySelectorAll('.rr-entry-del[data-cindy-idx]').forEach(btn=>btn.addEventListener('click',async e=>{
+    e.stopPropagation();
+    const raw=await fbGet(userPath()+'/cindy_log')||[];
+    const log=Array.isArray(raw)?raw:Object.values(raw);
+    log.splice(+btn.dataset.cindyIdx,1);
+    await fbSet(userPath()+'/cindy_log',log);
+    renderPU();
+  }));
+
+  // Bonus level — unlock when athlete logs a max PU set
+  const puBonusUnlocked=await fbGet(userPath()+'/pu_bonus_unlocked').catch(()=>false);
+  const puBonusLabel=document.getElementById('pu-bonus-label');
+  const puBonusContainer=document.getElementById('pu-bonus-container');
+  if(puBonusLabel) puBonusLabel.style.display=puBonusUnlocked?'flex':'none';
+  if(puBonusContainer) puBonusContainer.style.display=puBonusUnlocked?'block':'none';
+  if(puBonusUnlocked){
+    const cindyLog=await fbGet(userPath()+'/cindy_log').catch(()=>null);
+    const cindyLogArr=cindyLog?(Array.isArray(cindyLog)?cindyLog:Object.values(cindyLog)):[];
+    const cindyLB=await getCindyLB();
+    const cindyBlock=document.getElementById('pu-cindy-block');
+    if(cindyBlock) cindyBlock.innerHTML='<div class="rr-log-block">'+cindyLogHTML(cindyLogArr,cindyLB)+'</div>';
+  }
 
   // Banded add
   const bandBtn=document.getElementById('band-add-btn');
@@ -2058,6 +2177,94 @@ async function lobbyDel(key){
   await fbRemove('chat/messages/'+key);
   renderLobby();
 }
+// ── CIGAR MODAL ───────────────────────────────────────────────────────────
+let cigarCountdown=null;
+function showCigar(){
+  document.getElementById('cigar-overlay').style.display='flex';
+  // Start countdown from 9
+  let count=9;
+  const btn=document.getElementById('cigar-continue-btn');
+  if(btn) btn.textContent='▶ Continue... '+count;
+  cigarCountdown=setInterval(()=>{
+    count--;
+    if(btn) btn.textContent='▶ Continue... '+(count>0?count:'');
+    if(count<=0){
+      clearInterval(cigarCountdown);
+      cigarCountdown=null;
+      closeCigar();
+    }
+  },1000);
+}
+function closeCigar(){
+  if(cigarCountdown){clearInterval(cigarCountdown);cigarCountdown=null;}
+  document.getElementById('cigar-overlay').style.display='none';
+  const stepIdx=PU_FOUNDATION.length+3;
+  const el=document.getElementById('step-pu-trunk-container-'+stepIdx);
+  if(el){el.classList.add('open');el.scrollIntoView({behavior:'smooth',block:'center'});}
+}
+
+// ── CONGRATS MODAL ────────────────────────────────────────────────────────
+function showCongrats(){
+  document.getElementById('congrats-overlay').style.display='flex';
+}
+async function closeCongratsModal(){
+  const reps=parseInt(document.getElementById('maxpu-reps').value)||0;
+  const notes=document.getElementById('maxpu-notes').value.trim();
+  document.getElementById('congrats-overlay').style.display='none';
+  if(reps){
+    const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    const log=await getMaxPULog();
+    log.push({reps,notes,date:today});
+    await saveMaxPULog(log);
+    await fbSet(userPath()+'/pu_bonus_unlocked',true);
+    renderPU();
+  }
+  setTimeout(()=>celebrate('💪 Pull-Up Beast Mode!','tTa_J7Sv8-0'),200);
+}
+
+function cindyLogHTML(log,lbData){
+  log=log||[];lbData=lbData||[];
+  const sorted=[...lbData].sort((a,b)=>(b.rounds*100+(b.reps||0))-(a.rounds*100+(a.reps||0)));
+  const medals=['🥇','🥈','🥉'];
+  const board=sorted.length?
+    '<div style="background:var(--bg);border:2px solid var(--accent2);border-radius:2px;padding:14px;margin-bottom:14px">'+
+    '<div style="font-family:\'Press Start 2P\',monospace;font-size:9px;letter-spacing:2px;color:var(--accent2);text-shadow:0 0 8px var(--accent2);margin-bottom:12px;text-align:center">── CINDY HI-SCORE ──</div>'+
+    sorted.slice(0,10).map((e,i)=>{
+      const isMe=e.name.toLowerCase()===currentUser.toLowerCase();
+      const score=e.rounds+' rds'+(e.reps?'+'+e.reps:'');
+      return '<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border);justify-content:space-between">'+
+        '<span style="font-family:\'Press Start 2P\',monospace;font-size:10px;color:'+(i<3?'var(--accent2)':'var(--muted2)')+'">'+
+          (i<3?medals[i]:(i+1)+'.')+
+        '</span>'+
+        '<span style="font-family:\'Press Start 2P\',monospace;font-size:9px;text-transform:uppercase;color:'+(isMe?'var(--accent)':'var(--text)')+'">'+
+          e.name+(isMe?' ◀':'')+
+        '</span>'+
+        '<span style="font-family:\'Press Start 2P\',monospace;font-size:11px;color:var(--accent2)">'+score+'</span>'+
+      '</div>';
+    }).join('')+'</div>':'';
+
+  const myBest=log.reduce((b,e)=>(e.rounds*100+(e.reps||0))>(b.rounds*100+(b.reps||0))?e:b,{rounds:0,reps:0});
+  const myLog=log.slice().reverse().slice(0,8).map((e,i)=>
+    '<div class="rr-entry">'+
+    '<div class="rr-entry-date">'+e.date+'</div>'+
+    '<div class="rr-entry-reps" style="font-size:15px;color:var(--accent2)">'+e.rounds+' rounds'+(e.reps?'+'+e.reps+' reps':'')+'</div>'+
+    '<div class="rr-entry-notes">'+(e.notes||'')+'</div>'+
+    '<button class="rr-entry-del" data-cindy-idx="'+(log.length-1-i)+'">x</button>'+
+    '</div>'
+  ).join('');
+
+  return board+
+    (myBest.rounds>0?'<div style="font-family:\'Press Start 2P\',monospace;font-size:11px;color:var(--accent2);text-align:center;margin-bottom:12px;text-shadow:0 0 8px var(--accent2)">★ PR: '+myBest.rounds+' rounds'+(myBest.reps?'+'+myBest.reps+' reps':'')+'</div>':'')+
+    '<div class="rr-log-title">// Log Your Score</div>'+
+    '<div class="rr-add-form">'+
+      '<div class="rr-form-field"><div class="rr-form-label">Rounds</div><input class="rr-small-input" id="cindy-rounds" type="number" min="0" max="50" placeholder="rounds" style="width:72px"></div>'+
+      '<div class="rr-form-field"><div class="rr-form-label">Extra Reps</div><input class="rr-small-input" id="cindy-reps" type="number" min="0" max="29" value="0" style="width:72px"></div>'+
+      '<div class="rr-form-field"><div class="rr-form-label">Notes</div><input class="rr-notes-input" id="cindy-notes" type="text" placeholder="how it felt..."></div>'+
+      '<div class="rr-form-field" style="justify-content:flex-end"><button class="btn-complete" id="cindy-add-btn" style="font-size:9px;padding:8px 12px">+ Log</button></div>'+
+    '</div>'+
+    (myLog?'<div class="rr-entries">'+myLog+'</div>':'<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);padding:12px 0;text-align:center">No scores yet</div>');
+}
+
 async function resetTrack(track){
   const labels={du:'Double Unders',pullup:'Pull-Up',hspu:'Strict HSPU Volume'};
   const label=labels[track]||track;
@@ -2309,30 +2516,182 @@ async function submitWriteInVote(){
   await submitWriteIn(name);
   renderPoll();
 }
+let staticAnimId=null;
+function playStaticThenLoad(videoId){
+  const canvas=document.getElementById('crt-static');
+  const iframe=document.getElementById('celebrate-iframe');
+  if(!canvas)return;
+  const ctx2=canvas.getContext('2d');
+  // Match canvas resolution to display size
+  canvas.width=320; canvas.height=180;
+  canvas.style.opacity='1';
+  iframe.src='';
+  let frame=0;
+  const totalFrames=30; // ~0.5s of static at 60fps
+  function drawStatic(){
+    const img=ctx2.createImageData(canvas.width,canvas.height);
+    for(let i=0;i<img.data.length;i+=4){
+      const v=Math.random()>0.5?255:0;
+      img.data[i]=v; img.data[i+1]=v; img.data[i+2]=v; img.data[i+3]=255;
+    }
+    ctx2.putImageData(img,0,0);
+    frame++;
+    if(frame<totalFrames){
+      staticAnimId=requestAnimationFrame(drawStatic);
+    } else {
+      // Fade out static, load video
+      canvas.style.transition='opacity 0.3s';
+      canvas.style.opacity='0';
+      iframe.src='https://www.youtube.com/embed/'+videoId+'?autoplay=1&rel=0&modestbranding=1';
+      setTimeout(()=>{canvas.style.opacity='0';},400);
+    }
+  }
+  // Also play static sound if audioCtx available
+  if(audioCtx){
+    const bufSize=audioCtx.sampleRate*0.4;
+    const buf=audioCtx.createBuffer(1,bufSize,audioCtx.sampleRate);
+    const d=buf.getChannelData(0);
+    for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*0.15;
+    const src=audioCtx.createBufferSource(),g=audioCtx.createGain();
+    g.gain.setValueAtTime(0.3,audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+0.45);
+    src.buffer=buf;src.connect(g);g.connect(audioCtx.destination);
+    src.start();
+  }
+  drawStatic();
+}
+
 function tuneIn(videoId){
   const t=document.getElementById('celebrate-title');
   t.textContent='▶ NOW PLAYING';
   t.style.color='var(--accent2)';
   t.style.textShadow='0 0 12px var(--accent2)';
-  document.getElementById('celebrate-iframe').src='https://www.youtube.com/embed/'+videoId+'?autoplay=1&rel=0&modestbranding=1';
   document.getElementById('celebrate-overlay').style.display='flex';
+  playStaticThenLoad(videoId);
 }
 function celebrate(title,videoId){
   const t=document.getElementById('celebrate-title');
   t.textContent=title;
   t.style.color='var(--accent3)';
   t.style.textShadow='0 0 12px var(--accent3)';
-  document.getElementById('celebrate-iframe').src='https://www.youtube.com/embed/'+videoId+'?autoplay=1&rel=0&modestbranding=1';
   document.getElementById('celebrate-overlay').style.display='flex';
+  playStaticThenLoad(videoId);
 }
 function closeCelebration(){
+  if(staticAnimId){cancelAnimationFrame(staticAnimId);staticAnimId=null;}
   document.getElementById('celebrate-overlay').style.display='none';
   document.getElementById('celebrate-iframe').src='';
+  const canvas=document.getElementById('crt-static');
+  if(canvas){canvas.style.opacity='1';canvas.style.transition='';}
 }
 
 // ── DISCLAIMER ────────────────────────────────────────────────────────────
+// ── AUDIO ENGINE ──────────────────────────────────────────────────────────
+let audioCtx=null, musicGain=null, musicPlaying=false;
+let melodyTimer=null, bassAudioTimer=null, arpTimer=null;
+let melodyIdx=0, bassAudioIdx=0, arpIdx=0;
+
+const AF={
+  G2:98,C3:130.81,D3:146.83,E3:164.81,G3:196,A3:220,B3:246.94,
+  C4:261.63,D4:293.66,E4:329.63,G4:392,A4:440,B4:493.88,
+  C5:523.25,D5:587.33,E5:659.25,G5:783.99,A5:880,B5:987.77
+};
+const MELODY=[
+  ['G4',.18],['E4',.18],['G4',.18],['A4',.18],
+  ['C5',.18],['B4',.18],['A4',.18],['G4',.36],
+  ['D5',.18],['C5',.18],['B4',.18],['A4',.18],
+  ['G4',.18],['A4',.18],['B4',.36],['_',.18],
+  ['E5',.18],['D5',.18],['C5',.18],['B4',.18],
+  ['A4',.18],['G4',.18],['A4',.18],['C5',.36],
+  ['B4',.18],['A4',.18],['G4',.18],['E4',.18],
+  ['D4',.18],['E4',.18],['G4',.54],
+  ['G4',.12],['G4',.12],['G4',.12],['A4',.18],
+  ['C5',.18],['C5',.18],['C5',.12],['A4',.12],['B4',.12],
+  ['G4',.18],['A4',.18],['C5',.18],['D5',.18],
+  ['E5',.36],['D5',.18],['C5',.54],
+];
+const ARP_PAT=['C4','E4','G4','C5','G4','E4','D4','G4','B4','D5','B4','G4','E4','G4','C5','E5','C5','G4','G3','B3','D4','G4','D4','B3'];
+const ABASS=[['C3',.36],['G2',.36],['A3',.36],['E3',.36],['F3',.36],['C3',.36],['D3',.36],['G3',.36]];
+
+function audioOsc(freq,type,gain,dur,when,detune=0){
+  if(!freq||!audioCtx)return;
+  const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+  o.type=type;o.frequency.value=freq;
+  if(detune)o.detune.value=detune;
+  g.gain.setValueAtTime(gain,when);
+  g.gain.exponentialRampToValueAtTime(0.0001,when+dur*0.88);
+  o.connect(g);g.connect(musicGain);
+  o.start(when);o.stop(when+dur);
+}
+
+function tickMelody(){
+  if(!musicPlaying)return;
+  const [n,dur]=MELODY[melodyIdx%MELODY.length];
+  const w=audioCtx.currentTime;
+  if(n!=='_'){
+    audioOsc(AF[n],'square',0.22,dur,w);
+    audioOsc(AF[n]*1.26,'triangle',0.07,dur,w,5);
+  }
+  melodyIdx++;
+  melodyTimer=setTimeout(tickMelody,dur*1000);
+}
+function tickArp(){
+  if(!musicPlaying)return;
+  const n=ARP_PAT[arpIdx%ARP_PAT.length];
+  const freq=AF[n],dur=0.11,w=audioCtx.currentTime;
+  const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+  o.type='triangle';o.frequency.value=freq;
+  g.gain.setValueAtTime(0.14,w);
+  g.gain.setTargetAtTime(0,w+0.02,0.04);
+  o.connect(g);g.connect(musicGain);
+  o.start(w);o.stop(w+dur);
+  arpIdx++;
+  arpTimer=setTimeout(tickArp,dur*1000);
+}
+function tickBass(){
+  if(!musicPlaying)return;
+  const [n,dur]=ABASS[bassAudioIdx%ABASS.length];
+  const w=audioCtx.currentTime;
+  audioOsc(AF[n],'triangle',0.25,dur,w);
+  audioOsc(AF[n]*2,'sine',0.08,dur,w);
+  bassAudioIdx++;
+  bassAudioTimer=setTimeout(tickBass,dur*1000);
+}
+
+function startMusic(){
+  if(musicPlaying)return;
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  musicGain=audioCtx.createGain();
+  musicGain.gain.value=0.35;
+  musicGain.connect(audioCtx.destination);
+  musicPlaying=true;
+  melodyIdx=0;bassAudioIdx=0;arpIdx=0;
+  tickMelody();tickArp();tickBass();
+}
+
+function stopMusic(){
+  musicPlaying=false;
+  clearTimeout(melodyTimer);clearTimeout(bassAudioTimer);clearTimeout(arpTimer);
+}
+
+function playSelectSound(){
+  if(!audioCtx)return;
+  const w=audioCtx.currentTime;
+  audioOsc(AF['G5'],'square',0.25,0.05,w);
+  audioOsc(AF['C6']||1046.5,'square',0.25,0.08,w+0.06);
+}
+
+// Play select sound on every button/interactive click
+document.addEventListener('click',e=>{
+  if(!audioCtx)return;
+  if(e.target.closest('button,a,.st-node,.step-header,.upgrade-card,.mode-btn')){
+    playSelectSound();
+  }
+},true);
+
 document.getElementById('disclaimer-btn').addEventListener('click',()=>{
   document.getElementById('disclaimer-overlay').style.display='none';
+  startMusic();
 });
 // Show disclaimer on load
 document.getElementById('disclaimer-overlay').style.display='flex';
