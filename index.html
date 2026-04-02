@@ -509,9 +509,8 @@ thead th:last-child{text-align:right}
       <!-- PULL-UP TRACK -->
       <div id="track-pullup" style="display:none">
         <div class="hero">
-          <div class="hero-label">// SKILL TRACK · GYMNASTICS</div>
           <div class="hero-title-row">
-            <h1 class="hero-title">Pull-ups, Dips<br>&amp; Muscle-Ups...<br><span class="highlight2">Oh My!</span></h1>
+            <h1 class="hero-title">Strict Pull-<span class="highlight2">Ups</span></h1>
             <div class="pixel-guy-wrap"><canvas id="pixel-guy-pu" width="64" height="80" style="image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 0 8px rgba(255,0,170,.4))"></canvas></div>
           </div>
         </div>
@@ -524,9 +523,34 @@ thead th:last-child{text-align:right}
           <div class="step-dots" id="pu-step-dots"></div>
           <div style="text-align:right;margin-top:10px"><button onclick="resetTrack('pullup')" style="background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted);font-family:'Press Start 2P',monospace;font-size:7px;padding:4px 10px;cursor:pointer;letter-spacing:1px;transition:all .15s" onmouseover="this.style.borderColor='var(--accent2)';this.style.color='var(--accent2)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted)'">↺ Reset Progress</button></div>
         </div>
-        <div class="branch-label trunk"><div class="bl-line"></div>FOUNDATION<div class="bl-line"></div></div>
+        <div class="branch-label trunk"><div class="bl-line"></div>OPTIONAL WARM-UP<div class="bl-line"></div></div>
+        <div class="steps" style="padding-bottom:0">
+          <div class="step-card" style="border-color:rgba(255,0,170,0.2)">
+            <div class="step-corner tl"></div><div class="step-corner br"></div>
+            <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
+              <div class="step-num" style="font-size:20px">💪</div>
+              <div class="step-info">
+                <div class="step-name">Pull-Up Warm-Up</div>
+                <div class="step-preview">AMRAP 5:00 · Optional · Before every session</div>
+              </div>
+              <div class="step-chevron">▾</div>
+            </div>
+            <div class="step-body">
+              <div class="drill-label">// The Warm-Up</div>
+              <div class="drill-text">
+                <div style="margin-bottom:10px"><strong>AMRAP 5:00</strong> (or more as needed)</div>
+                <div style="margin-bottom:10px">1. <strong>PVC Passthroughs</strong> — 10 reps. Slow and controlled, feel the shoulder open up.</div>
+                <div style="margin-bottom:10px">2. <strong>Hollow Rocks</strong> — 5 reps. Lumbar flat, shape never breaks.</div>
+                <div style="margin-bottom:10px">3. <strong>Supermans</strong> — 5 reps. Face down, arms overhead, lift chest and legs simultaneously. Hold briefly at the top.</div>
+                <div>4. <strong>Scap Pull-Ups</strong> — 5 reps. Dead hang, retract and depress the shoulder blades. No arm bend.</div>
+              </div>
+              <div class="completion-note" style="margin-top:12px">Optional but recommended before every session. Primes the shoulder, lats, and midline for pulling work.</div>
+            </div>
+          </div>
+        </div>
+        <div class="branch-label trunk" style="margin-top:8px"><div class="bl-line"></div>FOUNDATION<div class="bl-line"></div></div>
         <div class="steps" id="pu-foundation-container"></div>
-        <div class="branch-label split"><div class="bl-line"></div>PULL-UP BRANCH<div class="bl-line"></div></div>
+        <div class="branch-label split"><div class="bl-line"></div>SKILL STEPS<div class="bl-line"></div></div>
         <div class="steps" id="pu-trunk-container"></div>
       </div>
 
@@ -625,7 +649,7 @@ const DU_STEPS=[
   {name:"Consistent High Jumps",preview:"5 sets · 30s on / 30s off · No rope",drill:"5 Sets 30s on / 30s off: Consistent high jumps with no rope. Focus on knees together, landing on the ball of your feet with soft knees. Same height every rep, relaxed landing.",note:"This step is complete when the athlete achieves 5 sets of continuous and consistent jumping for 30 seconds."},
   {name:"Single-Unders",preview:"5 sets · 30s on / 30s off · 25 unbroken target",drill:"5 Sets 30s on / 30s off: Single-unders.",note:"This step is complete when the athlete hits 25 unbroken single-unders at least 3 times across the 5 sets.",videoLink:"hCuXYrTOMxI"},
   {name:"Speed Singles",preview:"5 sets · 20s on / 40s off · Max turnover",drill:"5 Sets 20s on / 40s off: Fast singles, maximum turnover. Elbows pinned, wrists only. Go as fast as you can without breaking.",note:"This step is complete when the athlete can sustain fast singles for the full 20 seconds without breaking, at least 3 out of 5 sets."},
-  {name:"Single-Single-Double",preview:"5 sets · 30s on / 30s off · Two singles, one DU",drill:"5 Sets 30s on / 30s off: Single-single-double. Two singles, one DU. The intent is to understand that you can do a double-under. Note: Spending too much time at this step can lead athletes to having to unlearn the rhythm for S,S,D before learning the rhythm of dubs.",note:"This step is complete when the athlete is confident they can do 1 Rx double-under. That's right! Only need the confidence to do 1!"},
+  {name:"Single-Single-Double",preview:"5 sets · 30s on / 30s off · Two singles, one DU",drill:"5 Sets 30s on / 30s off: Single-single-double. Two singles, one DU. The intent is to understand that you can do a double-under. Note: Spending too much time at this step can lead athletes to having to unlearn the rhythm for S,S,D before learning the rhythm of dubs.",note:"This step is complete when the athlete is confident they can do 1 Rx double-under. That's right! Only need the confidence to do 1!",videoLink:"82jNjDS19lg"},
   {name:"Fast Wrist Drill",preview:"5 sets · 20s on / 40s off · DU wrist speed",drill:"5 Sets 20s on / 40s off: Fast singles, maximum turnover. You are now training the exact wrist speed required for double-unders. Every flick is a DU flick.",note:"This step is complete when the athlete maintains fast, consistent singles for the full 20 seconds, at least 3 out of 5 sets."},
   {name:"Power Jump Drill",preview:"5 sets · 30s on / 30s off · Slow high singles",drill:"5 Sets 30s on / 30s off: We already sped up our wrist, now let's slow down our jump. Focus on slow singles with a high jump.",note:"This step is complete when the athlete achieves consistent maximum-height singles for the full 30 seconds, at least 3 out of 5 sets."},
   {name:"DU Volume",preview:"5 sets · 30s on / 30s off · Log your DUs",drill:"5 Sets 30s on / 30s off: As many double-unders as possible. Singles are allowed as a reset but the goal is linking dubs.",note:"This step is complete when the athlete averages 5 or more double-unders per set across all 5 sets.",isDUVolume:true},
@@ -635,13 +659,13 @@ const DU_STEPS=[
 ];
 
 const PU_FOUNDATION=[
-  {name:"Hollow Hold",preview:"5 sets · 20s on / 40s off",drill:"5 Sets 20s on / 40s off: Hollow body hold. Lumbar pressed flat to the floor, legs straight and low, shoulders off the ground, arms overhead. Scale by bending the knees.",note:"5 unbroken sets of 20 seconds. Lower back stays down the entire time.",videoLink:"Gkh7ZF_lcGw"},
-  {name:"Arch Hold",preview:"5 sets · 20s on / 40s off",drill:"5 Sets 20s on / 40s off: Arch hold. Face down, arms overhead, lift chest and legs simultaneously. Controlled position.",note:"5 unbroken sets of 20 seconds. Controlled position, not a max effort back bend.",videoLink:"TkrTjU-qf6U"},
-  {name:"Hollow Rock",preview:"5 sets · 20s on / 40s off",drill:"5 Sets 20s on / 40s off: Hollow body rock. Maintain hollow position throughout — if the shape breaks, the set is over.",note:"5 unbroken sets of 20 seconds. Consistent rhythm, shape never breaks.",videoLink:"p7j02V1fIzU"}
+  {name:"Hollow Hold",preview:"5 sets · 20s on / 40s off",drill:"5 Sets 20s on / 40s off: Hollow body hold.",note:"5 unbroken sets of 20 seconds.",videoLink:"Gkh7ZF_lcGw"},
+  {name:"Arch Hold",preview:"5 sets · 20s on / 40s off",drill:"5 Sets 20s on / 40s off: Arch hold. Face down, arms overhead, lift chest and legs simultaneously. Controlled position.",note:"5 unbroken sets of 20 seconds.",videoLink:"TkrTjU-qf6U"},
+  {name:"Hollow Rock",preview:"5 sets · 20s on / 40s off",drill:"5 Sets 20s on / 40s off: Hollow body rock.",note:"5 unbroken sets of 20 seconds.",videoLink:"p7j02V1fIzU"}
 ];
 
 const PU_PULLUP=[
-  {name:"Dead Hang + Scap Pull-Up",preview:"60s unbroken hang · 3×10 scap pull-ups · Training log",drill:"Work toward two milestones: (1) A single unbroken 60-second dead hang. Full grip, shoulders active, feet off the ground the entire time. (2) 3 sets of 10 scapular pull-ups — retract and depress the scapula to rise slightly from the hang, then fully relax back down. No arm bend. Full stop at the bottom between reps. Log every session below.",note:"Step is complete when the athlete logs 1 unbroken 60-second dead hang AND 3×10 scapular pull-ups in a single session.",isHangScap:true},
+  {name:"Dead Hang + Scap Pull-Up",preview:"3 sets · 30s hang + 5 scap pull-ups · Training log",drill:"3 sets of 30 second Dead Hang + 5 Scap Pull-Ups.",note:"Step is complete when a 30 second dead hang + 5 scap pull-ups is completed.",videoLink:"sfTsgt-a63c",isHangScap:true},
   {name:"Ring Row Progression · 3×10",preview:"4 positions · 3×10 each · Training log",drill:"Work through four ring row positions in order: Feet in front of rings → Feet under rings → Feet behind rings → Feet elevated on box. At each position: 3 sets of 10 reps, chest to rings at the top, full extension at the bottom, hips rigid the entire time. A pike disqualifies the rep. Log every session below.",note:"3 sets of 10 at all four positions. Hips stay rigid. Chest touches rings every rep.",isRingRow:true},
   {name:"Jumping Pull-Up + Slow Negative",preview:"3×10 · Log sets, reps & negative time · Training log",drill:"Jump to the top position — chin over bar — then lower yourself as slowly as possible. No kipping on the way down. Dead hang reset at the bottom before the next rep. The goal is to make the negative longer every session.",note:"Complete when athlete logs 3×10. Negative time should increase over sessions — that is the progress.",isJumpNeg:true},
   {name:"Flexed Arm Hang",preview:"3 sets · 30s target · Log each set · Training log",drill:"Jump or step to the top of a pull-up position — chin over bar, arms fully bent. Hold for as long as possible. Rest fully between sets. Fight for every second.",note:"Complete when athlete logs 3 sets of 30+ seconds in a single session.",isFlexHang:true},
@@ -861,7 +885,7 @@ function enterTrack(track){
   document.getElementById('track-views').style.display='block';
   ['du','pullup','hspu'].forEach(t=>document.getElementById('track-'+t).style.display='none');
   document.getElementById('track-'+track).style.display='block';
-  const labels={du:'Double Unders',pullup:'Pull-Up / Dip / MU',hspu:'SHSPU Volume'};
+  const labels={du:'Double Unders',pullup:'Strict Pull-Ups',hspu:'SHSPU Volume'};
   document.getElementById('track-breadcrumb').textContent='// '+labels[track];
   if(track==='du') try{renderDU();}catch(e){console.error('renderDU:',e);}
   if(track==='pullup') try{renderPU();}catch(e){console.error('renderPU:',e);}
@@ -908,7 +932,7 @@ async function renderSkillTree(){
             <div class="st-hline"></div>
             <div style="width:2px;height:28px;background:var(--border2)"></div>
           </div>
-          <div style="margin-right:1px">${node('pullup','💪','Pull-Ups',puPct,false,'pullup')}</div>
+          <div style="margin-right:1px">${node('pullup','💪','Strict Pull-Ups',puPct,false,'pullup')}</div>
         </div>
         <!-- center vertical drop -->
         <div style="display:flex;flex-direction:column;align-items:center;margin-top:28px">
@@ -1248,7 +1272,7 @@ function emomLogHTML(s,log){
     return '<div class="rr-entry">'+
       '<div class="rr-entry-date">'+e.date+'</div>'+
       '<div class="rr-entry-pos" style="color:var(--accent)">'+e.rounds+'/10 rounds</div>'+
-      (e.bonus?'<div class="rr-entry-reps" style="color:var(--accent3)">+'+e.bonus+' bonus</div>':'')+
+      (e.bonus?'<div class="rr-entry-reps" style="color:var(--accent3)">+'+e.bonus+' reps</div>':'')+
       '<div class="rr-entry-reps" style="color:var(--accent2);font-size:13px">'+totalDubs+' total dubs</div>'+
       '<div class="rr-entry-notes">'+(e.notes||'')+'</div>'+
       '<button class="rr-entry-del" data-emom-key="'+key+'" data-emom-idx="'+(log.length-1-i)+'">x</button>'+
@@ -1259,7 +1283,7 @@ function emomLogHTML(s,log){
     '<div class="rr-log-title">// Session Log · '+rpr+' DU/min ladder</div>'+
     '<div class="rr-add-form">'+
       '<div class="rr-form-field"><div class="rr-form-label">Rounds</div><input class="rr-small-input" id="emom-rounds-'+key+'" type="number" min="0" max="10" value="10" style="width:58px"></div>'+
-      '<div class="rr-form-field"><div class="rr-form-label">Bonus Reps</div><input class="rr-small-input" id="emom-bonus-'+key+'" type="number" min="0" max="'+(10*rpr)+'" value="0" style="width:58px" placeholder="0"></div>'+
+      '<div class="rr-form-field"><div class="rr-form-label">Reps</div><input class="rr-small-input" id="emom-bonus-'+key+'" type="number" min="0" max="'+(10*rpr)+'" value="0" style="width:58px" placeholder="0"></div>'+
       '<div class="rr-form-field"><div class="rr-form-label">Notes</div><input class="rr-notes-input" id="emom-notes-'+key+'" type="text" placeholder="where it broke, what helped..."></div>'+
       '<div class="rr-form-field" style="justify-content:flex-end"><button class="btn-complete" id="emom-add-'+key+'" style="font-size:9px;padding:8px 12px">+ Log</button></div>'+
     '</div>'+
@@ -1278,62 +1302,77 @@ function benchHTML(saved){
 // ── HANG + SCAP LOG HTML ──────────────────────────────────────────────────
 function hangScapHTML(log){
   log=log||[];
-  const bestHang=log.filter(e=>e.type==='hang').reduce((best,e)=>e.secs>best?e.secs:best,0);
-  const bestScap=log.filter(e=>e.type==='scap').reduce((best,e)=>(e.sets>=3&&e.reps>=10)?true:best,false);
-  const hangDone=bestHang>=60;
-  const scapDone=bestScap;
 
-  const entries=log.slice().reverse().slice(0,15).map((e,i)=>
-    '<div class="rr-entry">'+
-    '<div class="rr-entry-date">'+e.date+'</div>'+
-    '<div class="rr-entry-pos" style="color:'+(e.type==='hang'?'var(--accent)':'var(--accent2)')+'">'+
-      (e.type==='hang'?'Dead Hang':'Scap Pull-Up')+
-    '</div>'+
-    '<div class="rr-entry-reps">'+(e.type==='hang'?e.secs+'s':e.sets+'x'+e.reps)+'</div>'+
-    '<div class="rr-entry-notes">'+(e.notes||'')+'</div>'+
-    '<button class="rr-entry-del" data-hs-idx="'+(log.length-1-i)+'">x</button>'+
-    '</div>'
-  ).join('');
+  // PR = longest single hang across all sessions
+  const allHangs=log.flatMap(s=>s.sets||[]).map(s=>s.hang||0);
+  const pr=allHangs.length?Math.max(...allHangs):0;
 
-  const milestones=
-    '<div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">'+
-    '<div class="rr-pos-card '+(hangDone?'complete':bestHang>0?'unlocked':'')+'" style="min-width:140px">'+
-    '<div class="rr-pos-name">Dead Hang</div>'+
-    '<div class="rr-pos-best">'+(hangDone?'DONE 60s':bestHang>0?'Best: '+bestHang+'s':'--')+'</div>'+
-    '</div>'+
-    '<div class="rr-pos-card '+(scapDone?'complete':'')+'" style="min-width:140px">'+
-    '<div class="rr-pos-name">Scap Pull-Up</div>'+
-    '<div class="rr-pos-best">'+(scapDone?'DONE 3x10':'--')+'</div>'+
-    '</div>'+
+  // Unlock check: any session where any set has hang>=30 AND scap>=5
+  const unlocked=log.some(session=>(session.sets||[]).some(s=>s.hang>=30&&s.scap>=5));
+
+  const sessions=log.slice().reverse().slice(0,8).map((session,si)=>{
+    const sets=session.sets||[];
+    return '<div class="rr-entry" style="flex-wrap:wrap;gap:6px">'+
+      '<div class="rr-entry-date" style="width:100%">'+session.date+'</div>'+
+      sets.map((s,i)=>{
+        const passing=s.hang>=30&&s.scap>=5;
+        return '<div style="background:var(--surface);border:1px solid '+(passing?'var(--accent)':'var(--border2)')+';border-radius:2px;padding:8px 12px;flex:1;min-width:120px">'+
+          '<div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2);margin-bottom:6px">SET '+(i+1)+'</div>'+
+          '<div style="display:flex;gap:12px">'+
+            '<div><div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2)">HANG</div>'+
+            '<div style="font-family:\'Press Start 2P\',monospace;font-size:13px;color:var(--accent)">'+s.hang+'s</div></div>'+
+            '<div><div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2)">SCAP</div>'+
+            '<div style="font-family:\'Press Start 2P\',monospace;font-size:13px;color:var(--accent2)">'+s.scap+'</div></div>'+
+          '</div>'+
+        '</div>';
+      }).join('')+
+      (session.notes?'<div style="font-size:12px;color:var(--muted2);font-style:italic;width:100%">'+session.notes+'</div>':'')+
     '</div>';
+  }).join('');
 
-  const form=
-    '<div class="rr-add-form">'+
-    '<div class="rr-form-field"><div class="rr-form-label">Type</div>'+
-    '<select class="rr-select" id="hs-type">'+
-    '<option value="hang">Dead Hang</option>'+
-    '<option value="scap">Scap Pull-Up</option>'+
-    '</select></div>'+
-    '<div class="rr-form-field" id="hs-secs-wrap"><div class="rr-form-label">Seconds</div>'+
-    '<input class="rr-small-input" id="hs-secs" type="number" min="1" max="120" value="30" style="width:70px"></div>'+
-    '<div class="rr-form-field" id="hs-sets-wrap" style="display:none"><div class="rr-form-label">Sets</div>'+
-    '<input class="rr-small-input" id="hs-sets" type="number" min="1" max="10" value="3"></div>'+
-    '<div class="rr-form-field" id="hs-reps-wrap" style="display:none"><div class="rr-form-label">Reps</div>'+
-    '<input class="rr-small-input" id="hs-reps" type="number" min="1" max="20" value="10"></div>'+
-    '<div class="rr-form-field"><div class="rr-form-label">Notes</div>'+
-    '<input class="rr-notes-input" id="hs-notes" type="text" placeholder="grip, fatigue, etc."></div>'+
-    '<div class="rr-form-field" style="justify-content:flex-end">'+
-    '<button class="btn-complete" id="hs-add-btn" style="font-size:9px;padding:8px 12px">+ Log</button></div>'+
+  const prBar=pr>0?
+    '<div style="font-family:\'Press Start 2P\',monospace;font-size:11px;color:var(--accent);text-align:center;margin-bottom:14px;text-shadow:0 0 8px var(--accent)">'+
+    '★ PR: '+pr+'s hang</div>':'';
+
+  const unlockedBanner=unlocked?
+    '<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--accent);text-align:center;margin-bottom:12px;text-shadow:0 0 8px var(--accent)">✓ 30s + 5 SCAP — STEP UNLOCKED</div>':'';
+
+  const form='<div class="rr-log-title">// Log Your 3 Sets</div>'+
+    '<div class="rr-add-form" style="flex-direction:column;gap:10px">'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap">'+
+        [1,2,3].map(n=>
+          '<div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 12px;flex:1;min-width:120px">'+
+          '<div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2);margin-bottom:8px">SET '+n+'</div>'+
+          '<div style="display:flex;gap:8px">'+
+            '<div class="rr-form-field"><div class="rr-form-label">Hang (s)</div><input class="rr-small-input" id="hs-hang'+n+'" type="number" min="0" max="120" placeholder="secs" style="width:72px"></div>'+
+            '<div class="rr-form-field"><div class="rr-form-label">Scap</div><input class="rr-small-input" id="hs-scap'+n+'" type="number" min="0" max="20" placeholder="reps" style="width:72px"></div>'+
+          '</div>'+
+          '</div>'
+        ).join('')+
+      '</div>'+
+      '<div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap">'+
+        '<div class="rr-form-field" style="flex:1"><div class="rr-form-label">Notes</div><input class="rr-notes-input" id="hs-notes" type="text" placeholder="grip slipping, fatigue, etc." style="width:100%"></div>'+
+        '<div class="rr-form-field"><button class="btn-complete" id="hs-add-btn" style="font-size:9px;padding:8px 12px">+ Log</button></div>'+
+      '</div>'+
     '</div>';
-
-  const entryList=entries
-    ?'<div class="rr-entries">'+entries+'</div>'
-    :'<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);padding:12px 0;text-align:center">No entries yet</div>';
 
   return '<div class="rr-log-block">'+
-    '<div class="rr-log-title">// Training Log · Dead Hang + Scap Pull-Up</div>'+
-    milestones+form+entryList+
-    '</div>';
+    '<div style="display:flex;gap:16px;margin-bottom:14px;flex-wrap:wrap">'+
+      '<div style="flex:1;min-width:160px;background:var(--surface);border-left:3px solid var(--accent);border-radius:0 2px 2px 0;padding:10px 12px">'+
+        '<div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--accent);letter-spacing:1px;margin-bottom:6px">DEAD HANG</div>'+
+        '<div style="font-size:13px;color:var(--muted2);line-height:1.6">Full grip, shoulders active, feet off the ground the entire time.</div>'+
+      '</div>'+
+      '<div style="flex:1;min-width:160px;background:var(--surface);border-left:3px solid var(--accent2);border-radius:0 2px 2px 0;padding:10px 12px">'+
+        '<div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--accent2);letter-spacing:1px;margin-bottom:6px">SCAP PULL-UP</div>'+
+        '<div style="font-size:13px;color:var(--muted2);line-height:1.6">Retract and depress the scapula to rise slightly from the hang. No arm bend. Full stop at the bottom between reps.</div>'+
+      '</div>'+
+    '</div>'+
+    unlockedBanner+
+    prBar+
+    form+
+    (sessions?'<div class="rr-entries" style="margin-top:8px">'+sessions+'</div>':
+      '<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);padding:12px 0;text-align:center">No sessions yet</div>')+
+  '</div>';
 }
 
 // ── RING ROW LOG HTML ─────────────────────────────────────────────────────
@@ -1573,47 +1612,29 @@ async function renderPU(){
     renderPU();
   });
 
-  // Hang/scap type toggle
-  const hsType=document.getElementById('hs-type');
-  if(hsType){
-    function toggleHSFields(){
-      const isHang=hsType.value==='hang';
-      document.getElementById('hs-secs-wrap').style.display=isHang?'':'none';
-      document.getElementById('hs-sets-wrap').style.display=isHang?'none':'';
-      document.getElementById('hs-reps-wrap').style.display=isHang?'none':'';
-    }
-    hsType.addEventListener('change',toggleHSFields);
-    toggleHSFields();
-  }
-
-  // Hang/scap add
+  // Hang/scap add — 3 paired sets
   const hsAddBtn=document.getElementById('hs-add-btn');
   if(hsAddBtn)hsAddBtn.addEventListener('click',async e=>{
     e.stopPropagation();
-    const type=document.getElementById('hs-type').value;
     const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
     const notes=document.getElementById('hs-notes').value.trim();
+    const sets=[1,2,3].map(n=>({
+      hang:parseInt(document.getElementById('hs-hang'+n).value)||0,
+      scap:parseInt(document.getElementById('hs-scap'+n).value)||0
+    }));
+    if(sets.every(s=>s.hang===0&&s.scap===0)) return;
     const log=await getHSLog();
-    if(type==='hang'){
-      const secs=parseInt(document.getElementById('hs-secs').value)||0;
-      log.push({type:'hang',secs,notes,date:today});
-    } else {
-      const sets=parseInt(document.getElementById('hs-sets').value)||3;
-      const reps=parseInt(document.getElementById('hs-reps').value)||10;
-      log.push({type:'scap',sets,reps,notes,date:today});
-    }
+    log.push({sets,notes,date:today});
     await saveHSLog(log);
+    // Auto-unlock if any set has hang>=30 AND scap>=5
+    if(sets.some(s=>s.hang>=30&&s.scap>=5)){
+      const hsStepIdx=PU_PULLUP.findIndex(s=>s.isHangScap);
+      const globalIdx=PU_FOUNDATION.length+hsStepIdx;
+      const arr=await getPUCompleted();
+      if(!arr.includes(globalIdx)){arr.push(globalIdx);await savePUCompleted(arr);}
+    }
     renderPU();
   });
-
-  // Hang/scap delete
-  document.querySelectorAll('.rr-entry-del[data-hs-idx]').forEach(btn=>btn.addEventListener('click',async e=>{
-    e.stopPropagation();
-    const log=await getHSLog();
-    log.splice(+btn.dataset.hsIdx,1);
-    await saveHSLog(log);
-    renderPU();
-  }));
 
   // Ring row delete
   document.querySelectorAll('.rr-entry-del[data-idx]').forEach(btn=>btn.addEventListener('click',async e=>{
