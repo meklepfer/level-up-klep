@@ -666,8 +666,8 @@ const PU_FOUNDATION=[
 
 const PU_PULLUP=[
   {name:"Dead Hang + Scap Pull-Up",preview:"3 sets · 30s hang + 5 scap pull-ups · Training log",drill:"3 sets of 30 second Dead Hang + 5 Scap Pull-Ups.",note:"Step is complete when a 30 second dead hang + 5 scap pull-ups is completed.",videoLink:"sfTsgt-a63c",isHangScap:true},
-  {name:"Ring Row Progression · 3×10",preview:"4 positions · 3×10 each · Training log",drill:"Work through four ring row positions in order: Feet in front of rings → Feet under rings → Feet behind rings → Feet elevated on box. At each position: 3 sets of 10 reps, chest to rings at the top, full extension at the bottom, hips rigid the entire time. A pike disqualifies the rep. Log every session below.",note:"3 sets of 10 at all four positions. Hips stay rigid. Chest touches rings every rep.",isRingRow:true},
-  {name:"Jumping Pull-Up + Slow Negative",preview:"3×10 · Log sets, reps & negative time · Training log",drill:"Jump to the top position — chin over bar — then lower yourself as slowly as possible. No kipping on the way down. Dead hang reset at the bottom before the next rep. The goal is to make the negative longer every session.",note:"Complete when athlete logs 3×10. Negative time should increase over sessions — that is the progress.",isJumpNeg:true},
+  {name:"Ring Row Progression · 3×10",preview:"4 positions · 3×10 each · Training log",drill:"3 sets of 10 Ring Rows.",note:"Feet in Front of Rings is the easiest and as the feet move back it gets more difficult — elevating feet with a small box is the final progression at this step. Complete when the athlete logs 3 sets of 10 with elevated feet.",videoLink:"sEAOZc77wk8",isRingRow:true},
+  {name:"Jumping Pull-Up + Slow Negative",preview:"3×10 · Log sets & reps · Training log",drill:"3 sets of 10 jumping pull-ups + a negative down.\n\nJump to the top position — chin over bar — then lower yourself as slowly as possible.",note:"Athlete completes 3x10 jumping pull-ups and negative.",videoLink:"BLX0O9t51oQ",isJumpNeg:true},
   {name:"Flexed Arm Hang",preview:"3 sets · 30s target · Log each set · Training log",drill:"Jump or step to the top of a pull-up position — chin over bar, arms fully bent. Hold for as long as possible. Rest fully between sets. Fight for every second.",note:"Complete when athlete logs 3 sets of 30+ seconds in a single session.",isFlexHang:true},
   {name:"Toes Assisted Pull-Up",preview:"3×10 · Toes on box · Training log",drill:"Place toes on a box in front of the bar. Use your legs as much as you need to get your chin over the bar. Full dead hang at the bottom between every rep. Reduce leg assistance over time — the goal is eventually not needing the box.",note:"Complete when athlete logs 3×10 with full ROM. Chin clears the bar every rep.",isToesAssist:true},
   {name:"Banded Pull-Up",preview:"3×10 · Log band + sets × reps · Training log",drill:"Loop a band around the bar and place your knees or feet in it. Start with the thickest band you need to complete 3×10. Work down in band resistance over time — thinner band means you are getting stronger.",note:"Complete when athlete logs 3×10 at their current band. Track band resistance each session — decreasing band thickness is the progress indicator.",isBanded:true},
@@ -1418,7 +1418,6 @@ function jumpNegHTML(log){
     '<div class="rr-entry">'+
     '<div class="rr-entry-date">'+e.date+'</div>'+
     '<div class="rr-entry-pos" style="color:var(--accent)">'+e.sets+'x'+e.reps+'</div>'+
-    '<div class="rr-entry-reps" style="color:var(--accent3)">'+e.negsecs+'s neg</div>'+
     '<div class="rr-entry-notes">'+(e.notes||'')+'</div>'+
     '<button class="rr-entry-del" data-jn-idx="'+(log.length-1-i)+'">x</button>'+
     '</div>'
@@ -1426,13 +1425,10 @@ function jumpNegHTML(log){
   const form='<div class="rr-add-form">'+
     '<div class="rr-form-field"><div class="rr-form-label">Sets</div><input class="rr-small-input" id="jn-sets" type="number" min="1" max="10" value="3"></div>'+
     '<div class="rr-form-field"><div class="rr-form-label">Reps</div><input class="rr-small-input" id="jn-reps" type="number" min="1" max="20" value="10"></div>'+
-    '<div class="rr-form-field"><div class="rr-form-label">Neg (s)</div><input class="rr-small-input" id="jn-neg" type="number" min="1" max="30" value="3" style="width:60px"></div>'+
     '<div class="rr-form-field"><div class="rr-form-label">Notes</div><input class="rr-notes-input" id="jn-notes" type="text" placeholder="felt strong, shaky, etc."></div>'+
     '<div class="rr-form-field" style="justify-content:flex-end"><button class="btn-complete" id="jn-add-btn" style="font-size:9px;padding:8px 12px">+ Log</button></div>'+
     '</div>';
   return '<div class="rr-log-block"><div class="rr-log-title">// Training Log · Jumping Pull-Up + Slow Negative</div>'+
-    '<div class="rr-pos-card '+(best?'complete':'')+'" style="margin-bottom:12px;min-width:0">'+
-    '<div class="rr-pos-name">Target</div><div class="rr-pos-best">'+(best?'DONE 3x10':'3 sets x 10 reps')+'</div></div>'+
     form+(entries?'<div class="rr-entries">'+entries+'</div>':'<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);padding:12px 0;text-align:center">No entries yet</div>')+
     '</div>';
 }
@@ -1652,10 +1648,9 @@ async function renderPU(){
     const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
     const sets=parseInt(document.getElementById('jn-sets').value)||3;
     const reps=parseInt(document.getElementById('jn-reps').value)||10;
-    const negsecs=parseInt(document.getElementById('jn-neg').value)||3;
     const notes=document.getElementById('jn-notes').value.trim();
     const log=await getJumpNegLog();
-    log.push({sets,reps,negsecs,notes,date:today});
+    log.push({sets,reps,notes,date:today});
     await saveJumpNegLog(log);
     renderPU();
   });
