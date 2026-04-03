@@ -426,28 +426,30 @@ thead th:last-child{text-align:right}
     <div id="mode-upgrade-content" style="display:none">
       <div style="max-width:860px;margin:0 auto;padding:20px 28px 0">
         <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;color:var(--accent2);margin-bottom:4px;text-shadow:0 0 8px var(--accent2)">// UPGRADE PROGRAMS</div>
-        <div style="font-size:13px;color:var(--muted2);font-weight:500;margin-bottom:20px">Targeted programs to build volume and strength on skills you already have.</div>
+        <div style="font-size:13px;color:var(--muted2);font-weight:500;margin-bottom:14px">Targeted programs to build volume and strength on skills you already have.</div>
+        <input id="upgrade-search" type="text" placeholder="Search programs..." oninput="filterUpgrades(this.value)" style="width:100%;background:var(--bg);border:2px solid var(--border2);border-radius:2px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:500;padding:10px 14px;margin-bottom:16px;box-sizing:border-box;transition:border-color .15s" onfocus="this.style.borderColor='var(--accent2)'" onblur="this.style.borderColor='var(--border2)'">
       </div>
-      <div style="max-width:860px;margin:0 auto;padding:0 28px 28px;display:flex;flex-direction:column;gap:12px">
-        <div class="upgrade-card" onclick="setMode('upgrade');enterTrack('hspu')">
+      <div style="max-width:860px;margin:0 auto;padding:0 28px 28px;display:flex;flex-direction:column;gap:12px" id="upgrade-list">
+        <div class="upgrade-card" id="uc-pu" onclick="setMode('upgrade');enterTrack('pu-upgrade')" data-tags="pull-up pullup strict volume upgrade strength">
+          <div class="upgrade-card-icon">💪</div>
+          <div class="upgrade-card-body">
+            <div class="upgrade-card-name">Strict Pull-Up Volume</div>
+            <div class="upgrade-card-desc">Build strict pull-up volume with ladders, training sets, rows, and max sets. Cycle-based progressive program.</div>
+          </div>
+          <div class="upgrade-card-arrow">▶</div>
+        </div>
+        <div class="upgrade-card" id="uc-hspu" onclick="setMode('upgrade');enterTrack('hspu')" data-tags="hspu handstand push-up strict volume upgrade strength">
           <div class="upgrade-card-icon">🤸</div>
           <div class="upgrade-card-body">
-            <div class="upgrade-card-name">Strict HSPU for Volume</div>
+            <div class="upgrade-card-name">Strict HSPU Volume</div>
             <div class="upgrade-card-desc">Build from 1-3 reps to consistent sets of 10+. 4-cycle progressive program with cycle-specific targets.</div>
           </div>
           <div class="upgrade-card-arrow">▶</div>
         </div>
-        <div class="upgrade-card upgrade-card-locked">
+        <div class="upgrade-card upgrade-card-locked" id="uc-du" data-tags="double under volume upgrade">
           <div class="upgrade-card-icon">🔒</div>
           <div class="upgrade-card-body">
             <div class="upgrade-card-name">Double Under Volume</div>
-            <div class="upgrade-card-desc">Coming soon</div>
-          </div>
-        </div>
-        <div class="upgrade-card upgrade-card-locked">
-          <div class="upgrade-card-icon">🔒</div>
-          <div class="upgrade-card-body">
-            <div class="upgrade-card-name">Pull-Up Volume</div>
             <div class="upgrade-card-desc">Coming soon</div>
           </div>
         </div>
@@ -742,7 +744,85 @@ thead th:last-child{text-align:right}
           </div>
         </div>
     </div>
-  </div>
+
+      <!-- PU UPGRADE TRACK -->
+      <div id="track-pu-upgrade" style="display:none">
+        <div class="hero">
+          <div class="hero-title-row">
+            <h1 class="hero-title">Strict Pull-<span class="highlight2">Up Volume</span></h1>
+            <div class="pixel-guy-wrap"><img id="pixel-pu-upgrade" src="" style="width:120px;height:180px;filter:drop-shadow(0 0 8px rgba(255,0,170,.5));image-rendering:pixelated;animation:dad-hang 2s ease-in-out infinite"></div>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <div class="progress-label">Cycle Progress</div>
+            <div class="progress-fraction">Cycle <span id="pu-upgrade-cycle-num">1</span></div>
+          </div>
+          <div class="xp-bar-wrap"><div class="xp-bar-fill" id="pu-upgrade-track-fill" style="width:0%"></div><div class="xp-label" id="pu-upgrade-xp-label">0%</div></div>
+          <div class="step-dots" id="pu-upgrade-step-dots"></div>
+          <div style="text-align:right;margin-top:10px"><button onclick="resetTrack('pu-upgrade')" style="background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted);font-family:'Press Start 2P',monospace;font-size:7px;padding:4px 10px;cursor:pointer;letter-spacing:1px;transition:all .15s" onmouseover="this.style.borderColor='var(--accent2)';this.style.color='var(--accent2)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted)'">↺ Reset Progress</button></div>
+        </div>
+        <div class="branch-label trunk" style="margin-top:8px"><div class="bl-line"></div>OPTIONAL WARM-UP<div class="bl-line"></div></div>
+        <div class="steps" style="padding-bottom:0">
+          <div class="step-card" style="border-color:rgba(255,0,170,0.2)">
+            <div class="step-corner tl"></div><div class="step-corner br"></div>
+            <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
+              <div class="step-num" style="font-size:20px">💪</div>
+              <div class="step-info">
+                <div class="step-name">Pull-Up Warm-Up</div>
+                <div class="step-preview">AMRAP 5:00 · Optional · Before every session</div>
+              </div>
+              <div class="step-chevron">▾</div>
+            </div>
+            <div class="step-body">
+              <div class="drill-label">// The Warm-Up</div>
+              <div class="drill-text">
+                <div style="margin-bottom:10px"><strong>AMRAP 5:00</strong></div>
+                <div style="margin-bottom:10px">1. <strong>PVC Passthroughs</strong> — 10 reps</div>
+                <div style="margin-bottom:10px">2. <strong>Hollow Rocks</strong> — 5 reps</div>
+                <div style="margin-bottom:10px">3. <strong>Supermans</strong> — 5 reps</div>
+                <div>4. <strong>Scap Pull-Ups</strong> — 5 reps</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="branch-label trunk" style="margin-top:8px"><div class="bl-line"></div>CYCLE STEPS<div class="bl-line"></div></div>
+        <div class="steps" id="pu-upgrade-steps-container"></div>
+        <div class="branch-label boss" id="pu-upgrade-bonus-label" style="display:none"><div class="bl-line"></div>⭐ BONUS LEVEL<div class="bl-line"></div></div>
+        <div id="pu-upgrade-bonus-container" style="display:none;max-width:860px;margin:0 auto;padding:0 28px 28px">
+          <div class="step-card" style="border-color:rgba(255,0,170,0.35);box-shadow:0 0 18px rgba(255,0,170,.06)">
+            <div class="step-corner tl" style="border-color:var(--accent2)"></div><div class="step-corner br" style="border-color:var(--accent2)"></div>
+            <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
+              <div class="step-num" style="font-size:20px;color:var(--accent2);text-shadow:0 0 8px var(--accent2)">Rx</div>
+              <div class="step-info">
+                <div class="step-name" style="color:var(--accent2)">Strict Fran</div>
+                <div class="step-preview">21-15-9 · Strict Pull-Ups + Thrusters · For Time</div>
+              </div>
+              <div class="step-chevron">▾</div>
+            </div>
+            <div class="step-body" style="padding-left:16px">
+              <div class="drill-label" style="color:var(--accent2)">// The Workout</div>
+              <div class="drill-text" style="border-left-color:var(--accent2)">
+                <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent2);text-align:center;margin-bottom:16px;text-shadow:0 0 10px var(--accent2)">21 — 15 — 9</div>
+                <div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
+                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 20px;text-align:center;flex:1;min-width:120px">
+                    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted2);margin-bottom:6px">THRUSTERS</div>
+                    <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent3)">95 / 65</div>
+                    <div style="font-size:11px;color:var(--muted2);margin-top:4px">lb</div>
+                  </div>
+                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 20px;text-align:center;flex:1;min-width:120px">
+                    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted2);margin-bottom:6px">PULL-UPS</div>
+                    <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent2)">Strict</div>
+                    <div style="font-size:11px;color:var(--muted2);margin-top:4px">no kipping</div>
+                  </div>
+                </div>
+                <div style="font-size:13px;color:var(--muted2);line-height:1.7">No kipping. Every pull-up must be strict. This is the proof of work.</div>
+              </div>
+              <div id="pu-upgrade-fran-block" style="margin-top:14px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
   </div>
 
@@ -783,6 +863,408 @@ const PU_PULLUP=[
 const PU_TRUNK=[...PU_FOUNDATION,...PU_PULLUP];
 
 const RR_POSITIONS=['Feet in Front','Feet Under','Feet Behind','Feet Elevated'];
+
+// ── PU UPGRADE TRACK DATA ─────────────────────────────────────────────────
+const PU_UPGRADE_STEPS=[
+  {name:'Pull-Up Ladder + Drop Set',
+   preview:'Climb until failure · Rest · Max set',
+   drill:'Start at 1 strict pull-up. Rest 2-3 minutes. Then 2 reps. Rest 2-3 minutes. Then 3 reps. Keep climbing until you fail to complete a set.\n\nRest 2-3 minutes. Then one all-out max effort set.',
+   note:'Log rounds completed, reps in the failed set, and reps in the max set.',
+   isPULadder:true},
+  {name:'5 Training Sets',
+   preview:'5 sets · Controlled reps · Not to failure',
+   drill:'5 sets of strict pull-ups. Choose a rep count you can hit for all 5 sets without going to failure. Focus on quality — dead hang start, chin fully over bar every rep.\n\nRest 2:00-2:30 between sets.',
+   note:'Complete when all 5 sets are logged.',
+   isPUTraining:true},
+  {name:'Bent Over Row · 3×8-10',
+   preview:'3 sets · 8-10 reps · Log weight',
+   drill:'3 sets of 8-10 dumbbell bent over rows.\n\nHinge at the hips, back flat, row to the hip. Full range of motion. Rest 2:00 between sets.',
+   note:'Complete when 3 sets of 8-10 reps are logged.',
+   isPURow:true},
+  {name:'3 Max Sets',
+   preview:'3 all-out sets · Log each · Track your PR',
+   drill:'3 max effort sets of strict pull-ups.\n\nDead hang start. Go until you can\'t get your chin over the bar. Rest fully between sets — at least 3:00.',
+   note:'After logging all 3 sets choose to keep cycling or unlock the bonus level.',
+   isPUMaxSets:true},
+];
+
+// ── PU UPGRADE FIREBASE ───────────────────────────────────────────────────
+async function getPUUpgradeCycle(){try{return(await fbGet(userPath()+'/pu_upgrade_cycle'))||1}catch(e){return 1}}
+async function savePUUpgradeCycle(n){try{await fbSet(userPath()+'/pu_upgrade_cycle',n)}catch(e){}}
+async function getPUUpgradeBranch(){try{return(await fbGet(userPath()+'/pu_upgrade_branch'))||[]}catch(e){return[]}}
+async function savePUUpgradeBranch(a){try{await fbSet(userPath()+'/pu_upgrade_branch',a)}catch(e){}}
+async function getPUUpgradeAdventure(){try{return await fbGet(userPath()+'/pu_upgrade_adventure')}catch(e){return false}}
+async function getPUUpgradeLog(key){try{const d=await fbGet(userPath()+'/'+key);return d?Object.values(d):[]}catch(e){return[]}}
+async function savePUUpgradeLog(key,a){try{await fbSet(userPath()+'/'+key,a)}catch(e){}}
+async function getFranLB(){try{const d=await fbGet('leaderboard_fran');return d?Object.values(d):[]}catch(e){return[]}}
+async function pushFranLB(user,time){
+  try{
+    const key=user.toLowerCase().replace(/\s+/g,'_');
+    const existing=await fbGet('leaderboard_fran/'+key);
+    // Store as seconds for comparison
+    const toSecs=t=>{const p=t.split(':');return p.length===2?+p[0]*60+(+p[1]||0):+p[0]||9999};
+    if(!existing||toSecs(time)<toSecs(existing.time)){
+      await fbSet('leaderboard_fran/'+key,{name:user,time,ts:Date.now()});
+    }
+  }catch(e){}
+}
+
+// ── PU UPGRADE HTML BUILDERS ──────────────────────────────────────────────
+function puLadderHTML(log){
+  log=log||[];
+  const pr=log.reduce((b,e)=>e.maxSet>b?e.maxSet:b,0);
+  const entries=log.slice().reverse().slice(0,8).map((e,i)=>
+    '<div class="rr-entry">'+
+    '<div class="rr-entry-date">'+e.date+'</div>'+
+    '<div class="rr-entry-pos" style="color:var(--accent)">'+e.rounds+' rounds</div>'+
+    '<div class="rr-entry-reps" style="color:var(--accent2)">failed at '+e.failReps+'</div>'+
+    '<div class="rr-entry-reps" style="color:var(--accent3);font-size:14px">max: '+e.maxSet+'</div>'+
+    '<div class="rr-entry-notes">'+(e.notes||'')+'</div>'+
+    '<button class="rr-entry-del" data-puladder-idx="'+(log.length-1-i)+'">x</button>'+
+    '</div>'
+  ).join('');
+  return '<div class="rr-log-block">'+
+    (pr?'<div style="font-family:\'Press Start 2P\',monospace;font-size:16px;color:var(--accent3);text-align:center;margin-bottom:12px;text-shadow:0 0 10px var(--accent3)">★ PR: '+pr+' reps</div>':'')+
+    '<div class="rr-log-title">// Log Your Session</div>'+
+    '<div class="rr-add-form" style="flex-wrap:wrap;gap:8px">'+
+      '<div class="rr-form-field"><div class="rr-form-label">Rounds</div><input class="rr-small-input" id="puladder-rounds" type="number" min="0" max="50" placeholder="made" style="width:66px"></div>'+
+      '<div class="rr-form-field"><div class="rr-form-label">Failed Set</div><input class="rr-small-input" id="puladder-fail" type="number" min="0" max="50" placeholder="reps" style="width:66px"></div>'+
+      '<div class="rr-form-field"><div class="rr-form-label">Max Set</div><input class="rr-small-input" id="puladder-max" type="number" min="0" max="50" placeholder="reps" style="width:66px"></div>'+
+      '<div class="rr-form-field" style="flex:1"><div class="rr-form-label">Notes</div><input class="rr-notes-input" id="puladder-notes" type="text" placeholder="how it felt..."></div>'+
+      '<div class="rr-form-field" style="justify-content:flex-end"><button class="btn-complete" id="puladder-add-btn" style="font-size:9px;padding:8px 12px">+ Log</button></div>'+
+    '</div>'+
+    (entries?'<div class="rr-entries">'+entries+'</div>':'<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);padding:12px 0;text-align:center">No sessions yet</div>')+
+  '</div>';
+}
+
+function puTrainingHTML(log){
+  log=log||[];
+  const entries=log.slice().reverse().slice(0,8).map((e,i)=>{
+    const sets=e.sets||[];
+    return '<div class="rr-entry" style="flex-wrap:wrap;gap:6px">'+
+      '<div class="rr-entry-date" style="width:100%">'+e.date+(e.notes?' <span style="color:var(--muted2);font-size:11px;font-style:italic">'+e.notes+'</span>':'')+'</div>'+
+      sets.map((s,si)=>'<div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:6px 10px;text-align:center;min-width:50px">'+
+        '<div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2);margin-bottom:3px">S'+(si+1)+'</div>'+
+        '<div style="font-family:\'Press Start 2P\',monospace;font-size:14px;color:var(--accent)">'+s+'</div>'+
+      '</div>').join('')+
+    '</div>';
+  }).join('');
+  return '<div class="rr-log-block">'+
+    '<div class="rr-log-title">// Log 5 Sets</div>'+
+    '<div class="rr-add-form" style="flex-wrap:wrap;gap:8px">'+
+      [1,2,3,4,5].map(n=>'<div class="rr-form-field"><div class="rr-form-label">Set '+n+'</div><input class="rr-small-input" id="putraining-s'+n+'" type="number" min="0" max="50" placeholder="reps" style="width:58px"></div>').join('')+
+      '<div class="rr-form-field" style="flex:1"><div class="rr-form-label">Notes</div><input class="rr-notes-input" id="putraining-notes" type="text" placeholder="rep scheme, feel..."></div>'+
+      '<div class="rr-form-field" style="justify-content:flex-end"><button class="btn-complete" id="putraining-add-btn" style="font-size:9px;padding:8px 12px">+ Log</button></div>'+
+    '</div>'+
+    (entries?'<div class="rr-entries">'+entries+'</div>':'<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);padding:12px 0;text-align:center">No sessions yet</div>')+
+  '</div>';
+}
+
+function puRowHTML(log){
+  log=log||[];
+  const entries=log.slice().reverse().slice(0,8).map((e,i)=>{
+    const sets=e.sets||[];
+    return '<div class="rr-entry" style="flex-wrap:wrap;gap:6px">'+
+      '<div class="rr-entry-date" style="width:100%">'+e.date+'</div>'+
+      sets.map((s,si)=>'<div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:6px 10px;text-align:center;min-width:70px">'+
+        '<div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2);margin-bottom:3px">SET '+(si+1)+'</div>'+
+        '<div style="font-family:\'Press Start 2P\',monospace;font-size:13px;color:var(--accent)">'+s.reps+'</div>'+
+        '<div style="font-size:11px;color:var(--muted2)">'+s.weight+'lb</div>'+
+      '</div>').join('')+
+      (e.notes?'<div style="font-size:12px;color:var(--muted2);font-style:italic;width:100%">'+e.notes+'</div>':'')+
+    '</div>';
+  }).join('');
+  return '<div class="rr-log-block">'+
+    '<div class="rr-log-title">// Log 3 Sets</div>'+
+    '<div class="rr-add-form" style="flex-direction:column;gap:10px">'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap">'+
+        [1,2,3].map(n=>'<div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:10px 12px;flex:1;min-width:100px">'+
+          '<div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2);margin-bottom:8px">SET '+n+'</div>'+
+          '<div style="display:flex;gap:8px">'+
+            '<div class="rr-form-field"><div class="rr-form-label">Reps</div><input class="rr-small-input" id="purow-reps'+n+'" type="number" min="0" max="20" placeholder="reps" style="width:58px"></div>'+
+            '<div class="rr-form-field"><div class="rr-form-label">Weight</div><input class="rr-small-input" id="purow-wt'+n+'" type="number" min="0" max="200" placeholder="lb" style="width:58px"></div>'+
+          '</div>'+
+        '</div>').join('')+
+      '</div>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">'+
+        '<div class="rr-form-field" style="flex:1"><div class="rr-form-label">Notes</div><input class="rr-notes-input" id="purow-notes" type="text" placeholder="which DB, fatigue..." style="width:100%"></div>'+
+        '<div class="rr-form-field"><button class="btn-complete" id="purow-add-btn" style="font-size:9px;padding:8px 12px">+ Log</button></div>'+
+      '</div>'+
+    '</div>'+
+    (entries?'<div class="rr-entries">'+entries+'</div>':'<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);padding:12px 0;text-align:center">No sessions yet</div>')+
+  '</div>';
+}
+
+function puMaxSetsHTML(log,cycle,adventure){
+  log=log||[];
+  const pr=log.reduce((b,e)=>{const m=Math.max(...(e.sets||[0]));return m>b?m:b},0);
+  const hasLogged=log.length>0;
+  const entries=log.slice().reverse().slice(0,8).map((e,i)=>{
+    const sets=e.sets||[];
+    return '<div class="rr-entry" style="flex-wrap:wrap;gap:6px">'+
+      '<div class="rr-entry-date" style="width:100%">'+e.date+'</div>'+
+      sets.map((s,si)=>'<div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:6px 10px;text-align:center;min-width:50px">'+
+        '<div style="font-family:\'Press Start 2P\',monospace;font-size:7px;color:var(--muted2);margin-bottom:3px">S'+(si+1)+'</div>'+
+        '<div style="font-family:\'Press Start 2P\',monospace;font-size:14px;color:var(--accent3)">'+s+'</div>'+
+      '</div>').join('')+
+    '</div>';
+  }).join('');
+  return '<div class="rr-log-block">'+
+    (pr?'<div style="font-family:\'Press Start 2P\',monospace;font-size:18px;color:var(--accent3);text-align:center;margin-bottom:12px;text-shadow:0 0 10px var(--accent3)">★ PR: '+pr+' reps</div>':'')+
+    '<div class="rr-log-title">// Log 3 Max Sets</div>'+
+    '<div class="rr-add-form" style="flex-wrap:wrap;gap:8px">'+
+      [1,2,3].map(n=>'<div class="rr-form-field"><div class="rr-form-label">Set '+n+'</div><input class="rr-small-input" id="pumaxsets-s'+n+'" type="number" min="0" max="50" placeholder="reps" style="width:66px"></div>').join('')+
+      '<div class="rr-form-field" style="flex:1"><div class="rr-form-label">Notes</div><input class="rr-notes-input" id="pumaxsets-notes" type="text" placeholder="grip, fatigue..."></div>'+
+      '<div class="rr-form-field" style="justify-content:flex-end"><button class="btn-complete" id="pumaxsets-add-btn" style="font-size:9px;padding:8px 12px">+ Log</button></div>'+
+    '</div>'+
+    '<div style="margin-top:20px;padding:16px;background:rgba(255,204,0,0.04);border:2px solid var(--accent3);border-radius:2px;text-align:center">'+
+      '<div style="font-family:\'Press Start 2P\',monospace;font-size:9px;color:var(--accent3);text-shadow:0 0 8px var(--accent3);margin-bottom:12px;letter-spacing:2px">CHOOSE YOUR PATH</div>'+
+      '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'+
+        '<button class="btn-complete" id="pu-upgrade-keep-btn" onclick="puUpgradeKeep(event)" style="font-size:8px;border-color:var(--accent);color:var(--accent);text-shadow:0 0 6px var(--accent)">↺ Keep Upgrading</button>'+
+        '<button class="btn-complete" id="pu-upgrade-adventure-btn" onclick="puUpgradeAdventure(event)" style="font-size:8px;border-color:var(--accent2);color:var(--accent2);text-shadow:0 0 6px var(--accent2)">⭐ Ready for an Adventure</button>'+
+      '</div>'+
+    '</div>'+
+    (entries?'<div class="rr-entries">'+entries+'</div>':'')+
+  '</div>';
+}
+
+function franLogHTML(log,lbData){
+  log=log||[];lbData=lbData||[];
+  const toSecs=t=>{if(!t)return 9999;const p=t.split(':');return p.length===2?+p[0]*60+(+p[1]||0):+p[0]||9999};
+  const sorted=[...lbData].sort((a,b)=>toSecs(a.time)-toSecs(b.time));
+  const medals=['🥇','🥈','🥉'];
+  const board=sorted.length?
+    '<div style="background:var(--bg);border:2px solid var(--accent2);border-radius:2px;padding:14px;margin-bottom:14px">'+
+    '<div style="font-family:\'Press Start 2P\',monospace;font-size:9px;letter-spacing:2px;color:var(--accent2);text-shadow:0 0 8px var(--accent2);margin-bottom:12px;text-align:center">── STRICT FRAN HI-SCORE ──</div>'+
+    sorted.slice(0,10).map((e,i)=>{
+      const isMe=e.name.toLowerCase()===currentUser.toLowerCase();
+      return '<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border);justify-content:space-between">'+
+        '<span style="font-family:\'Press Start 2P\',monospace;font-size:10px;color:'+(i<3?'var(--accent2)':'var(--muted2)')+'">'+
+          (i<3?medals[i]:(i+1)+'.')+
+        '</span>'+
+        '<span style="font-family:\'Press Start 2P\',monospace;font-size:9px;text-transform:uppercase;color:'+(isMe?'var(--accent)':'var(--text)')+'">'+
+          e.name+(isMe?' ◀':'')+
+        '</span>'+
+        '<span style="font-family:\'Press Start 2P\',monospace;font-size:11px;color:var(--accent2)">'+e.time+'</span>'+
+      '</div>';
+    }).join('')+'</div>':'';
+
+  const myBest=log.reduce((b,e)=>toSecs(e.time)<toSecs(b)?e.time:b,'');
+  const myLog=log.slice().reverse().slice(0,8).map((e,i)=>
+    '<div class="rr-entry">'+
+    '<div class="rr-entry-date">'+e.date+'</div>'+
+    '<div class="rr-entry-reps" style="font-size:16px;color:var(--accent2)">'+e.time+'</div>'+
+    '<div class="rr-entry-notes">'+(e.notes||'')+'</div>'+
+    '<button class="rr-entry-del" data-fran-idx="'+(log.length-1-i)+'">x</button>'+
+    '</div>'
+  ).join('');
+
+  return board+
+    (myBest?'<div style="font-family:\'Press Start 2P\',monospace;font-size:11px;color:var(--accent2);text-align:center;margin-bottom:12px;text-shadow:0 0 8px var(--accent2)">★ PR: '+myBest+'</div>':'')+
+    '<div class="rr-log-title">// Log Your Time</div>'+
+    '<div class="rr-add-form">'+
+      '<div class="rr-form-field"><div class="rr-form-label">Time</div><input class="rr-small-input" id="fran-time" type="text" placeholder="0:00" maxlength="6" style="width:80px"></div>'+
+      '<div class="rr-form-field" style="flex:1"><div class="rr-form-label">Notes</div><input class="rr-notes-input" id="fran-notes" type="text" placeholder="breaks, how it felt..."></div>'+
+      '<div class="rr-form-field" style="justify-content:flex-end"><button class="btn-complete" id="fran-add-btn" style="font-size:9px;padding:8px 12px">+ Log</button></div>'+
+    '</div>'+
+    (myLog?'<div class="rr-entries">'+myLog+'</div>':'<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2);padding:12px 0;text-align:center">No scores yet</div>');
+}
+
+// ── PU UPGRADE RENDER ─────────────────────────────────────────────────────
+async function renderPUUpgrade(){
+  const cycle=await getPUUpgradeCycle();
+  const branch=await getPUUpgradeBranch();
+  const adventure=await getPUUpgradeAdventure();
+  const total=PU_UPGRADE_STEPS.length;
+  const done=branch.length;
+  const pct=Math.round(done/total*100);
+
+  document.getElementById('pu-upgrade-cycle-num').textContent=cycle;
+  document.getElementById('pu-upgrade-track-fill').style.width=pct+'%';
+  document.getElementById('pu-upgrade-xp-label').textContent=pct+'%';
+
+  const dotsEl=document.getElementById('pu-upgrade-step-dots');
+  dotsEl.innerHTML=PU_UPGRADE_STEPS.map((_,i)=>'<div class="step-dot '+(branch.includes(i)?'done':(!branch.includes(i)&&(i===0||branch.includes(i-1)))?'active':'')+'" data-i="'+i+'"></div>').join('');
+
+  // Load all logs in parallel
+  const [ladderLog,trainingLog,rowLog,maxSetsLog]=await Promise.all([
+    getPUUpgradeLog('pu_ladder_log'),
+    getPUUpgradeLog('pu_training_log'),
+    getPUUpgradeLog('pu_row_log'),
+    getPUUpgradeLog('pu_maxsets_log'),
+  ]);
+
+  function isDoneU(i){return branch.includes(i);}
+  function isActiveU(i){return!branch.includes(i)&&(i===0||branch.includes(i-1));}
+  function isLockedU(i){return!branch.includes(i)&&!isActiveU(i);}
+
+  document.getElementById('pu-upgrade-steps-container').innerHTML=PU_UPGRADE_STEPS.map((s,i)=>{
+    const dn=isDoneU(i),ac=isCoach||isActiveU(i)||s.isPUMaxSets,lk=!isCoach&&isLockedU(i)&&!s.isPUMaxSets;
+    const cls='step-card'+(dn?' is-done':ac?' is-active':lk?' is-locked':'')+(s.isPUMaxSets&&ac?' open':'');
+    const badge=dn?'<span class="step-badge badge-done">✓ DONE</span>':ac?'<span class="step-badge badge-active">▶ ACTIVE</span>':'<span class="step-badge badge-locked">🔒 LOCKED</span>';
+
+    let extra='';
+    if(s.isPULadder) extra=puLadderHTML(ladderLog);
+    if(s.isPUTraining) extra=puTrainingHTML(trainingLog);
+    if(s.isPURow) extra=puRowHTML(rowLog);
+    if(s.isPUMaxSets) extra=puMaxSetsHTML(maxSetsLog,cycle,adventure);
+
+    const action=s.isPUMaxSets?'':(dn?'<button class="btn-complete btn-pu-upgrade-undo" data-i="'+i+'">↩ Undo</button>':ac?'<button class="btn-complete btn-pu-upgrade-done" data-i="'+i+'">✓ Mark Complete</button>':'');
+
+    return '<div class="'+cls+' step-card-pu-upgrade" data-i="'+i+'" id="pu-upgrade-step-'+i+'" style="max-width:860px;margin:0 auto">'+
+      '<div class="step-corner tl"></div><div class="step-corner br"></div>'+
+      '<div class="step-header"><div class="step-num">'+(dn?'✓':String(i+1).padStart(2,'0'))+'</div>'+
+      '<div class="step-info"><div class="step-name">'+s.name+'</div><div class="step-preview">'+s.preview+'</div></div>'+
+      badge+'<div class="step-chevron">▾</div></div>'+
+      '<div class="step-body">'+
+        (s.drill?'<div class="drill-label">// The Drill</div><div class="drill-text">'+s.drill.replace(/\n\n/g,'<br><br>')+'</div>':'')+
+        (s.note&&!s.isPUMaxSets?'<div class="completion-note">'+s.note+'</div>':'')+
+        '<div class="step-actions">'+action+'</div>'+
+        extra+
+      '</div></div>';
+  }).join('');
+
+  // Bind card headers
+  document.querySelectorAll('.step-card-pu-upgrade .step-header').forEach(h=>
+    h.addEventListener('click',()=>h.closest('.step-card').classList.toggle('open')));
+
+  // Mark complete
+  document.querySelectorAll('.btn-pu-upgrade-done').forEach(btn=>btn.addEventListener('click',async e=>{
+    e.stopPropagation();
+    const i=+btn.dataset.i;
+    const arr=await getPUUpgradeBranch();
+    if(!arr.includes(i)){arr.push(i);await savePUUpgradeBranch(arr);}
+    renderPUUpgrade();
+    setTimeout(()=>{const nx=document.getElementById('pu-upgrade-step-'+(i+1));if(nx){nx.classList.add('open');nx.scrollIntoView({behavior:'smooth',block:'center'});}},100);
+  }));
+
+  // Undo
+  document.querySelectorAll('.btn-pu-upgrade-undo').forEach(btn=>btn.addEventListener('click',async e=>{
+    e.stopPropagation();
+    const i=+btn.dataset.i;
+    const arr=await getPUUpgradeBranch();
+    await savePUUpgradeBranch(arr.filter(x=>x!==i));
+    renderPUUpgrade();
+  }));
+
+  // Ladder log
+  const ladderBtn=document.getElementById('puladder-add-btn');
+  if(ladderBtn)ladderBtn.addEventListener('click',async e=>{
+    e.stopPropagation();
+    const rounds=parseInt(document.getElementById('puladder-rounds').value)||0;
+    const failReps=parseInt(document.getElementById('puladder-fail').value)||0;
+    const maxSet=parseInt(document.getElementById('puladder-max').value)||0;
+    const notes=document.getElementById('puladder-notes').value.trim();
+    if(!rounds&&!maxSet)return;
+    const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    const log=await getPUUpgradeLog('pu_ladder_log');
+    log.push({rounds,failReps,maxSet,notes,date:today});
+    await savePUUpgradeLog('pu_ladder_log',log);
+    renderPUUpgrade();
+  });
+  document.querySelectorAll('.rr-entry-del[data-puladder-idx]').forEach(btn=>btn.addEventListener('click',async e=>{
+    e.stopPropagation();const log=await getPUUpgradeLog('pu_ladder_log');log.splice(+btn.dataset.puladderIdx,1);await savePUUpgradeLog('pu_ladder_log',log);renderPUUpgrade();
+  }));
+
+  // Training sets log
+  const trainingBtn=document.getElementById('putraining-add-btn');
+  if(trainingBtn)trainingBtn.addEventListener('click',async e=>{
+    e.stopPropagation();
+    const sets=[1,2,3,4,5].map(n=>parseInt(document.getElementById('putraining-s'+n).value)||0);
+    const notes=document.getElementById('putraining-notes').value.trim();
+    if(sets.every(s=>s===0))return;
+    const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    const log=await getPUUpgradeLog('pu_training_log');
+    log.push({sets,notes,date:today});
+    await savePUUpgradeLog('pu_training_log',log);
+    renderPUUpgrade();
+  });
+
+  // Row log
+  const rowBtn=document.getElementById('purow-add-btn');
+  if(rowBtn)rowBtn.addEventListener('click',async e=>{
+    e.stopPropagation();
+    const sets=[1,2,3].map(n=>({reps:parseInt(document.getElementById('purow-reps'+n).value)||0,weight:parseInt(document.getElementById('purow-wt'+n).value)||0}));
+    const notes=document.getElementById('purow-notes').value.trim();
+    if(sets.every(s=>s.reps===0))return;
+    const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    const log=await getPUUpgradeLog('pu_row_log');
+    log.push({sets,notes,date:today});
+    await savePUUpgradeLog('pu_row_log',log);
+    renderPUUpgrade();
+  });
+
+  // Max sets log
+  const maxSetsBtn=document.getElementById('pumaxsets-add-btn');
+  if(maxSetsBtn)maxSetsBtn.addEventListener('click',async e=>{
+    e.stopPropagation();
+    const sets=[1,2,3].map(n=>parseInt(document.getElementById('pumaxsets-s'+n).value)||0);
+    const notes=document.getElementById('pumaxsets-notes').value.trim();
+    if(sets.every(s=>s===0))return;
+    const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    const log=await getPUUpgradeLog('pu_maxsets_log');
+    log.push({sets,notes,date:today});
+    await savePUUpgradeLog('pu_maxsets_log',log);
+    renderPUUpgrade();
+  });
+
+  // Keep upgrading - handled by global puUpgradeKeep()
+
+  // Ready for an Adventure - handled by global puUpgradeAdventure()
+
+  // Bonus level
+  const bonusLabel=document.getElementById('pu-upgrade-bonus-label');
+  const bonusContainer=document.getElementById('pu-upgrade-bonus-container');
+  if(bonusLabel) bonusLabel.style.display=adventure?'flex':'none';
+  if(bonusContainer) bonusContainer.style.display=adventure?'block':'none';
+  if(adventure){
+    const franLog=await getPUUpgradeLog('pu_fran_log').catch(()=>[]);
+    const franLB=await getFranLB();
+    const franBlock=document.getElementById('pu-upgrade-fran-block');
+    if(franBlock) franBlock.innerHTML='<div class="rr-log-block">'+franLogHTML(franLog,franLB)+'</div>';
+    const franBtn=document.getElementById('fran-add-btn');
+    if(franBtn)franBtn.addEventListener('click',async e=>{
+      e.stopPropagation();
+      const time=document.getElementById('fran-time').value.trim();
+      const notes=document.getElementById('fran-notes').value.trim();
+      if(!time)return;
+      const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      const log=await getPUUpgradeLog('pu_fran_log').catch(()=>[]);
+      log.push({time,notes,date:today});
+      await savePUUpgradeLog('pu_fran_log',log);
+      await pushFranLB(currentUser,time);
+      renderPUUpgrade();
+    });
+    document.querySelectorAll('.rr-entry-del[data-fran-idx]').forEach(btn=>btn.addEventListener('click',async e=>{
+      e.stopPropagation();
+      const log=await getPUUpgradeLog('pu_fran_log').catch(()=>[]);
+      log.splice(+btn.dataset.franIdx,1);
+      await savePUUpgradeLog('pu_fran_log',log);
+      renderPUUpgrade();
+    }));
+  }
+
+  // Set pullup image on upgrade track
+  const puUpgradeImg=document.getElementById('pixel-pu-upgrade');
+  const puImg=document.getElementById('pixel-guy-pu');
+  if(puUpgradeImg&&puImg) puUpgradeImg.src=puImg.src;
+}
+
+async function puUpgradeKeep(e){
+  if(e) e.stopPropagation();
+  const c=await getPUUpgradeCycle();
+  await savePUUpgradeCycle(c+1);
+  await savePUUpgradeBranch([]);
+  renderPUUpgrade();
+  setTimeout(()=>{const el=document.getElementById('pu-upgrade-step-0');if(el){el.classList.add('open');el.scrollIntoView({behavior:'smooth',block:'center'});}},100);
+}
+
+async function puUpgradeAdventure(e){
+  if(e) e.stopPropagation();
+  celebrate('⭐ Adventure Unlocked!','30kDN86TXa4');
+  await fbSet(userPath()+'/pu_upgrade_adventure',true);
+  setTimeout(()=>renderPUUpgrade(),400);
+}
 
 // ── HSPU TRACK DATA ───────────────────────────────────────────────────────
 const HSPU_WARMUP='WARM-UP — AMRAP 5:00: Wrist/Forearm Stretch 5-10s · Wrist Circles 5 each direction · Scap Push-Ups 5 · Pike Push-Ups 5 · Handstand Shoulder Taps 10';
@@ -1003,19 +1485,20 @@ function enterTrack(track){
   document.getElementById('mode-unlock-content').style.display='none';
   document.getElementById('mode-upgrade-content').style.display='none';
   document.getElementById('track-views').style.display='block';
-  ['du','pullup','hspu'].forEach(t=>document.getElementById('track-'+t).style.display='none');
+  ['du','pullup','hspu','pu-upgrade'].forEach(t=>{const el=document.getElementById('track-'+t);if(el)el.style.display='none';});
   document.getElementById('track-'+track).style.display='block';
-  const labels={du:'Double Unders',pullup:'Strict Pull-Ups',hspu:'SHSPU Volume'};
-  document.getElementById('track-breadcrumb').textContent='// '+labels[track];
+  const labels={du:'Double Unders',pullup:'Strict Pull-Ups',hspu:'SHSPU Volume','pu-upgrade':'Strict Pull-Up Volume'};
+  document.getElementById('track-breadcrumb').textContent='// '+(labels[track]||track);
   if(track==='du') try{renderDU();}catch(e){console.error('renderDU:',e);}
   if(track==='pullup') try{renderPU();}catch(e){console.error('renderPU:',e);}
   if(track==='hspu') try{renderHSPU();}catch(e){console.error('renderHSPU:',e);}
+  if(track==='pu-upgrade') try{renderPUUpgrade();}catch(e){console.error('renderPUUpgrade:',e);}
 }
 
 function closeTrack(){
   currentTrack=null;
   document.getElementById('track-views').style.display='none';
-  ['du','pullup','hspu'].forEach(t=>document.getElementById('track-'+t).style.display='none');
+  ['du','pullup','hspu','pu-upgrade'].forEach(t=>{const el=document.getElementById('track-'+t);if(el)el.style.display='none';});
   setMode(currentMode);
 }
 
@@ -1239,7 +1722,7 @@ function buildCard(s,i,completed,containerId,onComplete,onUndo,extraHTML=''){
     '<button onclick="tuneIn(\''+s.videoLink+'\')" style="display:inline-flex;align-items:center;gap:8px;background:transparent;border:2px solid var(--accent2);border-radius:2px;color:var(--accent2);font-family:\'Press Start 2P\',monospace;font-size:9px;letter-spacing:2px;padding:9px 14px;cursor:pointer;transition:all .15s;text-shadow:0 0 6px var(--accent2);text-transform:uppercase" onmouseover="this.style.background=\'var(--accent2)\';this.style.color=\'#000\';this.style.textShadow=\'none\'" onmouseout="this.style.background=\'transparent\';this.style.color=\'var(--accent2)\';this.style.textShadow=\'0 0 6px var(--accent2)\'">'+
     '▶ TUNE IN</button></div>':'';
 
-  return '<div class="'+cls+'" data-i="'+i+'" id="step-'+containerId+'-'+i+'">'+
+  return '<div class="'+cls+'" data-i="'+i+'" id="step-'+containerId+'-'+i+'" style="max-width:860px;margin:0 auto">'+
     '<div class="step-corner tl"></div><div class="step-corner br"></div>'+
     '<div class="step-header"><div class="step-num">'+(dn?'✓':String(i+1).padStart(2,'0'))+'</div>'+
     '<div class="step-info"><div class="step-name">'+s.name+'</div><div class="step-preview">'+s.preview+'</div></div>'+
@@ -2274,7 +2757,7 @@ function cindyLogHTML(log,lbData){
 }
 
 async function resetTrack(track){
-  const labels={du:'Double Unders',pullup:'Pull-Up',hspu:'Strict HSPU Volume'};
+  const labels={du:'Double Unders',pullup:'Pull-Up',hspu:'Strict HSPU Volume','pu-upgrade':'Strict Pull-Up Volume'};
   const label=labels[track]||track;
   if(!confirm('Reset all progress for '+label+'?\n\nThis cannot be undone.')) return;
   if(track==='du'){
@@ -2305,7 +2788,26 @@ async function resetTrack(track){
     await fbSet(userPath()+'/training_log',null);
     await fbSet(userPath()+'/maxsets_log',null);
     renderHSPU();
+  } else if(track==='pu-upgrade'){
+    await fbSet(userPath()+'/pu_upgrade_branch',[]);
+    await fbSet(userPath()+'/pu_upgrade_cycle',1);
+    await fbSet(userPath()+'/pu_upgrade_adventure',null);
+    await fbSet(userPath()+'/pu_ladder_log',null);
+    await fbSet(userPath()+'/pu_training_log',null);
+    await fbSet(userPath()+'/pu_row_log',null);
+    await fbSet(userPath()+'/pu_maxsets_log',null);
+    await fbSet(userPath()+'/pu_fran_log',null);
+    renderPUUpgrade();
   }
+}
+
+function filterUpgrades(query){
+  const q=query.toLowerCase().trim();
+  document.querySelectorAll('#upgrade-list .upgrade-card, #upgrade-list .upgrade-card-locked').forEach(card=>{
+    const name=card.querySelector('.upgrade-card-name').textContent.toLowerCase();
+    const tags=(card.dataset.tags||'').toLowerCase();
+    card.style.display=(!q||name.includes(q)||tags.includes(q))?'':'none';
+  });
 }
 
 // ── COACH DASHBOARD ───────────────────────────────────────────────────────
