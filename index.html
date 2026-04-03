@@ -1,52 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Level Up Klep</title>
-    <!-- Replace Firebase script tag here with proper versions -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
+</head>
+<body>
+    <h1>Welcome to Level Up Klep!</h1>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
     <script>
-        // Your web app's Firebase configuration
+        // Firebase configuration
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            databaseURL: "YOUR_DATABASE_URL",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: 'AIzaSyD8iA8-DY1VM5Qt6ejFDWQ5u_n31Ur7OuI',
+            authDomain: 'level-up-klep.firebaseapp.com',
+            databaseURL: 'https://level-up-klep-default-rtdb.firebaseio.com',
+            projectId: 'level-up-klep',
+            storageBucket: 'level-up-klep.firebasestorage.app',
+            messagingSenderId: '616259528679',
+            appId: '1:616259528679:web:b614c68ce644dfe84d3f42'
         };
 
         // Initialize Firebase
+        let app, db;
         try {
-            const app = firebase.initializeApp(firebaseConfig);
+            app = firebase.initializeApp(firebaseConfig);
+            db = firebase.database();
+            console.log('Firebase initialized successfully.');
+            document.body.innerHTML += '<p>Status: Firebase initialized successfully.</p>';
         } catch (error) {
-            console.error("Firebase initialization error: ", error);
+            console.error('Error initializing Firebase:', error);
+            document.body.innerHTML += '<p>Status: Error initializing Firebase. Check console for details.</p>';
         }
 
-        // Initialize Web Audio context safely
-        let audioCtx;
+        // Canvas initialization
         try {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        } catch (e) {
-            console.error("Web Audio API not supported: ", e);
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            console.log('Canvas initialized successfully.');
+            document.body.innerHTML += '<p>Status: Canvas initialized successfully.</p>';
+        } catch (error) {
+            console.error('Error initializing canvas:', error);
+            document.body.innerHTML += '<p>Status: Error initializing canvas. Check console for details.</p>';
         }
 
-        // Ensure DOM manipulation is safe
-        document.addEventListener("DOMContentLoaded", function() {
-            const someElement = document.getElementById('someElementId');
-            if (someElement) {
-                // Perform DOM manipulations here
-            } else {
-                console.warn('Element not found, skipping DOM manipulation.');
+        // Web Audio API - Check for Audio Context
+        let audioContext;
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            console.log('Web Audio API initialized successfully.');
+            document.body.innerHTML += '<p>Status: Web Audio API initialized successfully.</p>';
+        } catch (error) {
+            console.error('Error initializing Web Audio API:', error);
+            document.body.innerHTML += '<p>Status: Error initializing Web Audio API. Check console for details.</p>';
+        }
+
+        // Test function to verify Firebase connection
+        function testFirebaseConnection() {
+            try {
+                db.ref('test').set({ success: true });
+                console.log('Firebase connection test successful.');
+                document.body.innerHTML += '<p>Status: Firebase connection test successful.</p>';
+            } catch (error) {
+                console.error('Firebase connection test failed:', error);
+                document.body.innerHTML += '<p>Status: Firebase connection test failed. Check console for details.</p>';
             }
-        });
+        }
+
+        testFirebaseConnection();
     </script>
-</head>
-<body>
-    <!-- Your content goes here -->
 </body>
 </html>
