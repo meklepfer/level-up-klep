@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TERMINAL v1.0</title>
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Courier New', Courier, monospace;
+      overflow: hidden;
+    }
+
+    /* ── CRT Monitor Shell ────────────────────────────────────────────────── */
+    .monitor {
+      position: relative;
+      width: min(90vw, 860px);
+      background: #1a1a1a;
+      border-radius: 24px 24px 32px 32px;
+      padding: 28px 28px 60px;
+      box-shadow:
+        0 0 0 6px #2a2a2a,
+        0 0 0 10px #111,
+        0 0 60px rgba(0, 255, 0, 0.08),
+        inset 0 2px 4px rgba(255,255,255,0.04);
+    }
+
+    /* ── Screen Bezel ─────────────────────────────────────────────────────── */
+    .bezel {
+      background: #0a0a0a;
+      border-radius: 8px;
+      padding: 16px;
+      border: 3px solid #222;
+      box-shadow:
+        inset 0 0 30px rgba(0, 0, 0, 0.9),
+        inset 0 0 4px rgba(0, 255, 0, 0.05);
+    }
+
+    /* ── Screen Surface ───────────────────────────────────────────────────── */
+    .screen {
+      position: relative;
+      background: #000;
+      border-radius: 4px;
+      padding: 24px 28px;
+      min-height: 420px;
+      overflow: hidden;
+      border: 1px solid #0a2a0a;
+    }
+
+    /* Phosphor glow on the screen glass */
+    .screen::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse at 50% 40%,
+        rgba(0, 255, 0, 0.04) 0%,
+        transparent 70%
+      );
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* CRT scanlines */
+    .screen::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 2px,
+        rgba(0, 0, 0, 0.35) 2px,
+        rgba(0, 0, 0, 0.35) 4px
+      );
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    /* ── Terminal Output ──────────────────────────────────────────────────── */
+    .output {
+      position: relative;
+      z-index: 2;
+      color: #00ff00;
+      font-size: clamp(13px, 1.8vw, 15px);
+      line-height: 1.6;
+      text-shadow: 0 0 6px #00ff00, 0 0 12px rgba(0,255,0,0.4);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .output .line {
+      display: block;
+      min-height: 1.6em;
+    }
+
+    .output .dim {
+      color: #009900;
+      text-shadow: 0 0 4px #009900;
+    }
+
+    .output .bright {
+      color: #66ff66;
+      text-shadow: 0 0 8px #66ff66, 0 0 16px rgba(102,255,102,0.5);
+    }
+
+    /* ── Input Line ───────────────────────────────────────────────────────── */
+    .input-line {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      color: #00ff00;
+      font-size: clamp(13px, 1.8vw, 15px);
+      text-shadow: 0 0 6px #00ff00, 0 0 12px rgba(0,255,0,0.4);
+      margin-top: 4px;
+    }
+
+    .prompt {
+      white-space: nowrap;
+      margin-right: 4px;
+    }
+
+    #user-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #00ff00;
+      font-family: inherit;
+      font-size: inherit;
+      text-shadow: inherit;
+      caret-color: transparent;
+      flex: 1;
+    }
+
+    /* ── Blinking Cursor ──────────────────────────────────────────────────── */
+    .cursor {
+      display: inline-block;
+      width: 9px;
+      height: 1.1em;
+      background: #00ff00;
+      vertical-align: text-bottom;
+      box-shadow: 0 0 6px #00ff00, 0 0 12px rgba(0,255,0,0.6);
+      animation: blink 1s step-start infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* ── Monitor Stand ────────────────────────────────────────────────────── */
+    .stand-neck {
+      width: 60px;
+      height: 24px;
+      background: #1e1e1e;
+      margin: 0 auto;
+      border-radius: 0 0 4px 4px;
+    }
+
+    .stand-base {
+      width: 160px;
+      height: 14px;
+      background: #222;
+      margin: 0 auto;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+    }
+
+    /* ── Power LED ────────────────────────────────────────────────────────── */
+    .power-led {
+      position: absolute;
+      bottom: 22px;
+      right: 36px;
+      width: 8px;
+      height: 8px;
+      background: #00ff00;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #00ff00, 0 0 12px #00ff00;
+      animation: blink 2.4s step-start infinite;
+    }
+
+    /* ── Screen flicker on load ───────────────────────────────────────────── */
+    @keyframes flicker {
+      0%   { opacity: 0.1; }
+      10%  { opacity: 0.9; }
+      15%  { opacity: 0.2; }
+      25%  { opacity: 1; }
+      30%  { opacity: 0.6; }
+      40%  { opacity: 1; }
+      55%  { opacity: 0.85; }
+      70%  { opacity: 1; }
+      100% { opacity: 1; }
+    }
+
+    .screen.boot {
+      animation: flicker 0.8s ease-out forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="monitor">
+    <div class="bezel">
+      <div class="screen boot" id="screen">
+        <div class="output" id="output"></div>
+        <div class="input-line" id="input-line" style="display:none;">
+          <span class="prompt" id="prompt">user@terminal:~$&nbsp;</span>
+          <input type="text" id="user-input" autocomplete="off" spellcheck="false" />
+          <span class="cursor"></span>
+        </div>
+      </div>
+    </div>
+    <div class="power-led"></div>
+    <div class="stand-neck"></div>
+    <div class="stand-base"></div>
+  </div>
+
+  <script>
+    const output   = document.getElementById('output');
+    const inputLine = document.getElementById('input-line');
+    const userInput = document.getElementById('user-input');
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+    function appendLine(text, cls) {
+      const span = document.createElement('span');
+      span.className = 'line' + (cls ? ' ' + cls : '');
+      span.textContent = text;
+      output.appendChild(span);
+      scrollBottom();
+    }
+
+    function scrollBottom() {
+      const screen = document.getElementById('screen');
+      screen.scrollTop = screen.scrollHeight;
+    }
+
+    function sleep(ms) {
+      return new Promise(r => setTimeout(r, ms));
+    }
+
+    // ── Type a line character-by-character ───────────────────────────────────
+    async function typeLine(text, cls, delay = 38) {
+      const span = document.createElement('span');
+      span.className = 'line' + (cls ? ' ' + cls : '');
+      output.appendChild(span);
+      for (const ch of text) {
+        span.textContent += ch;
+        scrollBottom();
+        await sleep(delay);
+      }
+    }
+
+    // ── Boot sequence ────────────────────────────────────────────────────────
+    async function boot() {
+      await sleep(600); // wait for flicker animation
+
+      await typeLine('BIOS v2.31  (C) 1987 RetroTech Inc.', 'dim', 22);
+      await sleep(120);
+      await typeLine('Memory Test: 640K OK', 'dim', 22);
+      await sleep(80);
+      appendLine('', '');
+      await typeLine('Loading TERMINAL OS v1.0 ...', '', 30);
+      await sleep(300);
+
+      const dots = document.createElement('span');
+      dots.className = 'line dim';
+      output.appendChild(dots);
+      for (let i = 0; i < 12; i++) {
+        dots.textContent += '.';
+        scrollBottom();
+        await sleep(80);
+      }
+      appendLine('', '');
+      await sleep(200);
+
+      appendLine('', '');
+      await typeLine('┌──────────────────────────────────────┐', 'dim', 12);
+      await typeLine('│       TERMINAL OS  v1.0              │', 'bright', 16);
+      await typeLine('│   Green Screen Edition  (1987)       │', '', 16);
+      await typeLine('└──────────────────────────────────────┘', 'dim', 12);
+      appendLine('', '');
+
+      await typeLine('System ready.', '', 40);
+      await typeLine('Type HELP for available commands.', 'dim', 28);
+      appendLine('', '');
+
+      // Show input
+      inputLine.style.display = 'flex';
+      userInput.focus();
+    }
+
+    // ── Commands ─────────────────────────────────────────────────────────────
+    const COMMANDS = {
+      help: async () => {
+        appendLine('', '');
+        appendLine('Available commands:', '');
+        const cmds = [
+          ['  HELP    ', 'Show this help text'],
+          ['  ABOUT   ', 'About this terminal'],
+          ['  DATE    ', 'Display current date & time'],
+          ['  CLEAR   ', 'Clear the screen'],
+          ['  MATRIX  ', 'Enter the matrix'],
+          ['  BEEP    ', 'Play a system beep'],
+        ];
+        for (const [cmd, desc] of cmds) {
+          appendLine(cmd + desc, 'dim');
+          await sleep(40);
+        }
+        appendLine('', '');
+      },
+      about: async () => {
+        appendLine('', '');
+        await typeLine('TERMINAL OS v1.0  —  Green Screen Edition', 'bright', 22);
+        await typeLine('Built with ♥ and phosphor glow.', 'dim', 28);
+        appendLine('', '');
+      },
+      date: async () => {
+        appendLine('', '');
+        const now = new Date();
+        appendLine(now.toString(), 'bright');
+        appendLine('', '');
+      },
+      clear: () => {
+        output.innerHTML = '';
+      },
+      matrix: async () => {
+        appendLine('', '');
+        const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEF';
+        for (let row = 0; row < 8; row++) {
+          let line = '';
+          for (let col = 0; col < 44; col++) {
+            line += chars[Math.floor(Math.random() * chars.length)];
+          }
+          appendLine(line, 'bright');
+          await sleep(55);
+        }
+        appendLine('', '');
+        await typeLine('Wake up, Neo...', 'dim', 60);
+        appendLine('', '');
+      },
+      beep: async () => {
+        appendLine('', '');
+        appendLine('BEEP!', 'bright');
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.type = 'square';
+          osc.frequency.value = 880;
+          gain.gain.setValueAtTime(0.15, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.25);
+        } catch (e) { /* audio not available */ }
+        appendLine('', '');
+      },
+    };
+
+    // ── Input handler ─────────────────────────────────────────────────────────
+    userInput.addEventListener('keydown', async (e) => {
+      if (e.key !== 'Enter') return;
+      const raw = userInput.value.trim();
+      userInput.value = '';
+
+      // Echo the typed command
+      appendLine('user@terminal:~$ ' + raw, '');
+
+      const cmd = raw.toLowerCase();
+      if (cmd === '') {
+        // blank line
+      } else if (COMMANDS[cmd]) {
+        await COMMANDS[cmd]();
+      } else {
+        appendLine('', '');
+        appendLine("'" + raw + "' is not recognized as a valid command.", 'dim');
+        appendLine("Type HELP for available commands.", 'dim');
+        appendLine('', '');
+      }
+
+      scrollBottom();
+      userInput.focus();
+    });
+
+    // Keep focus on input when clicking anywhere on the screen
+    document.getElementById('screen').addEventListener('click', () => {
+      userInput.focus();
+    });
+
+    // ── Start ─────────────────────────────────────────────────────────────────
+    boot();
+  </script>
+</body>
+</html>
