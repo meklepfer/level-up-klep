@@ -495,12 +495,13 @@ thead th:last-child{text-align:right}
           </div>
           <div class="upgrade-card-arrow">▶</div>
         </div>
-        <div class="upgrade-card upgrade-card-locked" id="uc-du" data-tags="double under volume upgrade">
-          <div class="upgrade-card-icon">🔒</div>
+        <div class="upgrade-card upgrade-card-locked" id="uc-du" data-tags="double under volume upgrade" onclick="setMode('upgrade');enterTrack('du-upgrade')" style="cursor:pointer">
+          <div class="upgrade-card-icon">🪢</div>
           <div class="upgrade-card-body">
             <div class="upgrade-card-name">Double Under Volume</div>
-            <div class="upgrade-card-desc">Coming soon</div>
+            <div class="upgrade-card-desc">Coming soon — check back after your adventure.</div>
           </div>
+          <div class="upgrade-card-arrow">▶</div>
         </div>
       </div>
     </div>
@@ -873,9 +874,48 @@ thead th:last-child{text-align:right}
         </div>
       </div>
 
+      <!-- DU UPGRADE TRACK (COMING SOON) -->
+      <div id="track-du-upgrade" style="display:none">
+        <div class="hero">
+          <div class="hero-title-row">
+            <h1 class="hero-title">Double Under<br><span class="highlight">Volume</span></h1>
+          </div>
+        </div>
+        <div style="max-width:860px;margin:60px auto;padding:0 28px;text-align:center">
+          <div style="font-family:'Press Start 2P',monospace;font-size:11px;color:var(--accent3);text-shadow:0 0 12px var(--accent3);margin-bottom:20px;animation:flicker 3s infinite">⚠ FEATURE COMING SOON ⚠</div>
+          <div style="font-size:15px;color:var(--muted2);line-height:1.8;font-weight:500;margin-bottom:28px">The Double Under Volume upgrade program is in development.<br>Check back soon.</div>
+          <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted);letter-spacing:2px">INSERT COIN TO CONTINUE...</div>
+        </div>
+      </div>
+
   </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<!-- LEVEL COMPLETE MODAL -->
+<div id="level-complete-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(8px)">
+  <div style="background:var(--surface);border:3px solid var(--accent3);border-radius:3px;padding:32px;max-width:480px;width:100%;position:relative;box-shadow:0 0 60px rgba(255,204,0,.25);text-align:center;animation:float-in .4s ease both">
+    <div class="corner tl" style="border-color:var(--accent3)"></div><div class="corner tr" style="border-color:var(--accent3)"></div>
+    <div class="corner bl" style="border-color:var(--accent3)"></div><div class="corner br" style="border-color:var(--accent3)"></div>
+    <div style="font-family:'Press Start 2P',monospace;font-size:14px;color:var(--accent3);text-shadow:0 0 16px var(--accent3);margin-bottom:6px;letter-spacing:3px;animation:flicker 2s infinite">LEVEL COMPLETE</div>
+    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);letter-spacing:2px;margin-bottom:20px">YOU CAN DO DOUBLE UNDERS</div>
+    <div class="crt-wrap" style="margin:0 0 20px">
+      <div class="crt-tv" style="max-width:100%">
+        <div class="crt-screen-wrap" style="position:relative">
+          <canvas id="lc-static" style="position:absolute;inset:0;width:100%;height:100%;z-index:10;border-radius:6px"></canvas>
+          <iframe id="lc-iframe" width="100%" style="aspect-ratio:16/9;display:block;border:none" allowfullscreen allow="autoplay"></iframe>
+        </div>
+        <div class="crt-brand">LEVEL UP</div>
+        <div class="crt-knobs"><div class="crt-knob big"></div><div class="crt-knob"></div><div class="crt-knob"></div></div>
+        <div class="crt-feet"><div class="crt-foot"></div><div class="crt-foot"></div></div>
+      </div>
+    </div>
+    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent3);letter-spacing:2px;margin-bottom:16px">CHOOSE YOUR PATH</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <button onclick="duLevelCompleteAdventure()" class="btn-complete" style="flex:1;font-size:8px;padding:12px;border-color:var(--accent3);color:var(--accent3);text-shadow:0 0 6px var(--accent3)">⭐ Going on an Adventure</button>
+      <button onclick="duLevelCompleteUpgrade()" class="btn-complete" style="flex:1;font-size:8px;padding:12px;border-color:var(--accent2);color:var(--accent2);text-shadow:0 0 6px var(--accent2)">⬆ Upgrade the Dubs</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <script>
 // ── TRACK DATA ────────────────────────────────────────────────────────────
@@ -936,6 +976,81 @@ const PU_UPGRADE_STEPS=[
    note:'After logging all 3 sets choose to keep cycling or unlock the bonus level.',
    isPUMaxSets:true},
 ];
+
+// ── FF7 VICTORY TUNE ──────────────────────────────────────────────────────
+function playFF7Victory(){
+  if(!audioCtx) return;
+  const t=audioCtx.currentTime;
+  function n(freq,start,dur,gain=0.3,type='square'){
+    const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+    o.type=type; o.frequency.value=freq;
+    g.gain.setValueAtTime(gain,t+start);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+start+dur*0.9);
+    o.connect(g);g.connect(musicGain||audioCtx.destination);
+    o.start(t+start);o.stop(t+start+dur);
+  }
+  // FF7 victory fanfare approximation
+  const seq=[
+    [659,0,.12],[659,.13,.12],[659,.26,.12],[659,.39,.3],
+    [523,.39,.3,'sine'],[659,.7,.12],[659,.83,.12],[659,.96,.12],
+    [784,1.09,.5],[659,1.09,.5,'triangle'],
+    [0,1.6,.1],
+    [523,1.7,.12],[587,1.83,.12],[659,1.96,.12],
+    [784,2.09,.12],[880,2.22,.12],[1047,2.35,.6],
+    [880,2.35,.6,'triangle']
+  ];
+  seq.forEach(([freq,start,dur,type='square',gain=0.28])=>{
+    if(freq>0) n(freq,start,dur,gain,type);
+  });
+}
+
+function showLevelComplete(){
+  // Play FF7 victory
+  playFF7Victory();
+  // Load Annie video immediately so autoplay works
+  const iframe=document.getElementById('lc-iframe');
+  iframe.src='https://www.youtube.com/embed/eoCMJGVChRY?autoplay=1&rel=0&modestbranding=1';
+  // Show static overlay, then fade out
+  const canvas=document.getElementById('lc-static');
+  if(canvas){
+    const ctx2=canvas.getContext('2d');
+    canvas.width=320;canvas.height=180;
+    canvas.style.opacity='1';canvas.style.transition='';
+    let frame=0;
+    function drawStatic(){
+      const img=ctx2.createImageData(320,180);
+      for(let i=0;i<img.data.length;i+=4){const v=Math.random()>0.5?255:0;img.data[i]=v;img.data[i+1]=v;img.data[i+2]=v;img.data[i+3]=255;}
+      ctx2.putImageData(img,0,0);
+      frame++;
+      if(frame<25) requestAnimationFrame(drawStatic);
+      else{canvas.style.transition='opacity 0.3s';canvas.style.opacity='0';}
+    }
+    drawStatic();
+  }
+  document.getElementById('level-complete-overlay').style.display='flex';
+}
+
+function closeLevelComplete(){
+  document.getElementById('level-complete-overlay').style.display='none';
+  document.getElementById('lc-iframe').src='';
+  const canvas=document.getElementById('lc-static');
+  if(canvas){canvas.style.opacity='1';canvas.style.transition='';}
+}
+
+async function duLevelCompleteAdventure(){
+  closeLevelComplete();
+  await fbSet(userPath()+'/du_adventure',true);
+  renderDU();
+}
+
+function duLevelCompleteUpgrade(){
+  closeLevelComplete();
+  setMode('upgrade');
+  enterTrack('du-upgrade');
+}
+
+// ── LEVEL COMPLETE FIREBASE ───────────────────────────────────────────────
+async function getDUAdventure(){try{return await fbGet(userPath()+'/du_adventure')}catch(e){return false}}
 
 // ── PU UPGRADE FIREBASE ───────────────────────────────────────────────────
 async function getPUUpgradeCycle(){try{return(await fbGet(userPath()+'/pu_upgrade_cycle'))||1}catch(e){return 1}}
@@ -1534,9 +1649,9 @@ function enterTrack(track){
   document.getElementById('mode-unlock-content').style.display='none';
   document.getElementById('mode-upgrade-content').style.display='none';
   document.getElementById('track-views').style.display='block';
-  ['du','pullup','hspu','pu-upgrade'].forEach(t=>{const el=document.getElementById('track-'+t);if(el)el.style.display='none';});
+  ['du','pullup','hspu','pu-upgrade','du-upgrade'].forEach(t=>{const el=document.getElementById('track-'+t);if(el)el.style.display='none';});
   document.getElementById('track-'+track).style.display='block';
-  const labels={du:'Double Unders',pullup:'Strict Pull-Ups',hspu:'SHSPU Volume','pu-upgrade':'Strict Pull-Up Volume'};
+  const labels={du:'Double Unders',pullup:'Strict Pull-Ups',hspu:'SHSPU Volume','pu-upgrade':'Strict Pull-Up Volume','du-upgrade':'Double Under Volume'};
   document.getElementById('track-breadcrumb').textContent='// '+(labels[track]||track);
   if(track==='du') try{renderDU();}catch(e){console.error('renderDU:',e);}
   if(track==='pullup') try{renderPU();}catch(e){console.error('renderPU:',e);}
@@ -1547,7 +1662,7 @@ function enterTrack(track){
 function closeTrack(){
   currentTrack=null;
   document.getElementById('track-views').style.display='none';
-  ['du','pullup','hspu','pu-upgrade'].forEach(t=>{const el=document.getElementById('track-'+t);if(el)el.style.display='none';});
+  ['du','pullup','hspu','pu-upgrade','du-upgrade'].forEach(t=>{const el=document.getElementById('track-'+t);if(el)el.style.display='none';});
   setMode(currentMode);
 }
 
@@ -1814,7 +1929,17 @@ async function renderDU(){
     return buildCard(s,i,c,'du-steps-container',null,null,extra);
   }).join('');
   bindCards('du-steps-container',
-    async i=>{const arr=await getDUCompleted();if(!arr.includes(i)){arr.push(i);await saveDUCompleted(arr)}renderDU();setTimeout(()=>{const nx=document.getElementById('step-du-steps-container-'+(i+1));if(nx){nx.classList.add('open');nx.scrollIntoView({behavior:'smooth',block:'center'})}},100)},
+    async i=>{
+      const arr=await getDUCompleted();
+      if(!arr.includes(i)){arr.push(i);await saveDUCompleted(arr);}
+      renderDU();
+      // Step 10 (index 9) = EMOM Ladder x3 = Level Complete!
+      if(i===DU_STEPS.length-1){
+        setTimeout(()=>showLevelComplete(),400);
+      } else {
+        setTimeout(()=>{const nx=document.getElementById('step-du-steps-container-'+(i+1));if(nx){nx.classList.add('open');nx.scrollIntoView({behavior:'smooth',block:'center'})}},100);
+      }
+    },
     async i=>{const arr=await getDUCompleted();await saveDUCompleted(arr.filter(x=>x!==i));renderDU()}
   );
   // EMOM log buttons
@@ -1861,21 +1986,21 @@ async function renderDU(){
     }
     renderDU();
   });
-  // Bonus level — show Annie once all 10 steps complete
+  // Bonus level — show Annie once adventure is unlocked
+  const duAdventure=await getDUAdventure();
   const bonusLabel=document.getElementById('du-bonus-label');
   const bonusContainer=document.getElementById('du-bonus-container');
-  const unlocked=done>=total;
-  if(bonusLabel) bonusLabel.style.display=unlocked?'flex':'none';
-  if(bonusContainer) bonusContainer.style.display=unlocked?'block':'none';
+  if(bonusLabel) bonusLabel.style.display=duAdventure?'flex':'none';
+  if(bonusContainer) bonusContainer.style.display=duAdventure?'block':'none';
   // Render Annie bench inside bonus block
   const annieBlock=document.getElementById('du-annie-block');
-  if(annieBlock&&unlocked) annieBlock.innerHTML=benchHTML(saved);
+  if(annieBlock&&duAdventure) annieBlock.innerHTML=benchHTML(saved);
   const sb=document.getElementById('save-annie-btn');
   if(sb)sb.addEventListener('click',async e=>{
     e.stopPropagation();const val=(document.getElementById('annie-input').value||'').trim();
     if(!val)return;await saveDUTime(val);await pushLB(currentUser,val);
     sb.textContent='✓ SAVED';sb.style.background='var(--done)';sb.style.color='#000';sb.style.border='2px solid var(--done)';sb.style.textShadow='none';
-    setTimeout(()=>{renderDU();celebrate('🏆 Annie Rx Complete!','eoCMJGVChRY');},900);
+    setTimeout(()=>{renderDU();},900);
   });
 }
 
@@ -2806,12 +2931,13 @@ function cindyLogHTML(log,lbData){
 }
 
 async function resetTrack(track){
-  const labels={du:'Double Unders',pullup:'Pull-Up',hspu:'Strict HSPU Volume','pu-upgrade':'Strict Pull-Up Volume'};
+  const labels={du:'Double Unders',pullup:'Pull-Up',hspu:'Strict HSPU Volume','pu-upgrade':'Strict Pull-Up Volume','du-upgrade':'Double Under Volume'};
   const label=labels[track]||track;
   if(!confirm('Reset all progress for '+label+'?\n\nThis cannot be undone.')) return;
   if(track==='du'){
     await fbSet(userPath()+'/du_steps',[]);
     await fbSet(userPath()+'/du_annie',null);
+    await fbSet(userPath()+'/du_adventure',null);
     renderDU();
   } else if(track==='pullup'){
     await fbSet(userPath()+'/pu_steps',[]);
