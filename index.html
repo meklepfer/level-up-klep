@@ -458,6 +458,11 @@ thead th:last-child{text-align:right}
         <span class="mode-label">The Lobby</span>
         <span class="mode-sub">Chat with the box</span>
       </button>
+      <button class="mode-btn" id="mode-bonus" onclick="setMode('bonus')">
+        <span class="mode-icon">🏆</span>
+        <span class="mode-label">Bonus Levels</span>
+        <span class="mode-sub">Unlocked WODs · Hi-Scores</span>
+      </button>
     </div>
 
     <!-- UNLOCK MODE: ARCADE SKILL TREE -->
@@ -517,7 +522,17 @@ thead th:last-child{text-align:right}
       </div>
     </div>
 
-    <!-- LOBBY MODE -->
+    <!-- BONUS LEVELS MODE -->
+    <div id="mode-bonus-content" style="display:none">
+      <div style="max-width:860px;margin:0 auto;padding:20px 28px 0">
+        <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;color:var(--accent3);margin-bottom:4px;text-shadow:0 0 8px var(--accent3)">// BONUS LEVELS</div>
+        <div style="font-size:13px;color:var(--muted2);font-weight:500;margin-bottom:20px">Unlock these by completing skill tracks. Post your score. Chase the hi-score.</div>
+      </div>
+      <div id="bonus-levels-content" style="max-width:860px;margin:0 auto;padding:0 28px 28px">
+        <div style="text-align:center;padding:40px;font-family:'Press Start 2P',monospace;font-size:8px;color:var(--muted2)"><span class="blink">█</span> LOADING...</div>
+      </div>
+    </div>
+
     <div id="mode-lobby-content" style="display:none">
       <div style="max-width:860px;margin:0 auto;padding:20px 28px 0">
         <div style="font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:3px;color:var(--accent);margin-bottom:4px;text-shadow:0 0 8px var(--accent)">// THE LOBBY</div>
@@ -840,36 +855,11 @@ thead th:last-child{text-align:right}
         <div class="steps" id="pu-upgrade-steps-container"></div>
         <div class="branch-label boss" id="pu-upgrade-bonus-label" style="display:none"><div class="bl-line"></div>⭐ BONUS LEVEL<div class="bl-line"></div></div>
         <div id="pu-upgrade-bonus-container" style="display:none;max-width:860px;margin:0 auto;padding:0 28px 28px">
-          <div class="step-card" style="border-color:rgba(255,0,170,0.35);box-shadow:0 0 18px rgba(255,0,170,.06)">
-            <div class="step-corner tl" style="border-color:var(--accent2)"></div><div class="step-corner br" style="border-color:var(--accent2)"></div>
-            <div class="step-header" onclick="this.closest('.step-card').classList.toggle('open')" style="cursor:pointer">
-              <div class="step-num" style="font-size:20px;color:var(--accent2);text-shadow:0 0 8px var(--accent2)">Rx</div>
-              <div class="step-info">
-                <div class="step-name" style="color:var(--accent2)">Strict Fran</div>
-                <div class="step-preview">21-15-9 · Strict Pull-Ups + Thrusters · For Time</div>
-              </div>
-              <div class="step-chevron">▾</div>
-            </div>
-            <div class="step-body" style="padding-left:16px">
-              <div class="drill-label" style="color:var(--accent2)">// The Workout</div>
-              <div class="drill-text" style="border-left-color:var(--accent2)">
-                <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent2);text-align:center;margin-bottom:16px;text-shadow:0 0 10px var(--accent2)">21 — 15 — 9</div>
-                <div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
-                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 20px;text-align:center;flex:1;min-width:120px">
-                    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted2);margin-bottom:6px">THRUSTERS</div>
-                    <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent3)">95 / 65</div>
-                    <div style="font-size:11px;color:var(--muted2);margin-top:4px">lb</div>
-                  </div>
-                  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:2px;padding:12px 20px;text-align:center;flex:1;min-width:120px">
-                    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted2);margin-bottom:6px">PULL-UPS</div>
-                    <div style="font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent2)">Strict</div>
-                    <div style="font-size:11px;color:var(--muted2);margin-top:4px">no kipping</div>
-                  </div>
-                </div>
-                <div style="font-size:13px;color:var(--muted2);line-height:1.7">No kipping. Every pull-up must be strict. This is the proof of work.</div>
-              </div>
-              <div id="pu-upgrade-fran-block" style="margin-top:14px"></div>
-            </div>
+          <div style="background:rgba(255,0,170,0.06);border:2px solid var(--accent2);border-radius:3px;padding:28px;text-align:center">
+            <div style="font-size:32px;margin-bottom:12px">🏆</div>
+            <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--accent2);text-shadow:0 0 10px var(--accent2);margin-bottom:16px;letter-spacing:2px">CINDY UNLOCKED</div>
+            <div style="font-size:14px;color:var(--muted2);margin-bottom:20px;line-height:1.7">Your Cindy score is waiting on the Bonus Levels page.</div>
+            <button onclick="setMode('bonus')" class="btn-complete" style="font-size:9px;padding:12px 20px;border-color:var(--accent2);color:var(--accent2)">🎮 Go to Bonus Levels</button>
           </div>
         </div>
       </div>
@@ -910,8 +900,8 @@ thead th:last-child{text-align:right}
     </div>
     <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent3);letter-spacing:2px;margin-bottom:16px">CHOOSE YOUR PATH</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
-      <button onclick="duLevelCompleteAdventure()" class="btn-complete" style="flex:1;font-size:8px;padding:12px;border-color:var(--accent3);color:var(--accent3);text-shadow:0 0 6px var(--accent3)">⭐ Going on an Adventure</button>
-      <button onclick="duLevelCompleteUpgrade()" class="btn-complete" style="flex:1;font-size:8px;padding:12px;border-color:var(--accent2);color:var(--accent2);text-shadow:0 0 6px var(--accent2)">⬆ Upgrade the Dubs</button>
+      <button onclick="duBonusLevel()" class="btn-complete" style="flex:1;font-size:8px;padding:12px;border-color:var(--accent3);color:var(--accent3);text-shadow:0 0 6px var(--accent3)">⭐ Bonus Level</button>
+      <button onclick="duUpgradeDubs()" class="btn-complete" style="flex:1;font-size:8px;padding:12px;border-color:var(--accent2);color:var(--accent2);text-shadow:0 0 6px var(--accent2)">⬆ Upgrade the Dubs</button>
     </div>
   </div>
 </div>
@@ -1040,7 +1030,8 @@ function closeLevelComplete(){
 async function duLevelCompleteAdventure(){
   closeLevelComplete();
   await fbSet(userPath()+'/du_adventure',true);
-  renderDU();
+  await fbSet(userPath()+'/annie_unlocked',true);
+  setMode('bonus');
 }
 
 function duLevelCompleteUpgrade(){
@@ -1185,7 +1176,7 @@ function puMaxSetsHTML(log,cycle,adventure){
       '<div style="font-family:\'Press Start 2P\',monospace;font-size:9px;color:var(--accent3);text-shadow:0 0 8px var(--accent3);margin-bottom:12px;letter-spacing:2px">CHOOSE YOUR PATH</div>'+
       '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'+
         '<button class="btn-complete" id="pu-upgrade-keep-btn" onclick="puUpgradeKeep(event)" style="font-size:8px;border-color:var(--accent);color:var(--accent);text-shadow:0 0 6px var(--accent)">↺ Keep Upgrading</button>'+
-        '<button class="btn-complete" id="pu-upgrade-adventure-btn" onclick="puUpgradeAdventure(event)" style="font-size:8px;border-color:var(--accent2);color:var(--accent2);text-shadow:0 0 6px var(--accent2)">⭐ Ready for an Adventure</button>'+
+        '<button class="btn-complete" id="pu-upgrade-adventure-btn" onclick="puUpgradeAdventure(event)" style="font-size:8px;border-color:var(--accent2);color:var(--accent2);text-shadow:0 0 6px var(--accent2)">⭐ Bonus Level</button>'+
       '</div>'+
     '</div>'+
     (entries?'<div class="rr-entries">'+entries+'</div>':'')+
@@ -1381,32 +1372,6 @@ async function renderPUUpgrade(){
   const bonusContainer=document.getElementById('pu-upgrade-bonus-container');
   if(bonusLabel) bonusLabel.style.display=adventure?'flex':'none';
   if(bonusContainer) bonusContainer.style.display=adventure?'block':'none';
-  if(adventure){
-    const franLog=await getPUUpgradeLog('pu_fran_log').catch(()=>[]);
-    const franLB=await getFranLB();
-    const franBlock=document.getElementById('pu-upgrade-fran-block');
-    if(franBlock) franBlock.innerHTML='<div class="rr-log-block">'+franLogHTML(franLog,franLB)+'</div>';
-    const franBtn=document.getElementById('fran-add-btn');
-    if(franBtn)franBtn.addEventListener('click',async e=>{
-      e.stopPropagation();
-      const time=document.getElementById('fran-time').value.trim();
-      const notes=document.getElementById('fran-notes').value.trim();
-      if(!time)return;
-      const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
-      const log=await getPUUpgradeLog('pu_fran_log').catch(()=>[]);
-      log.push({time,notes,date:today});
-      await savePUUpgradeLog('pu_fran_log',log);
-      await pushFranLB(currentUser,time);
-      renderPUUpgrade();
-    });
-    document.querySelectorAll('.rr-entry-del[data-fran-idx]').forEach(btn=>btn.addEventListener('click',async e=>{
-      e.stopPropagation();
-      const log=await getPUUpgradeLog('pu_fran_log').catch(()=>[]);
-      log.splice(+btn.dataset.franIdx,1);
-      await savePUUpgradeLog('pu_fran_log',log);
-      renderPUUpgrade();
-    }));
-  }
 
   // Set pullup image on upgrade track
   const puUpgradeImg=document.getElementById('pixel-pu-upgrade');
@@ -1425,9 +1390,11 @@ async function puUpgradeKeep(e){
 
 async function puUpgradeAdventure(e){
   if(e) e.stopPropagation();
-  celebrate('⭐ Adventure Unlocked!','30kDN86TXa4',true);
   await fbSet(userPath()+'/pu_upgrade_adventure',true);
-  setTimeout(()=>renderPUUpgrade(),400);
+  await fbSet(userPath()+'/cindy_unlocked',true);
+  closeLevelComplete();
+  celebrate('⭐ Bonus Level Unlocked!','30kDN86TXa4',true);
+  setTimeout(()=>{closeCelebration();setMode('bonus');},4000);
 }
 
 // ── HSPU TRACK DATA ───────────────────────────────────────────────────────
@@ -1613,28 +1580,19 @@ let currentTrack=null;
 
 function setMode(mode){
   currentMode=mode;
-  const modeUnlock=document.getElementById('mode-unlock');
-  const modeUpgrade=document.getElementById('mode-upgrade');
-  const modePoll=document.getElementById('mode-poll');
-  const modeLobby=document.getElementById('mode-lobby');
-  const unlockContent=document.getElementById('mode-unlock-content');
-  const upgradeContent=document.getElementById('mode-upgrade-content');
-  const pollContent=document.getElementById('mode-poll-content');
-  const lobbyContent=document.getElementById('mode-lobby-content');
+  ['unlock','upgrade','poll','lobby','bonus'].forEach(m=>{
+    const btn=document.getElementById('mode-'+m);
+    const content=document.getElementById('mode-'+m+'-content');
+    if(btn) btn.classList.toggle('active',mode===m);
+    if(content) content.style.display=mode===m?'block':'none';
+  });
   const trackViews=document.getElementById('track-views');
-  if(modeUnlock) modeUnlock.classList.toggle('active',mode==='unlock');
-  if(modeUpgrade) modeUpgrade.classList.toggle('active',mode==='upgrade');
-  if(modePoll) modePoll.classList.toggle('active',mode==='poll');
-  if(modeLobby) modeLobby.classList.toggle('active',mode==='lobby');
-  if(unlockContent) unlockContent.style.display=mode==='unlock'?'block':'none';
-  if(upgradeContent) upgradeContent.style.display=mode==='upgrade'?'block':'none';
-  if(pollContent) pollContent.style.display=mode==='poll'?'block':'none';
-  if(lobbyContent) lobbyContent.style.display=mode==='lobby'?'block':'none';
   if(trackViews) trackViews.style.display='none';
-  ['du','pullup','hspu'].forEach(t=>{const el=document.getElementById('track-'+t);if(el)el.style.display='none';});
+  ['du','pullup','hspu','pu-upgrade','du-upgrade'].forEach(t=>{const el=document.getElementById('track-'+t);if(el)el.style.display='none';});
   currentTrack=null;
   if(mode==='unlock'&&currentUser) renderSkillTree();
   if(mode==='poll'&&currentUser) renderPoll();
+  if(mode==='bonus'&&currentUser) renderBonusLevels();
   if(mode==='lobby'&&currentUser){
     renderLobby();
     if(lobbyListener) fbRef('chat').off('value',lobbyListener);
@@ -1643,6 +1601,7 @@ function setMode(mode){
     if(lobbyListener){fbRef('chat').off('value',lobbyListener);lobbyListener=null;}
   }
 }
+
 
 function enterTrack(track){
   currentTrack=track;
@@ -2652,7 +2611,7 @@ function hspuMaxSetsHTML(log){
     '<div style="font-family:\'Press Start 2P\',monospace;font-size:9px;color:var(--accent3);text-shadow:0 0 8px var(--accent3);margin-bottom:12px;letter-spacing:2px">CHOOSE YOUR PATH</div>'+
     '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'+
     '<button class="btn-complete" id="hspu-keep-upgrading" style="font-size:8px;border-color:var(--accent);color:var(--accent);text-shadow:0 0 6px var(--accent)">↺ Keep Upgrading</button>'+
-    '<button class="btn-complete" id="hspu-adventure" style="font-size:8px;border-color:var(--accent2);color:var(--accent2);text-shadow:0 0 6px var(--accent2)">⭐ Ready for Adventure</button>'+
+    '<button class="btn-complete" id="hspu-adventure" style="font-size:8px;border-color:var(--accent2);color:var(--accent2);text-shadow:0 0 6px var(--accent2)">⭐ Bonus Level</button>'+
     '</div>'+
     '</div>'+
     '</div>';
@@ -2759,8 +2718,9 @@ async function renderHSPU(){
     e.stopPropagation();
     // Mark adventure unlocked in Firebase
     await fbSet(userPath()+'/hspu_adventure',true);
-    renderHSPU();
-    setTimeout(()=>celebrate('⭐ Adventure Unlocked!','MGyQarhoz8E'),300);
+    await fbSet(userPath()+'/diane_unlocked',true);
+    celebrate('⭐ Bonus Level Unlocked!','MGyQarhoz8E');
+    setTimeout(()=>{closeCelebration();setMode('bonus');},4000);
   });
 
   // Bonus level — unlocks when athlete chooses adventure
@@ -2775,7 +2735,175 @@ async function renderHSPU(){
   }
 }
 
-// ── THE LOBBY (CHAT) ──────────────────────────────────────────────────────
+// ── BONUS LEVELS ──────────────────────────────────────────────────────────
+const BONUS_WODS=[
+  {
+    id:'annie',
+    name:'Annie',
+    unlock_key:'annie_unlocked',
+    icon:'🪢',
+    color:'var(--accent)',
+    glow:'rgba(0,255,204,.3)',
+    description:'50-40-30-20-10\nDouble-Unders + Sit-Ups\nFor Time',
+    skill:'Double Unders',
+    lb_key:'leaderboard',
+    score_type:'time',
+    score_label:'TIME',
+  },
+  {
+    id:'cindy',
+    name:'Cindy',
+    unlock_key:'cindy_unlocked',
+    icon:'💪',
+    color:'var(--accent2)',
+    glow:'rgba(255,0,170,.3)',
+    description:'20 Minute AMRAP\n5 Pull-Ups · 10 Push-Ups · 15 Air Squats\nStrict pull-ups',
+    skill:'Strict Pull-Ups',
+    lb_key:'leaderboard_cindy',
+    score_type:'rounds',
+    score_label:'ROUNDS',
+  },
+  {
+    id:'diane',
+    name:'Diane',
+    unlock_key:'diane_unlocked',
+    icon:'🤸',
+    color:'var(--accent3)',
+    glow:'rgba(255,204,0,.3)',
+    description:'21-15-9\nDeadlift (225/155) + HSPU\nKipping OK',
+    skill:'Strict HSPU',
+    lb_key:'leaderboard_diane',
+    score_type:'time',
+    score_label:'TIME',
+  },
+];
+
+async function getBonusLB(key){
+  try{const d=await fbGet(key);return d?Object.values(d):[]}catch(e){return[]}
+}
+async function pushBonusLB(wod,user,score,extra){
+  try{
+    const key=user.toLowerCase().replace(/\s+/g,'_');
+    const toSecs=t=>{if(!t)return 9999;const p=(t+'').split(':');return p.length===2?+p[0]*60+(+p[1]||0):+p[0]||9999};
+    const existing=await fbGet(wod.lb_key+'/'+key);
+    let better=false;
+    if(!existing) better=true;
+    else if(wod.score_type==='time') better=toSecs(score)<toSecs(existing.score);
+    else better=(+score*100+(+extra||0))>(+existing.score*100+(+existing.extra||0));
+    if(better) await fbSet(wod.lb_key+'/'+key,{name:user,score,extra:extra||0,ts:Date.now()});
+  }catch(e){}
+}
+
+async function renderBonusLevels(){
+  const el=document.getElementById('bonus-levels-content');
+  if(!el) return;
+
+  // Load unlock flags and leaderboards in parallel
+  const unlockChecks=await Promise.all(BONUS_WODS.map(w=>fbGet(userPath()+'/'+w.unlock_key).catch(()=>false)));
+  const lbData=await Promise.all(BONUS_WODS.map(w=>getBonusLB(w.lb_key)));
+  const myLogs=await Promise.all(BONUS_WODS.map(w=>fbGet(userPath()+'/bonus_log_'+w.id).catch(()=>null)));
+
+  el.innerHTML=BONUS_WODS.map((wod,wi)=>{
+    const unlocked=!!unlockChecks[wi];
+    const lb=lbData[wi]||[];
+    const myLog=myLogs[wi]?Object.values(myLogs[wi]):[];
+    const toSecs=t=>{if(!t)return 9999;const p=(t+'').split(':');return p.length===2?+p[0]*60+(+p[1]||0):+p[0]||9999};
+
+    if(!unlocked){
+      return `<div style="background:var(--surface);border:2px solid var(--border2);border-radius:3px;padding:24px;margin-bottom:16px;text-align:center;opacity:0.4;filter:grayscale(1)">
+        <div style="font-size:32px;margin-bottom:8px">🔒</div>
+        <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--muted2);letter-spacing:2px">${wod.name.toUpperCase()}</div>
+        <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--muted);margin-top:8px">COMPLETE ${wod.skill.toUpperCase()} TO UNLOCK</div>
+      </div>`;
+    }
+
+    // Sort leaderboard
+    const sorted=[...lb].sort((a,b)=>{
+      if(wod.score_type==='time') return toSecs(a.score)-toSecs(b.score);
+      return (b.score*100+(b.extra||0))-(a.score*100+(a.extra||0));
+    });
+    const medals=['🥇','🥈','🥉'];
+
+    // My best
+    let myBest=null;
+    if(wod.score_type==='time'){
+      myBest=myLog.reduce((b,e)=>toSecs(e.score)<toSecs(b||'9999')?e.score:b,null);
+    } else {
+      const best=myLog.reduce((b,e)=>(!b||(e.score*100+(e.extra||0))>(b.score*100+(b.extra||0)))?e:b,null);
+      myBest=best?best.score+(best.extra?'+'+best.extra+' reps':''):null;
+    }
+
+    // Score format
+    const fmtScore=(e)=>wod.score_type==='time'?e.score:(e.score+' rds'+(e.extra?'+'+e.extra:''));
+
+    const boardRows=sorted.slice(0,10).map((e,i)=>{
+      const isMe=e.name.toLowerCase()===currentUser.toLowerCase();
+      return `<div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--border)">
+        <span style="font-family:'Press Start 2P',monospace;font-size:9px;min-width:24px;color:${i<3?wod.color:'var(--muted2)'};">${i<3?medals[i]:(i+1)+'.'}</span>
+        <span style="font-family:'Press Start 2P',monospace;font-size:8px;flex:1;text-transform:uppercase;color:${isMe?'var(--accent)':'var(--text)'};">${e.name}${isMe?' ◀':''}</span>
+        <span style="font-family:'Press Start 2P',monospace;font-size:10px;color:${wod.color};">${fmtScore(e)}</span>
+      </div>`;
+    }).join('');
+
+    const inputId=`bonus-input-${wod.id}`;
+    const extraId=`bonus-extra-${wod.id}`;
+    const logInput=wod.score_type==='time'
+      ? `<div class="rr-form-field"><div class="rr-form-label">Time</div><input class="rr-small-input" id="${inputId}" type="text" placeholder="0:00" maxlength="6" style="width:80px"></div>`
+      : `<div class="rr-form-field"><div class="rr-form-label">Rounds</div><input class="rr-small-input" id="${inputId}" type="number" min="0" max="99" placeholder="rds" style="width:70px"></div>
+         <div class="rr-form-field"><div class="rr-form-label">+Reps</div><input class="rr-small-input" id="${extraId}" type="number" min="0" max="29" value="0" style="width:70px"></div>`;
+
+    return `<div style="background:var(--surface);border:2px solid ${wod.color};border-radius:3px;padding:0;margin-bottom:20px;box-shadow:0 0 20px ${wod.glow};overflow:hidden">
+      <!-- Header -->
+      <div style="background:rgba(0,0,0,.3);padding:16px 20px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border2)">
+        <div style="font-size:28px">${wod.icon}</div>
+        <div style="flex:1">
+          <div style="font-family:'Press Start 2P',monospace;font-size:12px;color:${wod.color};text-shadow:0 0 10px ${wod.color};letter-spacing:2px">${wod.name.toUpperCase()}</div>
+          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--muted2);margin-top:4px;letter-spacing:1px">${wod.skill.toUpperCase()}</div>
+        </div>
+        ${myBest?`<div style="text-align:right"><div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--muted2)">YOUR PR</div><div style="font-family:'Press Start 2P',monospace;font-size:14px;color:${wod.color};text-shadow:0 0 8px ${wod.color}">${myBest}</div></div>`:''}
+      </div>
+      <!-- Workout description -->
+      <div style="padding:14px 20px 10px;border-bottom:1px solid var(--border2)">
+        <div style="font-size:13px;color:var(--muted2);line-height:1.8;white-space:pre-line">${wod.description}</div>
+      </div>
+      <!-- CRT Hi-Score board -->
+      <div style="background:#0a0a0a;padding:14px 20px;border-bottom:1px solid var(--border2);position:relative;overflow:hidden">
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.15) 2px,rgba(0,0,0,.15) 4px);pointer-events:none;z-index:1"></div>
+        <div style="position:relative;z-index:2">
+          <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:${wod.color};letter-spacing:3px;margin-bottom:10px;text-shadow:0 0 8px ${wod.color}">── HI-SCORE ──</div>
+          ${boardRows||`<div style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--muted2);text-align:center;padding:12px 0">NO SCORES YET — BE FIRST</div>`}
+        </div>
+      </div>
+      <!-- Log form -->
+      <div style="padding:14px 20px">
+        <div class="rr-add-form" style="flex-wrap:wrap;gap:8px">
+          ${logInput}
+          <div class="rr-form-field" style="flex:1"><div class="rr-form-label">Notes</div><input class="rr-notes-input" id="bonus-notes-${wod.id}" type="text" placeholder="how it felt..." style="width:100%"></div>
+          <div class="rr-form-field"><button class="btn-complete" onclick="logBonusScore('${wod.id}')" style="font-size:9px;padding:8px 12px;border-color:${wod.color};color:${wod.color}">+ Log</button></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function logBonusScore(wodId){
+  const wod=BONUS_WODS.find(w=>w.id===wodId);
+  if(!wod) return;
+  const inputEl=document.getElementById('bonus-input-'+wodId);
+  const extraEl=document.getElementById('bonus-extra-'+wodId);
+  const notesEl=document.getElementById('bonus-notes-'+wodId);
+  const score=inputEl?inputEl.value.trim():'';
+  const extra=extraEl?parseInt(extraEl.value)||0:0;
+  const notes=notesEl?notesEl.value.trim():'';
+  if(!score) return;
+  const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const raw=await fbGet(userPath()+'/bonus_log_'+wodId).catch(()=>null);
+  const log=raw?Object.values(raw):[];
+  log.push({score,extra,notes,date:today});
+  await fbSet(userPath()+'/bonus_log_'+wodId,log);
+  await pushBonusLB(wod,currentUser,score,extra);
+  renderBonusLevels();
+}
 let lobbyListener=null;
 
 async function renderLobby(){
@@ -2882,9 +3010,11 @@ async function closeCongratsModal(){
     log.push({reps,notes,date:today});
     await saveMaxPULog(log);
     await fbSet(userPath()+'/pu_bonus_unlocked',true);
+    await fbSet(userPath()+'/cindy_unlocked',true);
     renderPU();
   }
-  setTimeout(()=>celebrate('💪 Pull-Up Beast Mode!','tTa_J7Sv8-0',true),200);
+  celebrate('💪 Pull-Up Beast Mode!','tTa_J7Sv8-0',true);
+  setTimeout(()=>{closeCelebration();setMode('bonus');},4000);
 }
 
 function cindyLogHTML(log,lbData){
@@ -2948,12 +3078,15 @@ async function resetTrack(track){
     await fbSet(userPath()+'/ta_log',null);
     await fbSet(userPath()+'/band_log',null);
     await fbSet(userPath()+'/maxpu_log',null);
+    await fbSet(userPath()+'/pu_bonus_unlocked',null);
+    await fbSet(userPath()+'/cindy_unlocked',null);
     renderPU();
   } else if(track==='hspu'){
     await fbSet(userPath()+'/hspu_foundation',[]);
     await fbSet(userPath()+'/hspu_branch',[]);
     await fbSet(userPath()+'/hspu_cycle',0);
     await fbSet(userPath()+'/hspu_adventure',null);
+    await fbSet(userPath()+'/diane_unlocked',null);
     await fbSet(userPath()+'/ww_log',null);
     await fbSet(userPath()+'/pp_log',null);
     await fbSet(userPath()+'/dpp_log',null);
