@@ -1028,7 +1028,8 @@ function closeLevelComplete(){
 }
 
 async function duLevelCompleteAdventure(){
-  closeLevelComplete();
+  document.getElementById('level-complete-overlay').style.display='none';
+  document.getElementById('lc-iframe').src='';
   await fbSet(userPath()+'/du_adventure',true);
   await fbSet(userPath()+'/annie_unlocked',true);
   setMode('bonus');
@@ -1592,7 +1593,7 @@ function setMode(mode){
   currentTrack=null;
   if(mode==='unlock'&&currentUser) renderSkillTree();
   if(mode==='poll'&&currentUser) renderPoll();
-  if(mode==='bonus'&&currentUser) renderBonusLevels();
+  if(mode==='bonus'&&currentUser) try{renderBonusLevels();}catch(e){console.error('renderBonusLevels error:',e);}
   if(mode==='lobby'&&currentUser){
     renderLobby();
     if(lobbyListener) fbRef('chat').off('value',lobbyListener);
@@ -1646,7 +1647,7 @@ async function renderSkillTree(){
     <div class="st-col" style="align-items:center">
 
       <!-- DOUBLE UNDERS -->
-      <div class="st-row">${node('du','🪢','Double Unders',duPct,false,'du')}</div>
+      <div class="st-row">${node('du','⭕','Double Unders',duPct,false,'du')}</div>
 
       ${vline()}
 
@@ -2797,11 +2798,19 @@ async function pushBonusLB(wod,user,score,extra){
 async function renderBonusLevels(){
   const el=document.getElementById('bonus-levels-content');
   if(!el) return;
+  el.innerHTML='<div style="text-align:center;padding:40px"><span class="blink">█</span> LOADING...</div>';
 
-  // Load unlock flags and leaderboards in parallel
-  const unlockChecks=await Promise.all(BONUS_WODS.map(w=>fbGet(userPath()+'/'+w.unlock_key).catch(()=>false)));
-  const lbData=await Promise.all(BONUS_WODS.map(w=>getBonusLB(w.lb_key)));
-  const myLogs=await Promise.all(BONUS_WODS.map(w=>fbGet(userPath()+'/bonus_log_'+w.id).catch(()=>null)));
+  // Load sequentially to avoid overwhelming Firebase free tier
+  const unlockChecks=[];
+  for(const w of BONUS_WODS){
+    try{unlockChecks.push(await fbGet(userPath()+'/'+w.unlock_key));}catch(e){unlockChecks.push(false);}
+  }
+  const lbData=[];
+  for(const w of BONUS_WODS){ lbData.push(await getBonusLB(w.lb_key)); }
+  const myLogs=[];
+  for(const w of BONUS_WODS){
+    try{myLogs.push(await fbGet(userPath()+'/bonus_log_'+w.id));}catch(e){myLogs.push(null);}
+  }
 
   el.innerHTML=BONUS_WODS.map((wod,wi)=>{
     const unlocked=!!unlockChecks[wi];
@@ -2810,11 +2819,7 @@ async function renderBonusLevels(){
     const toSecs=t=>{if(!t)return 9999;const p=(t+'').split(':');return p.length===2?+p[0]*60+(+p[1]||0):+p[0]||9999};
 
     if(!unlocked){
-      return `<div style="background:var(--surface);border:2px solid var(--border2);border-radius:3px;padding:24px;margin-bottom:16px;text-align:center;opacity:0.4;filter:grayscale(1)">
-        <div style="font-size:32px;margin-bottom:8px">🔒</div>
-        <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--muted2);letter-spacing:2px">${wod.name.toUpperCase()}</div>
-        <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--muted);margin-top:8px">COMPLETE ${wod.skill.toUpperCase()} TO UNLOCK</div>
-      </div>`;
+      return ''; // Hidden until unlocked
     }
 
     // Sort leaderboard
@@ -3130,7 +3135,7 @@ function hideCoach(){
 async function renderCoachDashboard(){
   const el=document.getElementById('coach-dashboard-content');
   if(!el) return;
-  el.innerHTML='<div style="text-align:center;padding:40px;font-family:\'Press Start 2P\',monospace;font-size:8px;color:var(--muted2)"><span class="blink">█</span> LOADING...</div>';
+  el.innerHTML='<div style="text-align:center;padding:40px;font-family:monospace;font-size:8px;color:var(--muted2)"><span class="blink">█</span> LOADING...</div>';
   try{
     // Load all accounts and poll data in parallel
     const [accounts, pollItems] = await Promise.all([
@@ -3572,5 +3577,3 @@ document.getElementById('disclaimer-overlay').style.display='flex';
 </script>
 </body>
 </html>
-
-
