@@ -2862,32 +2862,37 @@ async function renderCoachDashboard(){
   el.innerHTML='<div style="text-align:center;padding:40px;font-family:monospace;font-size:8px;color:var(--muted2)"><span class="blink">█</span> LOADING...</div>';
   try{
     // Load all accounts and poll data in parallel
-    const [accounts, pollItems] = await Promise.all([
-      fbGet('accounts')||{},
-      fbGet('poll/items')||{}
+    const [accountsRaw, pollItems] = await Promise.all([
+      fbGet('accounts'),
+      fbGet('poll/items')
     ]);
+    const accounts=accountsRaw||{};
 
-    const names=Object.keys(accounts||{});
+    const names=Object.keys(accounts);
 
-    // Load all athlete data in parallel
-    const athleteData=await Promise.all(names.map(async key=>{
+    function normArr(d){if(!d)return[];return Array.isArray(d)?d:Object.values(d);}
+
+    // Load all athlete data sequentially to avoid free-tier connection limits
+    const athleteData=[];
+    for(const key of names){
       const a=accounts[key];
-      const base='athletes/'+key.toLowerCase().replace(/\s+/g,'_');
+      // Athlete data is stored under the normalized key (same as userPath())
+      const aPath='athletes/'+key.toLowerCase().replace(/\s+/g,'_');
       const [duSteps,puSteps,hspuF,hspuB,hspuCycle]=await Promise.all([
-        fbGet('athletes/'+key+'/du_steps'),
-        fbGet('athletes/'+key+'/pu_steps'),
-        fbGet('athletes/'+key+'/hspu_foundation'),
-        fbGet('athletes/'+key+'/hspu_branch'),
-        fbGet('athletes/'+key+'/hspu_cycle'),
+        fbGet(aPath+'/du_steps'),
+        fbGet(aPath+'/pu_steps'),
+        fbGet(aPath+'/hspu_foundation'),
+        fbGet(aPath+'/hspu_branch'),
+        fbGet(aPath+'/hspu_cycle'),
       ]);
-      const duDone=(duSteps||[]).length;
-      const puDone=(puSteps||[]).length;
-      const hspuFDone=(hspuF||[]).length;
-      const hspuBDone=(hspuB||[]).length;
+      const duDone=normArr(duSteps).length;
+      const puDone=normArr(puSteps).length;
+      const hspuFDone=normArr(hspuF).length;
+      const hspuBDone=normArr(hspuB).length;
       const hspuDone=hspuFDone+hspuBDone;
       const hspuTotal=HSPU_FOUNDATION.length+hspuBranchSteps(hspuCycle||0).length;
-      return {name:a.name||key, duDone, duTotal:DU_STEPS.length, puDone, puTotal:PU_TRUNK.length, hspuDone, hspuTotal, hspuCycle:hspuCycle||0};
-    }));
+      athleteData.push({name:a.name||key, duDone, duTotal:DU_STEPS.length, puDone, puTotal:PU_TRUNK.length, hspuDone, hspuTotal, hspuCycle:hspuCycle||0});
+    }
 
     // ── ATHLETE CARDS ──
     function bar(done,total,color){
