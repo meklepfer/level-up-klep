@@ -735,11 +735,11 @@ header {
     <div class="login-box">
       <div class="login-title">LEVEL<br><span>UP</span></div>
       <div style="font-family:var(--pixel);font-size:9px;letter-spacing:2px;color:var(--muted);margin:4px 0 20px">with Klep</div>
-      <div class="login-sub">Enter your name to start.</div>
+      <div class="login-sub">Choose Your Fighter.</div>
       <label for="inp-name">Your Name</label>
-      <input id="inp-name" type="text" placeholder="YOUR NAME" maxlength="24"
+      <input id="inp-name" type="text" placeholder="It doesn't have to be your real name" maxlength="24"
              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-      <button class="main" onclick="doLogin()">▶ ENTER</button>
+      <button class="main" onclick="doLogin()">▶ PLAY</button>
       <div class="login-err" id="login-err"></div>
       <button class="admin-link" onclick="adminLogin()">[ admin ]</button>
     </div>
@@ -775,17 +775,17 @@ header {
   <div id="view-mode" class="view on">
     <div class="mode-page">
       <div class="mode-heading">SELECT YOUR <span>MODE</span></div>
-      <div class="mode-sub" id="mode-welcome">Choose what you're working on today.</div>
+      <div class="mode-sub" id="mode-welcome"></div>
       <div class="mode-grid">
         <div class="mode-card" onclick="goMode('unlock')">
           <span class="mode-card-icon">🔓</span>
           <div class="mode-card-name">Unlock a Skill</div>
-          <div class="mode-card-desc">New to a movement? Work through a step-by-step progression from zero to confident.</div>
+          <div class="mode-card-desc">Enter here to unlock new abilities to perform in workouts.</div>
         </div>
         <div class="mode-card amber" onclick="goMode('upgrade')">
           <span class="mode-card-icon">📈</span>
           <div class="mode-card-name">Upgrade a Skill</div>
-          <div class="mode-card-desc">Already got the movement? Build volume, strength, and capacity on top of what you have.</div>
+          <div class="mode-card-desc">Enter here to level-up abilities for more work capacity during workouts</div>
         </div>
       </div>
       <button class="logout-btn" onclick="doLogout()">⎋ Logout</button>
@@ -934,8 +934,8 @@ function goMode(mode) {
   document.getElementById('pick-crumb').textContent  = '// ' + (isUnlock ? 'UNLOCK A SKILL' : 'UPGRADE A SKILL');
   document.getElementById('pick-heading').innerHTML  = isUnlock ? 'UNLOCK A <span>SKILL</span>' : 'UPGRADE A <span>SKILL</span>';
   document.getElementById('pick-sub').textContent    = isUnlock
-    ? 'Pick a movement to work through from the ground up.'
-    : 'Pick a skill to build volume and strength on.';
+    ? 'Which Skill are we acquiring today?'
+    : 'Which Skill are we upgrading today?.';
 
   const tracks = TRACKS[mode];
   const grid   = document.getElementById('pick-grid');
@@ -1025,8 +1025,8 @@ const TRACKS = {
     {
       id:    'double-unders',
       title: 'DOUBLE UNDERS',
-      sub:   '10 steps · zero to unbroken',
-      icon:  '🪢',
+      sub:   'Add Dubs to your Fitness Armory,
+      icon:  '🐰',
 
       warmup: {
         title: 'OPTIONAL WARM-UP',
