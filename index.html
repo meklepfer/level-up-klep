@@ -45,6 +45,8 @@ body::before {
 /* ── PAGES ── */
 .page { display: none; }
 .page.on { display: block; }
+.view { display: none; }
+.view.on { display: block; }
 
 /* ── WARNING BANNER ── */
 .banner {
@@ -742,28 +744,41 @@ header {
   </div>
 
   <!-- Mode Select -->
-  <div id="view-mode" class="page on">
+  <div id="view-mode" class="view on">
     <div class="mode-page">
       <div class="mode-heading">SELECT YOUR <span>MODE</span></div>
       <div class="mode-sub" id="mode-welcome">Choose what you're working on today.</div>
       <div class="mode-grid">
         <div class="mode-card" onclick="goMode('unlock')">
-          <span class="mode-card-icon">📦</span>
+          <span class="mode-card-icon">🔓</span>
           <div class="mode-card-name">Unlock a Skill</div>
-          <div class="mode-card-desc">Learn something new. Step-by-step progressions from zero to hero.</div>
+          <div class="mode-card-desc">New to a movement? Work through a step-by-step progression from zero to confident.</div>
         </div>
         <div class="mode-card amber" onclick="goMode('upgrade')">
-          <span class="mode-card-icon">⭐</span>
+          <span class="mode-card-icon">📈</span>
           <div class="mode-card-name">Upgrade a Skill</div>
-          <div class="mode-card-desc">More volume, more strength on skills you already have.</div>
+          <div class="mode-card-desc">Already got the movement? Build volume, strength, and capacity on top of what you have.</div>
         </div>
       </div>
       <button class="logout-btn" onclick="doLogout()">⎋ Logout</button>
     </div>
   </div>
 
+  <!-- Track Picker -->
+  <div id="view-pick" class="view">
+    <div class="mode-page">
+      <div class="track-topbar" style="margin-bottom:28px">
+        <button class="back-btn" onclick="showView('view-mode')">← Back</button>
+        <div class="crumb" id="pick-crumb"></div>
+      </div>
+      <div class="mode-heading" id="pick-heading">CHOOSE A TRACK</div>
+      <div class="mode-sub" id="pick-sub"></div>
+      <div class="mode-grid" id="pick-grid"></div>
+    </div>
+  </div>
+
   <!-- Track View -->
-  <div id="view-track" class="page">
+  <div id="view-track" class="view">
     <div class="track-page">
       <div class="track-topbar">
         <button class="back-btn" onclick="goBack()">← Back</button>
@@ -874,39 +889,55 @@ function show(pageId) {
 }
 
 function showView(viewId) {
-  ['view-mode','view-track'].forEach(v =>
-    document.getElementById(v).classList.toggle('on', v === viewId)
-  );
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  document.getElementById(viewId).classList.add('on');
   window.scrollTo(0, 0);
 }
 
 function goBack() {
   TRACK = null; DONE = []; LOGS = {}; OPEN.clear();
-  showView('view-mode');
+  showView('view-pick');
 }
+
 
 function goMode(mode) {
-  const list = TRACKS[mode];
-  if (!list || !list.length) {
-    showComingSoon(mode);
-    return;
-  }
-  loadTrack(list[0]);
-}
+  const isUnlock = mode === 'unlock';
 
-function showComingSoon(mode) {
-  document.getElementById('track-crumb').textContent = '// ' + mode.toUpperCase();
-  document.getElementById('xp-done').textContent  = '—';
-  document.getElementById('xp-total').textContent = '—';
-  document.getElementById('xp-fill').style.width  = '0%';
-  document.getElementById('xp-pct').textContent   = '';
-  document.getElementById('step-dots').innerHTML  = '';
-  document.getElementById('track-body').innerHTML = `
-    <div class="coming-soon">
-      <h2>COMING SOON</h2>
-      <p>${mode.charAt(0).toUpperCase()+mode.slice(1)} tracks are in development.</p>
-    </div>`;
-  showView('view-track');
+  document.getElementById('pick-crumb').textContent  = '// ' + (isUnlock ? 'UNLOCK A SKILL' : 'UPGRADE A SKILL');
+  document.getElementById('pick-heading').innerHTML  = isUnlock ? 'UNLOCK A <span>SKILL</span>' : 'UPGRADE A <span>SKILL</span>';
+  document.getElementById('pick-sub').textContent    = isUnlock
+    ? 'Pick a movement to work through from the ground up.'
+    : 'Pick a skill to build volume and strength on.';
+
+  const tracks = TRACKS[mode];
+  const grid   = document.getElementById('pick-grid');
+  grid.innerHTML = '';
+
+  if (!tracks || !tracks.length) {
+    grid.innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:60px 20px;
+        font-family:var(--pixel);
+        font-size:10px;
+        color:var(--gold);
+        letter-spacing:2px;
+      ">// IN DEVELOPMENT</div>`;
+  } else {
+    tracks.forEach(track => {
+      const card = document.createElement('div');
+      card.className = 'mode-card' + (mode === 'upgrade' ? ' amber' : '');
+      card.innerHTML = `
+        <span class="mode-card-icon">${track.icon || '🎯'}</span>
+        <div class="mode-card-name">${track.title}</div>
+        <div class="mode-card-desc">${track.sub}</div>`;
+      card.onclick = () => loadTrack(track);
+      grid.appendChild(card);
+    });
+  }
+
+  showView('view-pick');
 }
 
 // ─── COACH ───────────────────────────────────────────────────────────────────
@@ -967,6 +998,7 @@ const TRACKS = {
       id:    'double-unders',
       title: 'DOUBLE UNDERS',
       sub:   '10 steps · zero to unbroken',
+      icon:  '🪢',
 
       warmup: {
         title: 'OPTIONAL WARM-UP',
@@ -1041,12 +1073,6 @@ const TRACKS = {
         },
       ],
 
-      bonus: {
-        name:    'Annie',
-        preview: '50-40-30-20-10 · DUs & Sit-Ups · For Time',
-        drill:   '50-40-30-20-10 reps for time:\nDouble-Unders\nAbmat Sit-Ups\n\nAll double-unders must be Rx.',
-        note:    'Record your time.',
-      },
     },
   ],
   upgrade: [],
@@ -1068,6 +1094,12 @@ async function loadTrack(track) {
   }
   showView('view-track');
   renderTrack();
+  // Open the warmup card on first load
+  if (track.warmup) {
+    const wu = document.querySelector('.warmup');
+    if (wu) wu.classList.add('open');
+  }
+
 }
 
 function isDone(i)   { return DONE.includes(i); }
