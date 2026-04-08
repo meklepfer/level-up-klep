@@ -118,13 +118,8 @@ body::before {
   outline: none;
   text-transform: uppercase;
 }
-.login-box input:focus {
-  border-color: var(--green);
-}
-.login-box input::placeholder {
-  color: var(--border2);
-  font-size: 10px;
-}
+.login-box input:focus { border-color: var(--green); }
+.login-box input::placeholder { color: var(--border2); font-size: 10px; }
 .login-box button.main {
   display: block;
   width: 100%;
@@ -179,18 +174,9 @@ header {
   top: 0;
   z-index: 100;
 }
-.logo {
-  font-family: var(--pixel);
-  font-size: clamp(8px, 2vw, 11px);
-  letter-spacing: 1px;
-}
+.logo { font-family: var(--pixel); font-size: clamp(8px, 2vw, 11px); letter-spacing: 1px; }
 .logo span { color: var(--green); }
-.hdr-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
+.hdr-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .tag {
   font-family: var(--pixel);
   font-size: 8px;
@@ -216,29 +202,11 @@ header {
 .hdr-btn.coach:hover { background: rgba(255,204,0,0.08); }
 
 /* ── MODE SELECT ── */
-.mode-page {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-.mode-heading {
-  font-family: var(--pixel);
-  font-size: clamp(11px, 3vw, 18px);
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-}
+.mode-page { max-width: 760px; margin: 0 auto; padding: 40px 20px; }
+.mode-heading { font-family: var(--pixel); font-size: clamp(11px, 3vw, 18px); letter-spacing: 2px; margin-bottom: 8px; }
 .mode-heading span { color: var(--green); }
-.mode-sub {
-  font-size: 15px;
-  color: var(--muted);
-  font-weight: 500;
-  margin-bottom: 32px;
-}
-.mode-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
+.mode-sub { font-size: 15px; color: var(--muted); font-weight: 500; margin-bottom: 32px; }
+.mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 520px) { .mode-grid { grid-template-columns: 1fr; } }
 .mode-card {
   background: var(--card);
@@ -249,13 +217,7 @@ header {
 }
 .mode-card:hover { border-color: var(--green); }
 .mode-card.amber:hover { border-color: var(--gold); }
-.mode-card-icon { font-size: 28px; margin-bottom: 12px; display: block; }
-.mode-card-name {
-  font-family: var(--pixel);
-  font-size: 10px;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
-}
+.mode-card-name { font-family: var(--pixel); font-size: 10px; letter-spacing: 1px; margin-bottom: 8px; }
 .mode-card.amber .mode-card-name { color: var(--gold); }
 .mode-card-desc { font-size: 14px; color: var(--muted); font-weight: 500; line-height: 1.5; }
 .logout-btn {
@@ -272,49 +234,12 @@ header {
 }
 .logout-btn:hover { color: var(--pink); }
 
-/* ── COMING SOON ── */
-.coming-soon {
-  text-align: center;
-  padding: 80px 20px;
-}
-.coming-soon h2 {
-  font-family: var(--pixel);
-  font-size: clamp(12px, 3vw, 18px);
-  color: var(--gold);
-  letter-spacing: 2px;
-  margin-bottom: 16px;
-}
-.coming-soon p { font-size: 15px; color: var(--muted); font-weight: 500; }
-
 /* ── COACH OVERLAY ── */
-#coach-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  z-index: 200;
-  overflow-y: auto;
-}
+#coach-overlay { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 200; overflow-y: auto; }
 #coach-overlay.on { display: block; }
-.coach-inner {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 24px 20px 60px;
-}
-.coach-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  padding-bottom: 14px;
-  border-bottom: 2px solid var(--border2);
-}
-.coach-title {
-  font-family: var(--pixel);
-  font-size: 11px;
-  color: var(--gold);
-  letter-spacing: 2px;
-}
+.coach-inner { max-width: 760px; margin: 0 auto; padding: 24px 20px 60px; }
+.coach-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--border2); }
+.coach-title { font-family: var(--pixel); font-size: 11px; color: var(--gold); letter-spacing: 2px; }
 .back-btn {
   background: none;
   border: 1px solid var(--border2);
@@ -327,265 +252,70 @@ header {
   transition: all 0.15s;
 }
 .back-btn:hover { color: var(--green); border-color: var(--green); }
-.athlete-card {
-  background: var(--card);
-  border: 2px solid var(--border2);
-  padding: 18px 20px;
-  margin-bottom: 10px;
-}
-.athlete-name {
-  font-family: var(--pixel);
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 1px;
-  margin-bottom: 14px;
-}
-.bar-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
-}
-.bar-label {
-  font-family: var(--pixel);
-  font-size: 7px;
-  color: var(--muted);
-  min-width: 90px;
-  letter-spacing: 1px;
-}
-.bar-track {
-  flex: 1;
-  height: 8px;
-  background: var(--border);
-  border: 1px solid var(--border2);
-  overflow: hidden;
-}
-.bar-fill {
-  height: 100%;
-  background: var(--green);
-  box-shadow: 0 0 6px var(--green);
-  transition: width 0.5s ease;
-}
-.bar-pct {
-  font-family: var(--pixel);
-  font-size: 7px;
-  color: var(--muted);
-  min-width: 32px;
-  text-align: right;
-}
+.athlete-card { background: var(--card); border: 2px solid var(--border2); padding: 18px 20px; margin-bottom: 10px; }
+.athlete-name { font-family: var(--pixel); font-size: 10px; color: var(--gold); letter-spacing: 1px; margin-bottom: 14px; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.bar-label { font-family: var(--pixel); font-size: 7px; color: var(--muted); min-width: 90px; letter-spacing: 1px; }
+.bar-track { flex: 1; height: 8px; background: var(--border); border: 1px solid var(--border2); overflow: hidden; }
+.bar-fill { height: 100%; background: var(--green); box-shadow: 0 0 6px var(--green); transition: width 0.5s ease; }
+.bar-pct { font-family: var(--pixel); font-size: 7px; color: var(--muted); min-width: 32px; text-align: right; }
 
 /* ── TRACK PAGE ── */
-.track-page {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 24px 20px 80px;
-}
-.track-topbar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-.crumb {
-  font-family: var(--pixel);
-  font-size: 7px;
-  color: var(--muted);
-  letter-spacing: 1px;
-}
-/* progress */
+.track-page { max-width: 760px; margin: 0 auto; padding: 24px 20px 80px; }
+.track-topbar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.crumb { font-family: var(--pixel); font-size: 7px; color: var(--muted); letter-spacing: 1px; }
 .xp-block { margin-bottom: 22px; }
-.xp-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 6px;
-}
+.xp-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
 .xp-label { font-family: var(--pixel); font-size: 7px; color: var(--muted); letter-spacing: 2px; }
 .xp-frac  { font-family: var(--pixel); font-size: 10px; color: var(--gold); }
-.xp-bar {
-  height: 14px;
-  background: var(--card);
-  border: 2px solid var(--border2);
-  overflow: hidden;
-  position: relative;
-}
-.xp-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--green), var(--pink));
-  box-shadow: 0 0 8px var(--green);
-  transition: width 0.5s ease;
-}
-.xp-pct {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--pixel);
-  font-size: 6px;
-  color: rgba(255,255,255,0.8);
-}
-.step-dots {
-  display: flex;
-  gap: 4px;
-  margin-top: 7px;
-  flex-wrap: wrap;
-}
-.dot {
-  flex: 1;
-  max-width: 22px;
-  height: 4px;
-  background: var(--border);
-  border-radius: 1px;
-  transition: all 0.3s;
-}
+.xp-bar { height: 14px; background: var(--card); border: 2px solid var(--border2); overflow: hidden; position: relative; }
+.xp-bar-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--pink)); box-shadow: 0 0 8px var(--green); transition: width 0.5s ease; }
+.xp-pct { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--pixel); font-size: 6px; color: rgba(255,255,255,0.8); }
+.step-dots { display: flex; gap: 4px; margin-top: 7px; flex-wrap: wrap; }
+.dot { flex: 1; max-width: 22px; height: 4px; background: var(--border); border-radius: 1px; transition: all 0.3s; }
 .dot.done   { background: var(--green); box-shadow: 0 0 4px var(--green); }
 .dot.active { background: var(--gold);  box-shadow: 0 0 6px var(--gold); }
-/* section label */
-.sec-label {
-  font-family: var(--pixel);
-  font-size: 8px;
-  color: var(--green);
-  letter-spacing: 2px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 16px 0 10px;
-}
+.sec-label { font-family: var(--pixel); font-size: 8px; color: var(--green); letter-spacing: 2px; display: flex; align-items: center; gap: 10px; margin: 16px 0 10px; }
 .sec-label.gold { color: var(--gold); }
 .sec-line { flex: 1; height: 1px; background: var(--border2); }
+
 /* warmup card */
-.warmup {
-  background: var(--card);
-  border: 1px solid var(--border);
-  margin-bottom: 10px;
-}
-.warmup-hdr {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 14px;
-  cursor: pointer;
-  user-select: none;
-}
-.warmup-hdr-title {
-  font-family: var(--pixel);
-  font-size: 8px;
-  color: var(--muted);
-  letter-spacing: 1px;
-  flex: 1;
-}
-.chev {
-  font-size: 10px;
-  color: var(--muted);
-  transition: transform 0.2s;
-  font-family: var(--pixel);
-}
+.warmup { background: var(--card); border: 1px solid var(--border); margin-bottom: 10px; }
+.warmup-hdr { display: flex; align-items: center; gap: 10px; padding: 11px 14px; cursor: pointer; user-select: none; }
+.warmup-hdr-title { font-family: var(--pixel); font-size: 8px; color: var(--muted); letter-spacing: 1px; flex: 1; }
+.chev { font-size: 10px; color: var(--muted); transition: transform 0.2s; font-family: var(--pixel); }
 .open .chev { transform: rotate(180deg); }
-.warmup-body {
-  display: none;
-  padding: 0 14px 14px;
-  border-top: 1px solid var(--border);
-}
+.warmup-body { display: none; padding: 0 14px 14px; border-top: 1px solid var(--border); }
 .open .warmup-body { display: block; }
+
 /* step card */
-.step {
-  background: var(--card);
-  border: 2px solid var(--border);
-  margin-bottom: 8px;
-  transition: border-color 0.2s;
-}
+.step { background: var(--card); border: 2px solid var(--border); margin-bottom: 8px; transition: border-color 0.2s; }
 .step.done   { border-color: rgba(0,255,204,0.3); }
 .step.active { border-color: rgba(255,204,0,0.4); }
 .step.locked { opacity: 0.28; pointer-events: none; }
-.step-hdr {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 13px 14px;
-  cursor: pointer;
-  user-select: none;
-}
-.step-num {
-  font-family: var(--pixel);
-  font-size: 18px;
-  line-height: 1;
-  min-width: 38px;
-  color: var(--border2);
-  transition: color 0.2s;
-}
+.step-hdr { display: flex; align-items: center; gap: 12px; padding: 13px 14px; cursor: pointer; user-select: none; }
+.step-num { font-family: var(--pixel); font-size: 18px; line-height: 1; min-width: 38px; color: var(--border2); transition: color 0.2s; }
 .step.done   .step-num { color: var(--green); text-shadow: 0 0 8px var(--green); }
 .step.active .step-num { color: var(--gold);  text-shadow: 0 0 8px var(--gold); }
 .step-info { flex: 1; min-width: 0; }
-.step-name {
-  font-family: var(--pixel);
-  font-size: clamp(8px, 1.8vw, 10px);
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  line-height: 1.4;
-  margin-bottom: 3px;
-}
+.step-name { font-family: var(--pixel); font-size: clamp(8px, 1.8vw, 10px); letter-spacing: 0.5px; text-transform: uppercase; line-height: 1.4; margin-bottom: 3px; }
 .step.done   .step-name { color: var(--green); }
 .step.active .step-name { color: var(--gold); }
 .step-preview { font-size: 13px; color: var(--muted); font-weight: 500; }
-.badge {
-  font-family: var(--pixel);
-  font-size: 7px;
-  letter-spacing: 1px;
-  padding: 3px 7px;
-  border: 1px solid;
-  flex-shrink: 0;
-  white-space: nowrap;
-}
+.badge { font-family: var(--pixel); font-size: 7px; letter-spacing: 1px; padding: 3px 7px; border: 1px solid; flex-shrink: 0; white-space: nowrap; }
 .badge-done   { color: var(--green); border-color: rgba(0,255,204,0.3); }
 .badge-active { color: var(--gold);  border-color: rgba(255,204,0,0.3); }
 .badge-locked { color: var(--muted); border-color: var(--border); }
-.step-body {
-  display: none;
-  padding: 0 14px 16px 64px;
-  border-top: 1px solid var(--border);
-}
+.step-body { display: none; padding: 0 14px 16px 64px; border-top: 1px solid var(--border); }
 .step.open .step-body { display: block; }
-.drill-label {
-  font-family: var(--pixel);
-  font-size: 7px;
-  color: var(--pink);
-  letter-spacing: 2px;
-  margin: 12px 0 7px;
-}
-.drill-text {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.65;
-  background: var(--bg);
-  border-left: 3px solid var(--green);
-  padding: 11px 13px;
-  white-space: pre-wrap;
-}
-.complete-note {
-  font-size: 12px;
-  color: var(--muted);
-  font-style: italic;
-  line-height: 1.5;
-  margin-top: 10px;
-  padding: 9px 12px;
-  border: 1px solid var(--border2);
-}
-.complete-note::before {
-  content: "■ COMPLETE WHEN: ";
-  font-style: normal;
-  font-weight: 700;
-  color: var(--gold);
-  font-size: 8px;
-  font-family: var(--pixel);
-  letter-spacing: 1px;
-  display: block;
-  margin-bottom: 4px;
-}
+.drill-label { font-family: var(--pixel); font-size: 7px; color: var(--pink); letter-spacing: 2px; margin: 12px 0 7px; }
+.drill-text { font-size: 14px; font-weight: 600; line-height: 1.65; background: var(--bg); border-left: 3px solid var(--green); padding: 11px 13px; white-space: pre-wrap; }
+.complete-note { font-size: 12px; color: var(--muted); font-style: italic; line-height: 1.5; margin-top: 10px; padding: 9px 12px; border: 1px solid var(--border2); }
+.complete-note::before { content: "■ COMPLETE WHEN: "; font-style: normal; font-weight: 700; color: var(--gold); font-size: 8px; font-family: var(--pixel); letter-spacing: 1px; display: block; margin-bottom: 4px; }
 .coach-tip {
   position: relative;
   margin-top: 14px;
-  padding: 12px 14px 12px 14px;
+  padding: 12px 14px;
   border: 1px solid rgba(255,204,0,0.45);
   background: rgba(255,204,0,0.04);
   box-shadow: 0 0 10px rgba(255,204,0,0.07);
@@ -599,8 +329,7 @@ header {
 .coach-tip::before {
   content: "[ COACH TIP ]";
   position: absolute;
-  top: -9px;
-  left: 12px;
+  top: -9px; left: 12px;
   background: var(--card);
   padding: 0 8px;
   font-family: var(--pixel);
@@ -611,106 +340,38 @@ header {
   text-shadow: 0 0 8px rgba(255,204,0,0.5);
 }
 .step-actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
-.btn-complete {
-  background: transparent;
-  border: 2px solid var(--green);
-  color: var(--green);
-  font-family: var(--pixel);
-  font-size: 8px;
-  letter-spacing: 1px;
-  padding: 9px 16px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.btn-complete:hover, .btn-complete:active {
-  background: var(--green);
-  color: #000;
-  box-shadow: 0 0 14px var(--green);
-}
-.btn-undo {
-  background: transparent;
-  border: 1px solid var(--border2);
-  color: var(--muted);
-  font-family: var(--pixel);
-  font-size: 7px;
-  letter-spacing: 1px;
-  padding: 9px 14px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
+.btn-complete { background: transparent; border: 2px solid var(--green); color: var(--green); font-family: var(--pixel); font-size: 8px; letter-spacing: 1px; padding: 9px 16px; cursor: pointer; transition: all 0.15s; }
+.btn-complete:hover, .btn-complete:active { background: var(--green); color: #000; box-shadow: 0 0 14px var(--green); }
+.btn-undo { background: transparent; border: 1px solid var(--border2); color: var(--muted); font-family: var(--pixel); font-size: 7px; letter-spacing: 1px; padding: 9px 14px; cursor: pointer; transition: all 0.15s; }
 .btn-undo:hover, .btn-undo:active { border-color: var(--pink); color: var(--pink); }
+
 /* log block */
-.log-block {
-  margin-top: 14px;
-  background: var(--bg);
-  border: 1px solid var(--border2);
-  padding: 14px;
-}
+.log-block { margin-top: 14px; background: var(--bg); border: 1px solid var(--border2); padding: 14px; }
 .log-title { font-family: var(--pixel); font-size: 7px; color: var(--pink); letter-spacing: 2px; margin-bottom: 12px; }
 .log-form { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 10px; }
 .log-field { display: flex; flex-direction: column; gap: 4px; }
 .log-field-lbl { font-family: var(--pixel); font-size: 6px; letter-spacing: 1px; color: var(--muted); }
-.log-input {
-  background: var(--bg);
-  border: 1px solid var(--border2);
-  color: var(--text);
-  font-family: var(--pixel);
-  font-size: 9px;
-  padding: 7px 9px;
-  width: 68px;
-  text-align: center;
-  outline: none;
-  transition: border-color 0.15s;
-}
+.log-input { background: var(--bg); border: 1px solid var(--border2); color: var(--text); font-family: var(--pixel); font-size: 9px; padding: 7px 9px; width: 68px; text-align: center; outline: none; transition: border-color 0.15s; }
 .log-input:focus { border-color: var(--green); }
 .log-input.wide { width: 160px; text-align: left; font-size: 12px; font-family: var(--ui); font-weight: 500; }
-.log-add {
-  background: transparent;
-  border: 1px solid var(--pink);
-  color: var(--pink);
-  font-family: var(--pixel);
-  font-size: 7px;
-  letter-spacing: 1px;
-  padding: 7px 12px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
+.log-add { background: transparent; border: 1px solid var(--pink); color: var(--pink); font-family: var(--pixel); font-size: 7px; letter-spacing: 1px; padding: 7px 12px; cursor: pointer; transition: all 0.15s; }
 .log-add:hover, .log-add:active { background: var(--pink); color: #000; }
 .log-entries { max-height: 160px; overflow-y: auto; }
-.log-entry {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 12px;
-  font-weight: 500;
-  flex-wrap: wrap;
-}
+.log-entry { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 12px; font-weight: 500; flex-wrap: wrap; }
 .log-entry:last-child { border-bottom: none; }
 .log-date { font-family: var(--pixel); font-size: 6px; color: var(--muted); white-space: nowrap; }
 .log-val  { font-family: var(--pixel); font-size: 9px; color: var(--gold); }
 .log-note { color: var(--muted); font-size: 12px; flex: 1; font-style: italic; }
 .log-del  { background: none; border: none; color: var(--border2); cursor: pointer; font-size: 14px; padding: 0 3px; transition: color 0.15s; }
 .log-del:hover { color: var(--pink); }
+
 /* bonus */
-.bonus {
-  background: var(--card);
-  border: 2px solid rgba(255,0,170,0.3);
-  margin-bottom: 8px;
-  box-shadow: 0 0 14px rgba(255,0,170,0.05);
-}
+.bonus { background: var(--card); border: 2px solid rgba(255,0,170,0.3); margin-bottom: 8px; box-shadow: 0 0 14px rgba(255,0,170,0.05); }
 .bonus .step-name { color: var(--pink); }
 .bonus .drill-text { border-left-color: var(--pink); }
+
 /* all done */
-.all-done {
-  text-align: center;
-  padding: 32px;
-  border: 2px solid var(--green);
-  margin-top: 10px;
-  box-shadow: 0 0 24px rgba(0,255,204,0.08);
-  display: none;
-}
+.all-done { text-align: center; padding: 32px; border: 2px solid var(--green); margin-top: 10px; box-shadow: 0 0 24px rgba(0,255,204,0.08); display: none; }
 .all-done.on { display: block; }
 .all-done h2 { font-family: var(--pixel); font-size: clamp(11px, 3vw, 16px); color: var(--green); letter-spacing: 2px; margin-bottom: 8px; }
 .all-done p  { font-size: 14px; color: var(--muted); font-weight: 500; }
@@ -739,7 +400,7 @@ header {
       <label for="inp-name">Your Name</label>
       <input id="inp-name" type="text" placeholder="Type Here" maxlength="24"
              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-      <button class="main" onclick="doLogin()">▶ ENTER</button>
+      <button class="main" onclick="doLogin()">▶ PLAY</button>
       <div class="login-err" id="login-err"></div>
       <button class="admin-link" onclick="adminLogin()">[ admin ]</button>
     </div>
@@ -778,14 +439,12 @@ header {
       <div class="mode-sub" id="mode-welcome"></div>
       <div class="mode-grid">
         <div class="mode-card" onclick="goMode('unlock')">
-          <span class="mode-card-icon">🔓</span>
           <div class="mode-card-name">Unlock a Skill</div>
           <div class="mode-card-desc">Enter here to unlock new abilities to perform in workouts.</div>
         </div>
         <div class="mode-card amber" onclick="goMode('upgrade')">
-          <span class="mode-card-icon">📈</span>
           <div class="mode-card-name">Upgrade a Skill</div>
-          <div class="mode-card-desc">Enter here to level-up abilities for more work capacity during workouts</div>
+          <div class="mode-card-desc">Enter here to level-up abilities for more work capacity during workouts.</div>
         </div>
       </div>
       <button class="logout-btn" onclick="doLogout()">⎋ Logout</button>
@@ -858,13 +517,12 @@ function fbSet(path, val) {
 }
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
-let WHO      = null;   // display name
-let WHO_KEY  = null;   // normalized key
+let WHO      = null;
+let WHO_KEY  = null;
 let IS_COACH = false;
-
-let TRACK    = null;   // current track object
-let DONE     = [];     // completed step indices
-let LOGS     = {};     // session logs per step
+let TRACK    = null;
+let DONE     = [];
+let LOGS     = {};
 const OPEN   = new Set();
 
 // ─── AUTH ────────────────────────────────────────────────────────────────────
@@ -901,10 +559,9 @@ function doLogout() {
 }
 
 function startApp() {
-  document.getElementById('hdr-name').textContent   = WHO + (IS_COACH ? ' 👑' : '');
+  document.getElementById('hdr-name').textContent    = WHO + (IS_COACH ? ' 👑' : '');
   document.getElementById('coach-btn').style.display = IS_COACH ? 'inline-block' : 'none';
-  document.getElementById('mode-welcome').textContent =
-    'Welcome, ' + WHO + '. Choose your mode.';
+  document.getElementById('mode-welcome').textContent = 'Welcome, ' + WHO + '. Choose your mode.';
   showView('view-mode');
   show('page-app');
 }
@@ -927,44 +584,31 @@ function goBack() {
   showView('view-pick');
 }
 
-
 function goMode(mode) {
   const isUnlock = mode === 'unlock';
-
-  document.getElementById('pick-crumb').textContent  = '// ' + (isUnlock ? 'UNLOCK A SKILL' : 'UPGRADE A SKILL');
-  document.getElementById('pick-heading').innerHTML  = isUnlock ? 'UNLOCK A <span>SKILL</span>' : 'UPGRADE A <span>SKILL</span>';
-  document.getElementById('pick-sub').textContent    = isUnlock
-    ? 'Which Skill are we acquiring today?'
-    : 'Which Skill are we upgrading today?.';
+  document.getElementById('pick-crumb').textContent = '// ' + (isUnlock ? 'UNLOCK A SKILL' : 'UPGRADE A SKILL');
+  document.getElementById('pick-heading').innerHTML = isUnlock ? 'UNLOCK A <span>SKILL</span>' : 'UPGRADE A <span>SKILL</span>';
+  document.getElementById('pick-sub').textContent   = isUnlock
+    ? 'Which skill are we acquiring today?'
+    : 'Which skill are we upgrading today?';
 
   const tracks = TRACKS[mode];
   const grid   = document.getElementById('pick-grid');
   grid.innerHTML = '';
 
   if (!tracks || !tracks.length) {
-    grid.innerHTML = `
-      <div style="
-        grid-column:1/-1;
-        text-align:center;
-        padding:60px 20px;
-        font-family:var(--pixel);
-        font-size:10px;
-        color:var(--gold);
-        letter-spacing:2px;
-      ">// IN DEVELOPMENT</div>`;
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;font-family:var(--pixel);font-size:10px;color:var(--gold);letter-spacing:2px">// IN DEVELOPMENT</div>`;
   } else {
     tracks.forEach(track => {
       const card = document.createElement('div');
       card.className = 'mode-card' + (mode === 'upgrade' ? ' amber' : '');
       card.innerHTML = `
-        <span class="mode-card-icon">${track.icon || '🎯'}</span>
         <div class="mode-card-name">${track.title}</div>
         <div class="mode-card-desc">${track.sub}</div>`;
       card.onclick = () => loadTrack(track);
       grid.appendChild(card);
     });
   }
-
   showView('view-pick');
 }
 
@@ -981,7 +625,7 @@ async function loadCoach() {
   const el = document.getElementById('coach-content');
   el.innerHTML = '<div style="font-family:var(--pixel);font-size:8px;color:var(--muted);padding:40px;text-align:center">LOADING...</div>';
   try {
-    let accounts = await fbGet('accounts') || {};
+    const accounts = await fbGet('accounts') || {};
     const keys = Object.keys(accounts);
     if (!keys.length) {
       el.innerHTML = '<div style="font-family:var(--pixel);font-size:8px;color:var(--muted);padding:20px">No athletes yet.</div>';
@@ -989,9 +633,9 @@ async function loadCoach() {
     }
     function norm(d) { return !d ? [] : Array.isArray(d) ? d : Object.values(d); }
     function bar(done, total) {
-      const pct = total ? Math.round(done/total*100) : 0;
+      const pct = total ? Math.round(done / total * 100) : 0;
       return `<div class="bar-row">
-        <div class="bar-label">🪢 DU &nbsp;${done}/${total}</div>
+        <div class="bar-label">DU &nbsp;${done}/${total}</div>
         <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
         <div class="bar-pct">${pct}%</div>
       </div>`;
@@ -1002,8 +646,8 @@ async function loadCoach() {
       const raw = await fbGet('athletes/' + key + '/double-unders');
       const n   = norm(raw).length;
       cards.push(`<div class="athlete-card">
-        <div class="athlete-name">${(a.name||key).toUpperCase()}</div>
-        ${bar(n, 10)}
+        <div class="athlete-name">${(a.name || key).toUpperCase()}</div>
+        ${bar(n, 11)}
       </div>`);
     }
     el.innerHTML = cards.join('') +
@@ -1016,17 +660,12 @@ async function loadCoach() {
 }
 
 // ─── TRACK DATA ───────────────────────────────────────────────────────────────
-// To add a track: push an object into TRACKS.unlock[] or TRACKS.upgrade[]
-// Step fields: name, preview, drill, note
-//              log: 'sets-reps' | 'timed-sets' | 'notes-only'   (optional)
-
 const TRACKS = {
   unlock: [
     {
       id:    'double-unders',
       title: 'DOUBLE UNDERS',
-      sub:   'Add Dubs to your Fitness Armory,
-      icon:  '🐰',
+      sub:   'Add Dubs to your Fitness Armory',
 
       warmup: {
         title: 'OPTIONAL WARM-UP',
@@ -1113,7 +752,6 @@ const TRACKS = {
           log:     'emom-ladder',
         },
       ],
-
     },
   ],
   upgrade: [],
@@ -1135,23 +773,21 @@ async function loadTrack(track) {
   }
   showView('view-track');
   renderTrack();
-  // Open the warmup card on first load
   if (track.warmup) {
     const wu = document.querySelector('.warmup');
     if (wu) wu.classList.add('open');
   }
-
 }
 
 function isDone(i)   { return DONE.includes(i); }
-function isActive(i) { return !isDone(i) && (i === 0 || isDone(i-1)); }
+function isActive(i) { return !isDone(i) && (i === 0 || isDone(i - 1)); }
 function isLocked(i) { return !isDone(i) && !isActive(i); }
 
 function renderTrack() {
   const t     = TRACK;
   const total = t.steps.length;
   const done  = DONE.length;
-  const pct   = total ? Math.round(done/total*100) : 0;
+  const pct   = total ? Math.round(done / total * 100) : 0;
 
   document.getElementById('track-crumb').textContent = '// ' + t.title;
   document.getElementById('xp-done').textContent     = done;
@@ -1159,31 +795,22 @@ function renderTrack() {
   document.getElementById('xp-fill').style.width     = pct + '%';
   document.getElementById('xp-pct').textContent      = pct + '%';
   document.getElementById('step-dots').innerHTML     = t.steps.map((_, i) =>
-    `<div class="dot ${isDone(i)?'done':isActive(i)?'active':''}"></div>`
+    `<div class="dot ${isDone(i) ? 'done' : isActive(i) ? 'active' : ''}"></div>`
   ).join('');
 
   const body = document.getElementById('track-body');
   body.innerHTML = '';
-
-  // Warmup
   if (t.warmup) body.appendChild(mkWarmup(t.warmup));
-
-  // Steps
   body.appendChild(mkSecLabel('SKILL STEPS'));
   t.steps.forEach((s, i) => body.appendChild(mkStep(s, i)));
-
-  // Bonus
   if (t.bonus) {
     body.appendChild(mkSecLabel('BONUS LEVEL', true));
     body.appendChild(mkBonus(t.bonus));
   }
-
-  // All done banner
   const ad = document.createElement('div');
   ad.className = 'all-done' + (done === total ? ' on' : '');
-  ad.innerHTML = `<h2>🏆 TRACK COMPLETE!</h2><p>All ${total} steps cleared. Go earn that bonus level.</p>`;
+  ad.innerHTML = `<h2>TRACK COMPLETE!</h2><p>All ${total} steps cleared.</p>`;
   body.appendChild(ad);
-
   bindEvents();
 }
 
@@ -1232,17 +859,17 @@ function mkStep(step, i) {
   el.dataset.i = i;
   el.innerHTML = `
     <div class="step-hdr">
-      <div class="step-num">${dn ? '✓' : String(i+1).padStart(2,'0')}</div>
+      <div class="step-num">${dn ? '✓' : String(i + 1).padStart(2, '0')}</div>
       <div class="step-info">
         <div class="step-name">${esc(step.name)}</div>
-        <div class="step-preview">${esc(step.preview||'')}</div>
+        <div class="step-preview">${esc(step.preview || '')}</div>
       </div>
       ${badge}
       <span class="chev">▾</span>
     </div>
     <div class="step-body">
       <div class="drill-label">// THE DRILL</div>
-      <div class="drill-text">${esc(step.drill||'')}</div>
+      <div class="drill-text">${esc(step.drill || '')}</div>
       ${step.note ? `<div class="complete-note">${esc(step.note)}</div>` : ''}
       ${step.tip  ? `<div class="coach-tip">${esc(step.tip)}</div>`    : ''}
       ${mkLog(step, i)}
@@ -1259,13 +886,13 @@ function mkBonus(bonus) {
       <div class="step-num" style="font-size:14px;color:var(--pink)">Rx</div>
       <div class="step-info">
         <div class="step-name" style="color:var(--pink)">${esc(bonus.name)}</div>
-        <div class="step-preview">${esc(bonus.preview||'')}</div>
+        <div class="step-preview">${esc(bonus.preview || '')}</div>
       </div>
       <span class="chev">▾</span>
     </div>
     <div class="step-body">
       <div class="drill-label" style="color:var(--pink)">// THE WORKOUT</div>
-      <div class="drill-text" style="border-left-color:var(--pink)">${esc(bonus.drill||'')}</div>
+      <div class="drill-text" style="border-left-color:var(--pink)">${esc(bonus.drill || '')}</div>
       ${bonus.note ? `<div class="complete-note">${esc(bonus.note)}</div>` : ''}
     </div>`;
   el.querySelector('.step-hdr').onclick = () => el.classList.toggle('open');
@@ -1275,11 +902,11 @@ function mkBonus(bonus) {
 function mkLog(step, i) {
   if (!step.log) return '';
 
-  // ── EMOM LADDER: rounds + partial reps → total DUs ──────────────
+  // ── EMOM LADDER ───────────────────────────────────────────────────
   if (step.log === 'emom-ladder') {
-    const mult = step.mult || 1;
-    const entries = (LOGS[i]||[]).slice().reverse().slice(0,8).map((e, ri) => {
-      const idx = (LOGS[i]||[]).length - 1 - ri;
+    const mult    = step.mult || 1;
+    const entries = (LOGS[i] || []).slice().reverse().slice(0, 8).map((e, ri) => {
+      const idx = (LOGS[i] || []).length - 1 - ri;
       return `<div class="log-entry">
         <span class="log-date">${e.date}</span>
         <span class="log-val" style="flex:1">${esc(e.val)}</span>
@@ -1288,7 +915,6 @@ function mkLog(step, i) {
       </div>`;
     }).join('');
     const empty = `<div style="font-family:var(--pixel);font-size:7px;color:var(--muted);padding:8px 0">No sessions logged yet.</div>`;
-
     return `<div class="log-block">
       <div class="log-title">// SESSION LOG</div>
       <div class="log-form" style="align-items:flex-end">
@@ -1303,16 +929,16 @@ function mkLog(step, i) {
         <button class="log-add" data-step="${i}" data-type="emom-ladder" data-mult="${mult}">+ LOG</button>
       </div>
       <div style="font-family:var(--pixel);font-size:6px;color:var(--muted);letter-spacing:1px;margin:6px 0 2px">
-        TOTAL = mult × rounds×(rounds+1)÷2 + reps
+        TOTAL = ×${mult} × rounds×(rounds+1)÷2 + extra reps
       </div>
-      <div class="log-entries">${entries||empty}</div>
+      <div class="log-entries">${entries || empty}</div>
     </div>`;
   }
 
   // ── DU VOLUME ─────────────────────────────────────────────────────
   if (step.log === 'du-volume') {
-    const entries = (LOGS[i]||[]).slice().reverse().slice(0,8).map((e, ri) => {
-      const idx = (LOGS[i]||[]).length - 1 - ri;
+    const entries = (LOGS[i] || []).slice().reverse().slice(0, 8).map((e, ri) => {
+      const idx = (LOGS[i] || []).length - 1 - ri;
       return `<div class="log-entry">
         <span class="log-date">${e.date}</span>
         <span class="log-val" style="flex:1">${esc(e.val)}</span>
@@ -1320,31 +946,29 @@ function mkLog(step, i) {
         <button class="log-del" data-step="${i}" data-idx="${idx}">×</button>
       </div>`;
     }).join('');
-    const empty = `<div style="font-family:var(--pixel);font-size:7px;color:var(--muted);padding:8px 0">No sessions logged yet.</div>`;
-
-    const setInputs = [1,2,3,4,5].map(n => `
+    const empty   = `<div style="font-family:var(--pixel);font-size:7px;color:var(--muted);padding:8px 0">No sessions logged yet.</div>`;
+    const setInputs = [1, 2, 3, 4, 5].map(n => `
       <div class="log-field">
         <div class="log-field-lbl">SET ${n}</div>
         <input class="log-input" id="duv-${i}-${n}" type="number" min="0" max="200" placeholder="0">
       </div>`).join('');
-
     return `<div class="log-block">
       <div class="log-title">// SESSION LOG — DU COUNTS PER SET</div>
       <div class="log-form" style="align-items:flex-end">
         ${setInputs}
         <button class="log-add" data-step="${i}" data-type="du-volume">+ LOG</button>
       </div>
-      <div class="log-entries">${entries||empty}</div>
+      <div class="log-entries">${entries || empty}</div>
     </div>`;
   }
 
-  // ── ALL OTHER LOG TYPES ───────────────────────────────────────────
-  const entries = (LOGS[i]||[]).slice().reverse().slice(0,10).map((e,ri) => {
-    const idx = (LOGS[i]||[]).length - 1 - ri;
+  // ── STANDARD LOG TYPES ────────────────────────────────────────────
+  const entries = (LOGS[i] || []).slice().reverse().slice(0, 10).map((e, ri) => {
+    const idx = (LOGS[i] || []).length - 1 - ri;
     return `<div class="log-entry">
       <span class="log-date">${e.date}</span>
       <span class="log-val">${esc(e.val)}</span>
-      <span class="log-note">${esc(e.notes||'')}</span>
+      <span class="log-note">${esc(e.notes || '')}</span>
       <button class="log-del" data-step="${i}" data-idx="${idx}">×</button>
     </div>`;
   }).join('');
@@ -1366,17 +990,16 @@ function mkLog(step, i) {
   return `<div class="log-block">
     <div class="log-title">// SESSION LOG</div>
     <div class="log-form">
-      ${fields[step.log]||''}
+      ${fields[step.log] || ''}
       <button class="log-add" data-step="${i}" data-type="${step.log}">+ LOG</button>
     </div>
-    <div class="log-entries">${entries||empty}</div>
+    <div class="log-entries">${entries || empty}</div>
   </div>`;
 }
 
 function bindEvents() {
   const body = document.getElementById('track-body');
 
-  // toggle open
   body.querySelectorAll('.step[data-i] .step-hdr').forEach(h => {
     h.onclick = () => {
       const card = h.closest('.step');
@@ -1386,7 +1009,6 @@ function bindEvents() {
     };
   });
 
-  // mark complete
   body.querySelectorAll('.btn-complete').forEach(btn => {
     btn.onclick = () => {
       const i = +btn.dataset.i;
@@ -1395,16 +1017,15 @@ function bindEvents() {
       OPEN.delete(i);
       renderTrack();
       setTimeout(() => {
-        const nx = body.querySelector(`.step[data-i="${i+1}"]`);
+        const nx = body.querySelector(`.step[data-i="${i + 1}"]`);
         if (nx && !nx.classList.contains('locked')) {
-          nx.classList.add('open'); OPEN.add(i+1);
-          nx.scrollIntoView({ behavior:'smooth', block:'center' });
+          nx.classList.add('open'); OPEN.add(i + 1);
+          nx.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 120);
     };
   });
 
-  // undo
   body.querySelectorAll('.btn-undo').forEach(btn => {
     btn.onclick = () => {
       DONE = DONE.filter(x => x !== +btn.dataset.i);
@@ -1412,83 +1033,79 @@ function bindEvents() {
     };
   });
 
-  // log add
   body.querySelectorAll('.log-add').forEach(btn => {
     btn.onclick = () => {
       const i    = +btn.dataset.step;
       const type = btn.dataset.type;
-      const date = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
-      let val='', notes='';
-      if (type==='emom-ladder') {
+      const date = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+      if (type === 'emom-ladder') {
         const mult   = parseInt(btn.dataset.mult) || 1;
         const rounds = parseInt(document.getElementById(`emom-r-${i}`)?.value) || 0;
         const extra  = parseInt(document.getElementById(`emom-p-${i}`)?.value) || 0;
         const total  = mult * (rounds * (rounds + 1) / 2) + extra;
         const val    = `${rounds} rounds + ${extra} reps`;
-        LOGS[i] = LOGS[i]||[];
-        LOGS[i].push({ date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}), val, total, notes:'' });
-        OPEN.add(i);
-        save(); renderTrack();
+        LOGS[i] = LOGS[i] || [];
+        LOGS[i].push({ date, val, total, notes: '' });
+        OPEN.add(i); save(); renderTrack();
         return;
       }
-      if (type==='du-volume') {
-        const vals = [1,2,3,4,5].map(n => parseInt(document.getElementById(`duv-${i}-${n}`)?.value)||0);
-        const total = vals.reduce((a,b) => a+b, 0);
+
+      if (type === 'du-volume') {
+        const vals = [1, 2, 3, 4, 5].map(n => parseInt(document.getElementById(`duv-${i}-${n}`)?.value) || 0);
+        const total = vals.reduce((a, b) => a + b, 0);
         const avg   = (total / 5).toFixed(1);
-        const val   = vals.map((v,n) => `Set ${n+1}: ${v}`).join(' · ');
-        LOGS[i] = LOGS[i]||[];
-        LOGS[i].push({ date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}), val, avg, notes:'' });
-        OPEN.add(i);
-        save(); renderTrack();
+        const val   = vals.map((v, n) => `Set ${n + 1}: ${v}`).join(' · ');
+        LOGS[i] = LOGS[i] || [];
+        LOGS[i].push({ date, val, avg, notes: '' });
+        OPEN.add(i); save(); renderTrack();
         return;
       }
-      if (type==='sets-reps') {
-        const s = document.getElementById(`ls-${i}`)?.value||'';
-        const r = document.getElementById(`lr-${i}`)?.value||'';
-        notes   = document.getElementById(`ln-${i}`)?.value.trim()||'';
+
+      let val = '', notes = '';
+      if (type === 'sets-reps') {
+        const s = document.getElementById(`ls-${i}`)?.value || '';
+        const r = document.getElementById(`lr-${i}`)?.value || '';
+        notes   = document.getElementById(`ln-${i}`)?.value.trim() || '';
         if (!s && !r) return;
         val = `${s}×${r}`;
-      } else if (type==='timed-sets') {
-        const s = document.getElementById(`ls-${i}`)?.value||'';
-        const r = document.getElementById(`lr-${i}`)?.value||'';
-        notes   = document.getElementById(`ln-${i}`)?.value.trim()||'';
+      } else if (type === 'timed-sets') {
+        const s = document.getElementById(`ls-${i}`)?.value || '';
+        const r = document.getElementById(`lr-${i}`)?.value || '';
+        notes   = document.getElementById(`ln-${i}`)?.value.trim() || '';
         if (!r) return;
         val = `Set ${s}: ${r} reps`;
-      } else if (type==='notes-only') {
-        notes = document.getElementById(`ln-${i}`)?.value.trim()||'';
+      } else if (type === 'notes-only') {
+        notes = document.getElementById(`ln-${i}`)?.value.trim() || '';
         if (!notes) return;
         val = '✓';
       }
-      if (!LOGS[i]) LOGS[i] = [];
+      LOGS[i] = LOGS[i] || [];
       LOGS[i].push({ date, val, notes });
-      OPEN.add(i);
-      save(); renderTrack();
+      OPEN.add(i); save(); renderTrack();
     };
   });
 
-  // log delete
   body.querySelectorAll('.log-del').forEach(btn => {
     btn.onclick = () => {
       const i   = +btn.dataset.step;
       const idx = +btn.dataset.idx;
       if (LOGS[i]) LOGS[i].splice(idx, 1);
-      OPEN.add(i);
-      save(); renderTrack();
+      OPEN.add(i); save(); renderTrack();
     };
   });
 }
 
 function save() {
   const base = 'athletes/' + WHO_KEY + '/' + TRACK.id;
-  fbSet(base, DONE).catch(()=>{});
-  fbSet(base + '_logs', LOGS).catch(()=>{});
+  fbSet(base, DONE).catch(() => {});
+  fbSet(base + '_logs', LOGS).catch(() => {});
 }
 
-// ─── UTILS ────────────────────────────────────────────────────────────────────
 function esc(s) {
-  return String(s||'')
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/\n/g,'<br>');
+  return String(s || '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\n/g, '<br>');
 }
 </script>
 </body>
