@@ -279,15 +279,11 @@ header{background:rgba(10,10,26,.96);backdrop-filter:blur(12px);border-bottom:2p
     </div>
     <div class="login-sub">Gain real life XP to unlock the perks for your character IRL</div>
     <div class="login-field">
-      <label>Choose Your Fighter</label>
+      <label>Your Name</label>
       <input class="login-input" id="login-user" type="text" placeholder="YOUR NAME" maxlength="24"
              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
     </div>
-    <div class="login-field">
-      <label>Password</label>
-      <input class="login-input" id="login-pass" type="password" placeholder="••••••••" maxlength="32">
-    </div>
-    <button class="login-btn" id="login-btn">▶ Press Play</button>
+    <button class="login-btn" id="login-btn">▶ Enter</button>
     <div class="login-err" id="login-err"></div>
     <button class="admin-ghost" onclick="devLogin()">[ admin ]</button>
     </div>
@@ -439,60 +435,37 @@ let isCoach        = false;
 function userKey(raw) { return raw.toLowerCase().replace(/\s+/g, '_'); }
 
 document.getElementById('login-btn').addEventListener('click', doLogin);
-document.getElementById('login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-document.getElementById('login-user').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('login-pass').focus(); });
+document.getElementById('login-user').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
 function doLogin() {
   const rawUser = document.getElementById('login-user').value.trim();
-  const rawPass = document.getElementById('login-pass').value.trim();
   const errEl   = document.getElementById('login-err');
-
   errEl.textContent = '';
 
-  if (!rawUser || rawUser.length < 2) { errEl.textContent = '!! ENTER USERNAME !!'; return; }
-  if (!rawPass)                        { errEl.textContent = '!! ENTER PASSWORD !!'; return; }
-
-  const key      = userKey(rawUser);
-  const passNorm = rawPass.toLowerCase();
-
-  // Coach check
-  if (key === COACH_USER && passNorm === COACH_PASS) {
-    currentUser    = 'Klep';
-    currentUserKey = COACH_USER;
-    isCoach        = true;
-    launchApp();
+  if (!rawUser || rawUser.length < 2) {
+    errEl.textContent = '!! ENTER YOUR NAME !!';
     return;
   }
 
-  // Athlete: check or create account
-  const accounts = getAccounts();
+  const key = userKey(rawUser);
 
-  if (accounts[key]) {
-    if (accounts[key].password !== passNorm) {
-      errEl.textContent = '!! WRONG PASSWORD !!';
-      return;
-    }
-    currentUser    = accounts[key].name;
-    currentUserKey = key;
+  if (key === COACH_USER) {
+    currentUser    = 'Klep';
+    currentUserKey = COACH_USER;
+    isCoach        = true;
   } else {
-    // New athlete — create account
     const name = rawUser.charAt(0).toUpperCase() + rawUser.slice(1).toLowerCase();
-    accounts[key] = { name, password: passNorm };
-    saveAccounts(accounts);
-    // Also write to Firebase so coach can see this athlete
-    fbSet('accounts/' + key, { name, password: passNorm })
-      .catch(e => console.warn('Firebase account save failed:', e.message));
     currentUser    = name;
     currentUserKey = key;
+    isCoach        = false;
+    fbSet('accounts/' + key, { name }).catch(() => {});
   }
 
-  isCoach = false;
   launchApp();
 }
 
 function devLogin() {
   document.getElementById('login-user').value = 'Klep';
-  document.getElementById('login-pass').value = 'CrossFit';
   doLogin();
 }
 
@@ -508,7 +481,6 @@ function doLogout() {
   currentUser = null; currentUserKey = null; isCoach = false;
   hideCoach();
   document.getElementById('login-user').value     = '';
-  document.getElementById('login-pass').value     = '';
   document.getElementById('login-err').textContent = '';
   showScreen('screen-login');
 }
