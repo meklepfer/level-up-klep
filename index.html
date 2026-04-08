@@ -530,9 +530,40 @@ function showPage(id) {
 }
 function goMode(mode) {
   currentMode = mode;
-  const list = TRACKS[mode];
-  if (!list || !list.length) { alert('No tracks configured yet for ' + mode); return; }
+  const list  = TRACKS[mode];
+  if (!list || !list.length) {
+    showComingSoon(mode);
+    return;
+  }
+  if (list.length === 1) {
+    openTrack(list[0]);
+    return;
+  }
+  // Multiple tracks — show picker (future)
   openTrack(list[0]);
+}
+
+function showComingSoon(mode) {
+  const label = mode === 'upgrade' ? 'UPGRADE' : mode.toUpperCase();
+  document.getElementById('track-breadcrumb').textContent = '// ' + label;
+  // Hide progress bar
+  document.getElementById('prog-done').textContent  = '—';
+  document.getElementById('prog-total').textContent = '—';
+  document.getElementById('xp-fill').style.width    = '0%';
+  document.getElementById('xp-label').textContent   = '';
+  document.getElementById('step-dots').innerHTML     = '';
+  document.getElementById('track-body').innerHTML    = `
+    <div style="text-align:center;padding:60px 20px">
+      <div style="font-family:var(--font-pixel);font-size:clamp(11px,2.5vw,16px);color:var(--accent3);
+                  letter-spacing:2px;margin-bottom:16px;text-shadow:0 0 12px var(--accent3)">
+        COMING SOON
+      </div>
+      <div style="font-family:var(--font-pixel);font-size:8px;color:var(--muted2);
+                  letter-spacing:1px;line-height:2">
+        ${label} tracks are in development.<br>Check back soon.
+      </div>
+    </div>`;
+  showPage('page-track');
 }
 function closeTrack() { showPage('page-mode'); }
 
@@ -561,7 +592,7 @@ async function renderCoach() {
     </div>`;
   }
 
-  const DU_TOTAL = 10, PU_TOTAL = 4, HSPU_TOTAL = 8;
+  const DU_TOTAL = 10;
 
   try {
     // Load accounts from Firebase; fall back to localStorage
@@ -579,14 +610,10 @@ async function renderCoach() {
     for (const key of names) {
       const a    = accounts[key];
       const base = 'athletes/' + key;
-      const [duRaw, puRaw] = await Promise.all([
-        fbGet(base + '/double-unders'),
-        fbGet(base + '/pu-volume'),
-      ]);
+      const duRaw = await fbGet(base + '/double-unders');
       rows.push({
         name: a.name || key,
         du:   normArr(duRaw).length,
-        pu:   normArr(puRaw).length,
       });
     }
 
@@ -595,8 +622,6 @@ async function renderCoach() {
         <div class="athlete-name">${a.name.toUpperCase()}</div>
         <div style="font-family:var(--font-pixel);font-size:7px;color:var(--muted2);margin-bottom:5px;letter-spacing:1px">🪢 DOUBLE UNDERS</div>
         ${bar(a.du, DU_TOTAL, 'var(--accent)')}
-        <div style="font-family:var(--font-pixel);font-size:7px;color:var(--muted2);margin:10px 0 5px;letter-spacing:1px">💪 PULL-UP VOLUME</div>
-        ${bar(a.pu, PU_TOTAL, 'var(--accent2)')}
       </div>`).join('') +
       `<div style="text-align:center;margin-top:20px">
         <button class="back-btn" onclick="renderCoach()">↻ Refresh</button>
@@ -645,24 +670,8 @@ const TRACKS = {
     },
   ],
   upgrade: [
-    {
-      id:       'pu-volume',
-      title:    'STRICT PULL-UP VOLUME',
-      subtitle: '4-step cycle · repeat to build',
-      warmup: {
-        title: 'OPTIONAL WARM-UP',
-        drill: '1. PVC Passthroughs — 10 reps\n2. Hollow Rocks — 5 reps\n3. Supermans — 5 reps\n4. Scap Pull-Ups — 5 reps',
-        note:  'Optional but recommended before every session.',
-      },
-      steps: [
-        { name:'Pull-Up Ladder + Drop Set', preview:'Climb to failure · rest · max set',      drill:'Start at 1 strict pull-up. Rest 2-3 min. Then 2. Then 3. Keep climbing until you fail a set.\n\nRest 2-3 min. Then one all-out max effort set.',       note:'Log rounds completed, reps at failure, and reps in max set.',  log:'notes-only' },
-        { name:'5 Training Sets',           preview:'5 sets · controlled · not to failure',   drill:'5 sets of strict pull-ups.\n\nChoose reps you can hit all 5 sets without failure. Dead hang start, chin over bar. Rest 2:00-2:30 between sets.',        note:'All 5 sets logged.',                                           log:'sets-reps'  },
-        { name:'Bent Over Row · 3×8-10',    preview:'3 sets · 8-10 reps · log weight',        drill:'3 sets of 8-10 dumbbell bent over rows.\n\nHinge at hips, back flat, row to hip. Full ROM. Rest 2:00 between sets.',                                  note:'3 sets of 8-10 reps logged.',                                  log:'sets-reps'  },
-        { name:'3 Max Sets',                preview:'3 all-out sets · track your PR',          drill:'3 max effort sets of strict pull-ups.\n\nDead hang start. Go until failure. Rest 3:00+ between sets.',                                                note:'All 3 sets logged.',                                           log:'sets-reps'  },
-      ],
-      bonus: { name:'Cindy', preview:'20 min AMRAP · 5/10/15 · Strict Pull-Ups', drill:'20 Minute AMRAP:\n5 Strict Pull-Ups\n10 Push-Ups\n15 Air Squats\n\nFull range on everything. Count rounds + extra reps.', note:'Record rounds + reps. Your score goes on the leaderboard.' },
-    },
-  ],
+    // Upgrade tracks — coming soon
+  ]
 };
 
 // ════════════════════════════════════════════════════════
