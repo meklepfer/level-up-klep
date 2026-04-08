@@ -582,6 +582,34 @@ header {
   display: block;
   margin-bottom: 4px;
 }
+.coach-tip {
+  position: relative;
+  margin-top: 14px;
+  padding: 12px 14px 12px 14px;
+  border: 1px solid rgba(255,204,0,0.45);
+  background: rgba(255,204,0,0.04);
+  box-shadow: 0 0 10px rgba(255,204,0,0.07);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.6;
+  font-family: var(--ui);
+  font-weight: 500;
+}
+.coach-tip::before {
+  content: "[ COACH TIP ]";
+  position: absolute;
+  top: -9px;
+  left: 12px;
+  background: var(--card);
+  padding: 0 8px;
+  font-family: var(--pixel);
+  font-size: 7px;
+  font-style: normal;
+  letter-spacing: 2px;
+  color: var(--gold);
+  text-shadow: 0 0 8px rgba(255,204,0,0.5);
+}
 .step-actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
 .btn-complete {
   background: transparent;
@@ -1062,13 +1090,23 @@ const TRACKS = {
           preview: '10 min EMOM · 2 DUs per minute',
           drill:   '10 Minute EMOM\n\nMinute 1 = 2 DUs, Minute 2 = 4 DUs... up to 20 DUs in Minute 10.\nReps do not need to be unbroken.',
           note:    'All 10 rounds completed without missing.',
+          tip:     'If unsuccessful, move on to 100 For Time next session.',
+          log:     'notes-only',
+        },
+        {
+          name:    '100 Double-Unders For Time',
+          preview: '100 reps · for time',
+          drill:   '100 Double-Unders\nFor Time.\n\nBreak them up however you need to. Record your time.',
+          note:    'Record your time.',
+          tip:     'Return to the ×2 Ladder if unsuccessful on your last ×2 attempt. Return to the ×3 Ladder if unsuccessful on your last ×3 attempt.',
           log:     'notes-only',
         },
         {
           name:    'EMOM Ladder ×3',
           preview: '10 min EMOM · 3 DUs per minute',
           drill:   '10 Minute EMOM\n\nMinute 1 = 3 DUs, Minute 2 = 6 DUs... up to 30 DUs in Minute 10.\nReps do not need to be unbroken.',
-          note:    'All 10 rounds completed. You can now do double-unders.',
+          note:    'All 10 rounds completed without missing.',
+          tip:     'If unsuccessful, move on to 100 For Time next session.',
           log:     'notes-only',
         },
       ],
@@ -1203,6 +1241,7 @@ function mkStep(step, i) {
       <div class="drill-label">// THE DRILL</div>
       <div class="drill-text">${esc(step.drill||'')}</div>
       ${step.note ? `<div class="complete-note">${esc(step.note)}</div>` : ''}
+      ${step.tip  ? `<div class="coach-tip">${esc(step.tip)}</div>`    : ''}
       ${mkLog(step, i)}
       <div class="step-actions">${action}</div>
     </div>`;
