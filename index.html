@@ -1083,15 +1083,17 @@ const TRACKS = {
           preview: '10 min EMOM · 1 DU per minute',
           drill:   '10 Minute EMOM\n\nMinute 1 = 1 DU, Minute 2 = 2 DUs... up to 10 DUs in Minute 10.\nReps do not need to be unbroken.',
           note:    'All 10 rounds completed without missing.',
-          log:     'notes-only',
+          mult:    1,
+          log:     'emom-ladder',
         },
         {
           name:    'EMOM Ladder ×2',
           preview: '10 min EMOM · 2 DUs per minute',
           drill:   '10 Minute EMOM\n\nMinute 1 = 2 DUs, Minute 2 = 4 DUs... up to 20 DUs in Minute 10.\nReps do not need to be unbroken.',
           note:    'All 10 rounds completed without missing.',
+          mult:    2,
           tip:     'If unsuccessful, move on to 100 For Time next session.',
-          log:     'notes-only',
+          log:     'emom-ladder',
         },
         {
           name:    '100 Double-Unders For Time',
@@ -1106,8 +1108,9 @@ const TRACKS = {
           preview: '10 min EMOM · 3 DUs per minute',
           drill:   '10 Minute EMOM\n\nMinute 1 = 3 DUs, Minute 2 = 6 DUs... up to 30 DUs in Minute 10.\nReps do not need to be unbroken.',
           note:    'All 10 rounds completed without missing.',
+          mult:    3,
           tip:     'If unsuccessful, move on to 100 For Time next session.',
-          log:     'notes-only',
+          log:     'emom-ladder',
         },
       ],
 
@@ -1272,7 +1275,41 @@ function mkBonus(bonus) {
 function mkLog(step, i) {
   if (!step.log) return '';
 
-  // ── DU VOLUME: 5 sets, individual DU counts ──────────────────────
+  // ── EMOM LADDER: rounds + partial reps → total DUs ──────────────
+  if (step.log === 'emom-ladder') {
+    const mult = step.mult || 1;
+    const entries = (LOGS[i]||[]).slice().reverse().slice(0,8).map((e, ri) => {
+      const idx = (LOGS[i]||[]).length - 1 - ri;
+      return `<div class="log-entry">
+        <span class="log-date">${e.date}</span>
+        <span class="log-val" style="flex:1">${esc(e.val)}</span>
+        <span class="log-note" style="color:var(--green);font-family:var(--pixel);font-size:8px">${e.total} DUs</span>
+        <button class="log-del" data-step="${i}" data-idx="${idx}">×</button>
+      </div>`;
+    }).join('');
+    const empty = `<div style="font-family:var(--pixel);font-size:7px;color:var(--muted);padding:8px 0">No sessions logged yet.</div>`;
+
+    return `<div class="log-block">
+      <div class="log-title">// SESSION LOG</div>
+      <div class="log-form" style="align-items:flex-end">
+        <div class="log-field">
+          <div class="log-field-lbl">ROUNDS DONE</div>
+          <input class="log-input" id="emom-r-${i}" type="number" min="0" max="10" placeholder="0">
+        </div>
+        <div class="log-field">
+          <div class="log-field-lbl">+ REPS</div>
+          <input class="log-input" id="emom-p-${i}" type="number" min="0" max="99" placeholder="0">
+        </div>
+        <button class="log-add" data-step="${i}" data-type="emom-ladder" data-mult="${mult}">+ LOG</button>
+      </div>
+      <div style="font-family:var(--pixel);font-size:6px;color:var(--muted);letter-spacing:1px;margin:6px 0 2px">
+        TOTAL = mult × rounds×(rounds+1)÷2 + reps
+      </div>
+      <div class="log-entries">${entries||empty}</div>
+    </div>`;
+  }
+
+  // ── DU VOLUME ─────────────────────────────────────────────────────
   if (step.log === 'du-volume') {
     const entries = (LOGS[i]||[]).slice().reverse().slice(0,8).map((e, ri) => {
       const idx = (LOGS[i]||[]).length - 1 - ri;
@@ -1382,6 +1419,18 @@ function bindEvents() {
       const type = btn.dataset.type;
       const date = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
       let val='', notes='';
+      if (type==='emom-ladder') {
+        const mult   = parseInt(btn.dataset.mult) || 1;
+        const rounds = parseInt(document.getElementById(`emom-r-${i}`)?.value) || 0;
+        const extra  = parseInt(document.getElementById(`emom-p-${i}`)?.value) || 0;
+        const total  = mult * (rounds * (rounds + 1) / 2) + extra;
+        const val    = `${rounds} rounds + ${extra} reps`;
+        LOGS[i] = LOGS[i]||[];
+        LOGS[i].push({ date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}), val, total, notes:'' });
+        OPEN.add(i);
+        save(); renderTrack();
+        return;
+      }
       if (type==='du-volume') {
         const vals = [1,2,3,4,5].map(n => parseInt(document.getElementById(`duv-${i}-${n}`)?.value)||0);
         const total = vals.reduce((a,b) => a+b, 0);
