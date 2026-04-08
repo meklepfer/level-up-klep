@@ -1076,7 +1076,7 @@ const TRACKS = {
           preview: '5 sets · 30s on / 30s off · link dubs',
           drill:   '5 Sets — 30s on / 30s off\n\nAs many double-unders as possible per set. Singles allowed as a reset but the goal is linking dubs.',
           note:    'Average of 5 or more double-unders per set across all 5 sets.',
-          log:     'sets-reps',
+          log:     'du-volume',
         },
         {
           name:    'EMOM Ladder ×1',
@@ -1271,6 +1271,37 @@ function mkBonus(bonus) {
 
 function mkLog(step, i) {
   if (!step.log) return '';
+
+  // ── DU VOLUME: 5 sets, individual DU counts ──────────────────────
+  if (step.log === 'du-volume') {
+    const entries = (LOGS[i]||[]).slice().reverse().slice(0,8).map((e, ri) => {
+      const idx = (LOGS[i]||[]).length - 1 - ri;
+      return `<div class="log-entry">
+        <span class="log-date">${e.date}</span>
+        <span class="log-val" style="flex:1">${esc(e.val)}</span>
+        <span class="log-note" style="color:var(--gold);font-family:var(--pixel);font-size:8px">avg ${e.avg}</span>
+        <button class="log-del" data-step="${i}" data-idx="${idx}">×</button>
+      </div>`;
+    }).join('');
+    const empty = `<div style="font-family:var(--pixel);font-size:7px;color:var(--muted);padding:8px 0">No sessions logged yet.</div>`;
+
+    const setInputs = [1,2,3,4,5].map(n => `
+      <div class="log-field">
+        <div class="log-field-lbl">SET ${n}</div>
+        <input class="log-input" id="duv-${i}-${n}" type="number" min="0" max="200" placeholder="0">
+      </div>`).join('');
+
+    return `<div class="log-block">
+      <div class="log-title">// SESSION LOG — DU COUNTS PER SET</div>
+      <div class="log-form" style="align-items:flex-end">
+        ${setInputs}
+        <button class="log-add" data-step="${i}" data-type="du-volume">+ LOG</button>
+      </div>
+      <div class="log-entries">${entries||empty}</div>
+    </div>`;
+  }
+
+  // ── ALL OTHER LOG TYPES ───────────────────────────────────────────
   const entries = (LOGS[i]||[]).slice().reverse().slice(0,10).map((e,ri) => {
     const idx = (LOGS[i]||[]).length - 1 - ri;
     return `<div class="log-entry">
@@ -1351,6 +1382,17 @@ function bindEvents() {
       const type = btn.dataset.type;
       const date = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
       let val='', notes='';
+      if (type==='du-volume') {
+        const vals = [1,2,3,4,5].map(n => parseInt(document.getElementById(`duv-${i}-${n}`)?.value)||0);
+        const total = vals.reduce((a,b) => a+b, 0);
+        const avg   = (total / 5).toFixed(1);
+        const val   = vals.map((v,n) => `Set ${n+1}: ${v}`).join(' · ');
+        LOGS[i] = LOGS[i]||[];
+        LOGS[i].push({ date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}), val, avg, notes:'' });
+        OPEN.add(i);
+        save(); renderTrack();
+        return;
+      }
       if (type==='sets-reps') {
         const s = document.getElementById(`ls-${i}`)?.value||'';
         const r = document.getElementById(`lr-${i}`)?.value||'';
