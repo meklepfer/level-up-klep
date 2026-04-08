@@ -667,6 +667,12 @@ const TRACKS = {
       title: 'DOUBLE UNDERS',
       sub:   'Add Dubs to your Fitness Armory',
 
+      intro: {
+        title: 'WHAT IS A DOUBLE-UNDER?',
+        body:  'The double-under is one jump with two wrist rotations — the rope passes under your feet twice per jump.\n\nGEAR: Skip the speed rope. Start with a slightly heavier rope. The extra weight gives you feedback you can feel while learning.\n\nPREREQUISITES: You need to hop on the balls of your feet with soft knees and a controlled rebound. If that\'s not there yet, build it first.\n\nTHE RHYTHM: It\'s not "1 and 2 and." It\'s "1, 2 and." Drop the first "and." That gives you:\n\nJump — Wrist — Wrist — Jump — Wrist — Wrist.\n\nThe jump is the quarter note. The two wrist flicks are the eighth notes. Once that clicks, everything else follows.',
+      },
+
+
       warmup: {
         title: 'OPTIONAL WARM-UP',
         drill: '1. Calf Stretch — 5-10s each side\n2. Wrist Stretch — 5-10s each hand\n3. Wrist Circles — 5 each direction\n4. Calf Raises — 10 reps\n5. Plate Hops — 10 hops\n6. Singles / DU practice — 30s',
@@ -773,7 +779,11 @@ async function loadTrack(track) {
   }
   showView('view-track');
   renderTrack();
-  if (track.warmup) {
+  // Open intro and warmup on first load
+  if (track.intro) {
+    const intro = document.querySelector('.warmup');
+    if (intro) intro.classList.add('open');
+  } else if (track.warmup) {
     const wu = document.querySelector('.warmup');
     if (wu) wu.classList.add('open');
   }
@@ -800,6 +810,7 @@ function renderTrack() {
 
   const body = document.getElementById('track-body');
   body.innerHTML = '';
+  if (t.intro)  body.appendChild(mkIntro(t.intro));
   if (t.warmup) body.appendChild(mkWarmup(t.warmup));
   body.appendChild(mkSecLabel('SKILL STEPS'));
   t.steps.forEach((s, i) => body.appendChild(mkStep(s, i)));
@@ -818,6 +829,23 @@ function mkSecLabel(text, gold) {
   const el = document.createElement('div');
   el.className = 'sec-label' + (gold ? ' gold' : '');
   el.innerHTML = `<div class="sec-line"></div>${text}<div class="sec-line"></div>`;
+  return el;
+}
+
+function mkIntro(intro) {
+  const el = document.createElement('div');
+  el.className = 'warmup';
+  el.style.borderColor = 'rgba(0,255,204,0.25)';
+  el.innerHTML = `
+    <div class="warmup-hdr">
+      <span style="font-family:var(--pixel);font-size:10px;color:var(--green)">▶</span>
+      <span class="warmup-hdr-title" style="color:var(--green)">${intro.title}</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="warmup-body">
+      <div class="drill-text" style="font-size:13px;margin-top:2px;border-left-color:var(--green)">${esc(intro.body)}</div>
+    </div>`;
+  el.querySelector('.warmup-hdr').onclick = () => el.classList.toggle('open');
   return el;
 }
 
