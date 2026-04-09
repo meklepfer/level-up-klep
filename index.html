@@ -647,7 +647,7 @@ async function loadCoach() {
       const n   = norm(raw).length;
       cards.push(`<div class="athlete-card">
         <div class="athlete-name">${(a.name || key).toUpperCase()}</div>
-        ${bar(n, 11)}
+        ${bar(n, 10)}
       </div>`);
     }
     el.innerHTML = cards.join('') +
@@ -691,12 +691,6 @@ const TRACKS = {
           preview: '5 sets · 30s on / 30s off',
           drill:   '5 Sets — 30s on / 30s off\n\nSingle-unders. Focus on rhythm and consistent height.',
           note:    '25 unbroken single-unders at least 3 times across the 5 sets.',
-        },
-        {
-          name:    'Speed Singles',
-          preview: '5 sets · 20s on / 40s off · max turnover',
-          drill:   '5 Sets — 20s on / 40s off\n\nFast singles, maximum turnover. Elbows pinned, wrists only.',
-          note:    'Sustained fast singles for the full 20s without breaking, at least 3 of 5 sets.',
         },
         {
           name:    'Single-Single-Double',
