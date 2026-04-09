@@ -486,6 +486,32 @@ header {
     </div>
   </div>
 
+  <!-- Level Complete Modal -->
+  <div id="modal-levelcomplete" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:300;align-items:center;justify-content:center;padding:24px">
+    <div style="background:var(--card);border:2px solid var(--green);max-width:460px;width:100%;padding:36px 28px;text-align:center;box-shadow:0 0 40px rgba(0,255,204,0.15)">
+      <div style="font-family:var(--pixel);font-size:clamp(11px,3vw,16px);color:var(--green);letter-spacing:2px;margin-bottom:12px">TRACK COMPLETE!</div>
+      <div id="modal-lc-msg" style="font-size:15px;color:var(--muted);font-weight:500;line-height:1.6;margin-bottom:28px"></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+        <button id="modal-lc-primary" style="background:transparent;border:2px solid var(--green);color:var(--green);font-family:var(--pixel);font-size:8px;letter-spacing:1px;padding:12px 20px;cursor:pointer;transition:all .15s" onmouseover="this.style.background='var(--green)';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='var(--green)'"></button>
+        <button id="modal-lc-secondary" style="background:transparent;border:2px solid var(--gold);color:var(--gold);font-family:var(--pixel);font-size:8px;letter-spacing:1px;padding:12px 20px;cursor:pointer;transition:all .15s" onmouseover="this.style.background='var(--gold)';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='var(--gold)'"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bonus Level View -->
+  <div id="view-bonus" class="view">
+    <div class="track-page">
+      <div class="track-topbar">
+        <button class="back-btn" onclick="showView('view-mode')">← Back</button>
+        <div class="crumb">// BONUS LEVEL</div>
+      </div>
+      <div style="text-align:center;padding:80px 20px">
+        <div style="font-family:var(--pixel);font-size:clamp(10px,2.5vw,14px);color:var(--gold);letter-spacing:3px;margin-bottom:20px">// IN DEVELOPMENT</div>
+        <div style="font-size:15px;color:var(--muted);font-family:var(--ui);font-weight:500;line-height:1.7;max-width:360px;margin:0 auto">Bonus levels are coming soon.<br>Check back after you finish the track.</div>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /page-app -->
 
 <script>
@@ -524,6 +550,7 @@ let TRACK    = null;
 let DONE     = [];
 let LOGS     = {};
 const OPEN   = new Set();
+let MODAL_FIRED = false;
 
 // ─── AUTH ────────────────────────────────────────────────────────────────────
 function doLogin() {
@@ -716,6 +743,7 @@ const TRACKS = {
           drill:   '5 Sets — 30s on / 30s off\n\nAs many double-unders as possible per set. Singles allowed as a reset but the goal is linking dubs.',
           note:    'Average of 5 or more double-unders per set across all 5 sets.',
           log:     'du-volume',
+          logKey:  'du_log_du_volume',
         },
         {
           name:    'EMOM Ladder ×1',
@@ -733,6 +761,7 @@ const TRACKS = {
           mult:    2,
           tip:     'If unsuccessful, move on to 100 For Time next session.',
           log:     'emom-ladder',
+          logKey:  'du_log_emom_x3',
         },
         {
           name:    '100 Double-Unders For Time',
@@ -741,6 +770,7 @@ const TRACKS = {
           note:    'Record your time.',
           tip:     'Return to the ×2 Ladder if unsuccessful on your last ×2 attempt. Return to the ×3 Ladder if unsuccessful on your last ×3 attempt.',
           log:     'notes-only',
+          logKey:  'du_log_100_for_time',
         },
         {
           name:    'EMOM Ladder ×3',
@@ -754,20 +784,138 @@ const TRACKS = {
       ],
     },
   ],
-  upgrade: [],
+  upgrade: [
+    {
+      id:    'double-unders-upgrade',
+      title: 'DOUBLE UNDERS — UPGRADE',
+      sub:   'Build capacity on your dubs',
+
+      intro: {
+        title: 'UPGRADING YOUR DOUBLE-UNDERS',
+        body:  'You have the skill. Now we build the engine.\n\nThis track takes the volume and benchmark work from the unlock track and adds fatigue and unbroken capacity on top. Each step asks more of you than the last.\n\nExpect to revisit steps. That is the point.',
+      },
+
+      steps: [
+        {
+          name:    'DU Volume',
+          preview: '5 sets · 30s on / 30s off · link dubs',
+          drill:   '5 Sets — 30s on / 30s off\n\nAs many double-unders as possible per set. Singles allowed as a reset but the goal is linking dubs.',
+          note:    'Average of 5 or more double-unders per set across all 5 sets.',
+          log:     'du-volume',
+          logKey:  'du_log_du_volume',
+        },
+        {
+          name:    '100 Double-Unders For Time',
+          preview: '100 reps · for time',
+          drill:   '100 Double-Unders\nFor Time.\n\nBreak them up however you need to. Record your time.',
+          note:    'Record your time.',
+          tip:     'Return to the ×2 Ladder if unsuccessful on your last ×2 attempt. Return to the ×3 Ladder if unsuccessful on your last ×3 attempt.',
+          log:     'notes-only',
+          logKey:  'du_log_100_for_time',
+        },
+        {
+          name:    'EMOM Ladder ×3',
+          preview: '10 min EMOM · 3 DUs per minute',
+          drill:   '10 Minute EMOM\n\nMinute 1 = 3 DUs, Minute 2 = 6 DUs... up to 30 DUs in Minute 10.\nReps do not need to be unbroken.',
+          note:    'All 10 rounds completed without missing.',
+          mult:    3,
+          tip:     'If unsuccessful, move on to 100 For Time next session.',
+          log:     'emom-ladder',
+          logKey:  'du_log_emom_x3',
+        },
+        {
+          name:    'Double-Unders Under Fatigue',
+          preview: 'Buy-in 20 Burpees · then 100 DUs for time',
+          drill:   'Buy-in: 20 Burpees\nThen: 100 Double-Unders for time.\n\nThis is a repeat of 100 For Time — but you are doing it under fatigue. Double-unders under fatigue are a different beast compared to doing them fresh. Record your time from the start of the burpees.',
+          note:    'Record your total time.',
+          log:     'notes-only',
+        },
+        {
+          name:    'The Double-Under Ladder',
+          preview: 'AMRAP 10 · 5-10-15-20-25... unbroken dubs',
+          drill:   'AMRAP 10 Minutes\n5 — 10 — 15 — 20 — 25 — ...\nUnbroken double-unders.\n\nPerform 5 unbroken dubs, then 10, then 15, climbing as high as possible in 10 minutes.\n\nIf you break, restart the current set from the beginning. Your score is the highest completed set of unbroken double-unders.\n\nAthletes may use singles at the start of a set to get going — but once the double-unders begin, they may not stop until the required reps are complete.',
+          note:    'Record your score — the highest completed unbroken set.',
+          log:     'notes-only',
+        },
+      ],
+
+      completeMode: 'upgrade',
+    },
+  ],
 };
 
-// ─── TRACK ENGINE ─────────────────────────────────────────────────────────────
+// ─── LEVEL COMPLETE MODAL ────────────────────────────────────────────────────
+function showLevelComplete(mode) {
+  const modal = document.getElementById('modal-levelcomplete');
+  const msg   = document.getElementById('modal-lc-msg');
+  const btn1  = document.getElementById('modal-lc-primary');
+  const btn2  = document.getElementById('modal-lc-secondary');
+
+  if (mode === 'unlock') {
+    msg.textContent   = 'You have completed the Double-Unders Unlock track. Ready to push further?';
+    btn1.textContent  = '▶ UPGRADE';
+    btn1.onclick      = () => { hideLevelComplete(); goToUpgradeDU(); };
+    btn2.textContent  = '★ BONUS LEVEL';
+    btn2.onclick      = () => { hideLevelComplete(); showView('view-bonus'); };
+  } else {
+    msg.textContent   = 'You have completed the Double-Unders Upgrade track. Keep climbing?';
+    btn1.textContent  = '↻ KEEP UPGRADING';
+    btn1.onclick      = () => { hideLevelComplete(); resetUpgrade(); };
+    btn2.textContent  = '★ BONUS LEVEL';
+    btn2.onclick      = () => { hideLevelComplete(); showView('view-bonus'); };
+  }
+
+  modal.style.display = 'flex';
+}
+
+function hideLevelComplete() {
+  document.getElementById('modal-levelcomplete').style.display = 'none';
+}
+
+function goToUpgradeDU() {
+  const upgradeTrack = TRACKS.upgrade.find(t => t.id === 'double-unders-upgrade');
+  if (upgradeTrack) loadTrack(upgradeTrack);
+}
+
+function resetUpgrade() {
+  // Clear upgrade progress and reload the track
+  const upgradeTrack = TRACKS.upgrade.find(t => t.id === 'double-unders-upgrade');
+  if (!upgradeTrack) return;
+  fbSet('athletes/' + WHO_KEY + '/' + upgradeTrack.id, []).catch(() => {});
+  fbSet('athletes/' + WHO_KEY + '/' + upgradeTrack.id + '_logs', {}).catch(() => {});
+  loadTrack(upgradeTrack);
+}
+
+
 function norm(d) { return !d ? [] : Array.isArray(d) ? d : Object.values(d); }
 
 async function loadTrack(track) {
   TRACK = track;
   OPEN.clear();
+  MODAL_FIRED = false;
   try {
     const raw  = await fbGet('athletes/' + WHO_KEY + '/' + track.id);
-    const rawL = await fbGet('athletes/' + WHO_KEY + '/' + track.id + '_logs');
     DONE = norm(raw);
-    LOGS = rawL || {};
+    // Load logs: shared steps use their logKey, others use track.id
+    LOGS = {};
+    const logKeys = new Set(track.steps.map(s => s.logKey).filter(Boolean));
+    // Load per-step logs for shared steps
+    for (const lk of logKeys) {
+      const data = await fbGet('athletes/' + WHO_KEY + '/' + lk);
+      if (data) {
+        // Map back to step indices that use this logKey
+        track.steps.forEach((s, i) => {
+          if (s.logKey === lk) LOGS[i] = norm(data);
+        });
+      }
+    }
+    // Load bulk logs for non-shared steps
+    const bulkLogs = await fbGet('athletes/' + WHO_KEY + '/' + track.id + '_logs');
+    if (bulkLogs) {
+      track.steps.forEach((s, i) => {
+        if (!s.logKey && bulkLogs[i]) LOGS[i] = bulkLogs[i];
+      });
+    }
   } catch(e) {
     DONE = []; LOGS = {};
   }
@@ -816,6 +964,13 @@ function renderTrack() {
   ad.className = 'all-done' + (done === total ? ' on' : '');
   ad.innerHTML = `<h2>TRACK COMPLETE!</h2><p>All ${total} steps cleared.</p>`;
   body.appendChild(ad);
+
+  // Fire level complete modal when track is first completed
+  if (done === total && !MODAL_FIRED) {
+    MODAL_FIRED = true;
+    setTimeout(() => showLevelComplete(t.completeMode || 'unlock'), 600);
+  }
+
   bindEvents();
 }
 
@@ -1119,9 +1274,23 @@ function bindEvents() {
 }
 
 function save() {
-  const base = 'athletes/' + WHO_KEY + '/' + TRACK.id;
-  fbSet(base, DONE).catch(() => {});
-  fbSet(base + '_logs', LOGS).catch(() => {});
+  const base    = 'athletes/' + WHO_KEY + '/';
+  const trackId = TRACK.id;
+
+  // Save progress (always per track)
+  fbSet(base + trackId, DONE).catch(() => {});
+
+  // Save logs: shared steps write to their logKey, others go in bulk
+  const bulk = {};
+  TRACK.steps.forEach((s, i) => {
+    if (!LOGS[i]) return;
+    if (s.logKey) {
+      fbSet(base + s.logKey, LOGS[i]).catch(() => {});
+    } else {
+      bulk[i] = LOGS[i];
+    }
+  });
+  fbSet(base + trackId + '_logs', bulk).catch(() => {});
 }
 
 function esc(s) {
