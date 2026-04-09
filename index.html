@@ -1331,8 +1331,14 @@ async function buildCabinet(def) {
     <div class="lb-score">${esc(s.score)}</div>
   </div>`;
 
-  const scrollRows  = scores.length > 0 ? scores.map(rowHTML).join('') + scores.map(rowHTML).join('') : '<div class="lb-empty">NO SCORES YET<br>BE THE FIRST</div>';
-  const scrollDur   = Math.max(8, scores.length * 2.5);
+  // Repeat rows enough to fill the scroll area and loop seamlessly
+  const minReps  = scores.length > 0 ? Math.max(2, Math.ceil(8 / scores.length)) : 1;
+  const onePass  = scores.length > 0 ? scores.map(rowHTML).join('') : '';
+  const scrollRows = scores.length > 0
+    ? Array(minReps * 2).fill(onePass).join('')   // minReps copies + minReps copies for seamless loop
+    : '<div class="lb-empty">NO SCORES YET<br>BE THE FIRST</div>';
+  // Animation translates exactly half the total height (minReps copies worth)
+  const scrollDur = Math.max(5, minReps * scores.length * 2.5);
 
   return `<div class="cabinet-wrap">
   <div class="cabinet" id="cabinet-${def.id}">
@@ -1384,7 +1390,6 @@ function initLeaderboards(container) {
   container.querySelectorAll('.hs-scroll').forEach(el => {
     const inner = el.querySelector('.hs-scroll-inner');
     if (!inner) return;
-    if (el.querySelectorAll('.lb-row').length <= 2) { inner.style.animation = 'none'; return; }
     el.addEventListener('mouseenter', () => inner.classList.add('paused'));
     el.addEventListener('mouseleave', () => inner.classList.remove('paused'));
   });
